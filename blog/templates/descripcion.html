@@ -1,4 +1,4 @@
-{% extends 'app/base.html' %}
+{% extends 'partials/base.html' %}
 
 {% block content %}
 
@@ -22,13 +22,13 @@
 </div>
 
 
-<div class="container mt-4">
+<div class="container mt-4 mb-5">
         <div class="card">
                 <div class="card-header">
                         <h5 class="card-title">{{ empleo.nombre_empleo }}</h5>     
                 </div>
                 <div class="card-body">
-                <p class="card-text"><strong>Requisitos:</strong>{{ empleo.descripcion_empleo }}</p>
+                <p class="card-text"><strong>Requisitos:</strong> {{ empleo.descripcion_empleo }}</p>
                 <p class="card-text"><strong>Fecha:</strong> {{ empleo.fecha_empleo }}</p>
                 <p class="card-text"><strong>Departamento:</strong> {{ empleo.area_empleo }}</p>
                 <p class="card-text"><strong>Modalidad:</strong> {{ empleo.modalidad_empleo}}</p>

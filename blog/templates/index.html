@@ -1,4 +1,4 @@
-{% extends 'app/base.html' %}
+{% extends 'partials/base.html' %}
 
 {% block content %}
 <head>
@@ -27,17 +27,30 @@
 {%for p in empleos %} <br>
 <div class="container-fluid col-sm-8 mb-6 mb-sm-2">
     <div class="card">
-      <a class="dir" href="{% url 'descripcion' p.id %}">
+      
       <div class="card-body btn" style="text-align:left;">
-        <h5 class="card-title">{{p.nombre_empleo}}</h5>
-        <p class="card-text"><i class="bi bi-geo-alt"></i> {{p.id_ciudad_fk }}</p>
-        <p class="card-text"><i class="bi bi-briefcase"></i> {{p.area_empleo}}</p>
-        <p class="card-text"><i class="bi bi-building"></i> {{p.modalidad_empleo}}</p>
+        
         
       </a>
       </div>
     </div>
   </div>
   
+  <div class="row">
+    <div class="container-fluid col-sm-8 mb-6 mb-sm-2" >
+        <div class="card bg-secondary" style="border-radius: 0.5rem;">
+          <a class="dir" href="{% url 'descripcion' p.id %}">
+            <div class="card-body btn" style="text-align:left;">
+                <blockquote class="card-blockquote mb-0">
+                  <h5 class="card-title">{{p.nombre_empleo}}</h5>
+                  <p class="card-text"><i class="bi bi-geo-alt"></i> {{p.id_ciudad_fk }}</p>
+                  <p class="card-text"><i class="bi bi-briefcase"></i> {{p.area_empleo}}</p>
+                    <footer class="blockquote-footer text-muted font-12 m-0 mt-0">
+                      <p class="card-text"><i class="bi bi-building"></i> {{p.modalidad_empleo}}</p>
+                    </footer>
+                </blockquote>
+            </div></a>
+        </div>
+    </div>
   {%endfor%}
   {% endblock %}

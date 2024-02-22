@@ -5,7 +5,7 @@
     <head>
     
         <meta charset="utf-8">
-        <title>{{title}} | Veltrix - Admin & Dashboard Template</title>
+        <title>{{title}} CNE | Santo Domingo</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="Premium Multipurpose Admin & Dashboard Template" name="description">
         <meta content="Themesbrand" name="author">
@@ -36,12 +36,15 @@
         {% block sidebar %}
         {% include 'partials/sidebar.html' %}
         {% endblock %}  
-        {% comment %} {% block header %}
+
+        {% comment %} 
+        {% block header %}
         {% include 'partials/hori-header.html' %}
         {% endblock %}
         {% block sidebar %}
         {% include 'partials/hori-sidebar.html' %}
-        {% endblock %} {% endcomment %}
+        {% endblock %} 
+        {% endcomment %}
 
             <!-- ============================================================== -->
             <!-- Start right Content here -->
@@ -52,10 +55,10 @@
                     <div class="container-fluid">
 
                         <!-- start page title -->
-                        <div class="page-title-box">
+                        <!-- <div class="page-title-box">
                             <div class="row align-items-center">
                                 <div class="col-md-8">
-                                    <h6 class="page-title">{{title}}</h6>
+                                    <h6 class="page-title">{{title}} Prueba </h6>
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="#">{{heading}}</a></li>
                                         <li class="breadcrumb-item"><a href="javascript: void(0);">{{subheading}}</a></li>
@@ -77,7 +80,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div> 
+                                </div>  -->
                             </div>
                         </div>
                         <!-- end page title -->
@@ -104,9 +107,6 @@
     </div>
         <!-- END layout-wrapper -->
 
-    {% block rightsidebar %}
-    {% include 'partials/rightsidebar.html' %}
-    {% endblock %}
 
     {% block javascript %}
 

@@ -29,7 +29,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     
-    path('', DashboardView.as_view(), name='dashboard'),
+    path('dashboard', DashboardView.as_view(), name='dashboard'),
     
     path('index', index, name='index'),
     path('home', home, name='home'),

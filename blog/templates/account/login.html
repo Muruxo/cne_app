@@ -20,7 +20,7 @@
                         </div>
                         <div class="card-body p-4">
                             <div class="p-3">
-                                <form class="mt-4 needs-validation" novalidate method="POST" action="{% url 'account_login' %}">
+                                <form class="mt-4 needs-validation" novalidate method="POST" action="{% url 'index' %}">
                                     {% csrf_token %}
                                     <div class="mb-3">
                                         {{ form.login|as_crispy_field }}

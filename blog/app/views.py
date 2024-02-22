@@ -20,7 +20,7 @@ def eliminar(request, publicacion_id):
     messages.success(request, 'Publicación Eliminada')
     return redirect(home)  
 
-@login_required    
+# @login_required    
 def agregar(request): 
     if request.POST: 
         form = EmpleoForm(request.POST)
@@ -63,7 +63,7 @@ def descripcion(request, empleo_id):
 
 #FORM DATOS PERSONALES POSTULANTE
 
-@login_required    
+   
 def agregarDatosPersonales(request): 
     if request.POST: 
         form = DatosPersonalesForm(request.POST)
@@ -75,7 +75,6 @@ def agregarDatosPersonales(request):
     return render(request, 'DatosPersonales.html', {'form':DatosPersonalesForm})
 
 
-@login_required    
 def agregarDatosAdicionales(request): 
     if request.POST: 
         ExperienciaForm1 = ExperienciaForm(request.POST)
@@ -88,8 +87,7 @@ def agregarDatosAdicionales(request):
 
     return render(request, 'DatosAd.html', {'form1':ExperienciaForm, 'form2': DatosAdicionalesForm})
 
-
-@login_required    
+  
 def agregarDatosEducacion(request): 
     if request.POST: 
         form = EducacionForm(request.POST)
