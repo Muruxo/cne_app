@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+<center>
+<h1>Datos Personales</h1>
+
+<div class="col-4" >
+
+<form action="" method="POST">
+{{ form.as_p }}
+{% csrf_token %}
+<button class="btn btn-success" type="submit">Siguiente</button>
+<a href="{% url 'DatosAd' %}"><button class="btn btn-danger" type="">Cancelar</button></a>
+
+</form>
+    
+</div>
+<br><br>
+</center>
+{% endblock %}

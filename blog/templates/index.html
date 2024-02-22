@@ -1,0 +1,43 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<style>
+
+.dir:link, .dir:visited,  .dir:hover, .dir:active
+{
+    color: #000000;
+    text-decoration: none;
+}
+.card:hover{
+  box-shadow: 3px 3px 10px rgba(0,0,0,0.8);
+}
+
+</style>
+<br>
+<center>
+  <h1>Plazas Laborales CNE</h1>
+  <h3>Santo Domingo 2024</h3>
+  <h5>Postula a tu trabajo ahora!</h3>
+  
+</center>
+{%for p in empleos %} <br>
+<div class="container-fluid col-sm-8 mb-6 mb-sm-2">
+    <div class="card">
+      <a class="dir" href="{% url 'descripcion' p.id %}">
+      <div class="card-body btn" style="text-align:left;">
+        <h5 class="card-title">{{p.nombre_empleo}}</h5>
+        <p class="card-text"><i class="bi bi-geo-alt"></i> {{p.id_ciudad_fk }}</p>
+        <p class="card-text"><i class="bi bi-briefcase"></i> {{p.area_empleo}}</p>
+        <p class="card-text"><i class="bi bi-building"></i> {{p.modalidad_empleo}}</p>
+        
+      </a>
+      </div>
+    </div>
+  </div>
+  
+  {%endfor%}
+  {% endblock %}

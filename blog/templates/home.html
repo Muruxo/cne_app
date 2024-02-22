@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<br>
+<center>
+  <h1>Empleos CNE</h1>
+  <h3>Santo Domingo 2024</h3>
+</center>
+{%for p in empleos %} <br>
+<div class="container-fluid col-sm-8 mb-6 mb-sm-2">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{p.nombre_empleo}}</h5>
+        <p class="card-text">{{p.descripcion_empleo}}</p>
+        <p class="card-text">Area: {{p.area_empleo}}</p>
+        <p class="card-text">Modalidad: {{p.modalidad_empleo}}</p>
+        <p class="card-text">Tiempo de Trabajo: {{p.tiempo_empleo}} meses</p>
+        <p class="card-text">Ciudad: {{p.id_ciudad_fk }}</p>
+
+        {%for postulacion in p.postulados.all %}
+        {{postulacion}}
+
+        {%endfor%}
+        <a href="{% url 'eliminar' p.id %}" class="btn btn-danger">Eliminar</a>
+      <a href="{% url 'actualizar' p.id %}" class="btn btn-success">Actualizar</a>
+      </div>
+    </div>
+  </div>
+  
+
+<!-- <div class="card">
+    <h5 class="card-header">{{p.titulo}}</h5>
+    <div class="card-body">
+      <h5 class="card-title">Contacto: {{p.email}}</h5>
+      <p class="card-text">{{p.descripcion}}</p>
+      <a href="{% url 'eliminar' p.id %}" class="btn btn-danger">Eliminar</a>
+      <a href="{% url 'actualizar' p.id %}" class="btn btn-success">Actualizar</a>
+    </div>
+  </div> -->
+
+  {%endfor%}
+  {% endblock %}
