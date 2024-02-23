@@ -43,9 +43,11 @@ urlpatterns = [
     path('DatosPer', agregarDatosPersonales, name='DatosPer'),
     path('DatosAd', agregarDatosAdicionales, name='DatosAd'),
     path('DatosEdu', agregarDatosEducacion, name='DatosEdu'),
-    
+    path('congrats', congrats, name= 'congrats'),
     path('admin/', admin.site.urls),
-    # path('', include('app.urls')),
+   
+   
+   
     # Email
     path("email/", include("e_mail.urls")),
     # Components

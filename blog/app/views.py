@@ -105,4 +105,9 @@ def lista_postulantes(request, lista_id):
     c={}
     c['postulantes'] = Postulante.objects.all()
     return render(request, 'lista_postulantes.html', c)
+
+def congrats(request):
     
+    c={}
+    c['congrats'] = Postulados.objects.all()
+    return render(request, 'congrats.html', c)
