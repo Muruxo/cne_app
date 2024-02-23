@@ -49,7 +49,7 @@ class PublicacionForm(ModelForm):
 
 class DatosPersonalesForm(forms.ModelForm):
     class Meta: 
-        genero = {'':'','M':'Masculino', 'F':'Femenino'}
+        genero = {'M':'Masculino', 'F':'Femenino'}
         model = Postulante
         fields = ['nombre_postulante','apellido_postulante','email_postulante','telefono_postulante','genero_postulante','edad_postulante','ciudad_postulante','direccion_postulante']
         labels = {  
@@ -66,25 +66,25 @@ class DatosPersonalesForm(forms.ModelForm):
              'nombre_postulante': forms.TextInput(attrs = {'class': 'form-control'}),
             'apellido_postulante': forms.TextInput(attrs = {'class': 'form-control'}),
             'email_postulante': forms.EmailInput(attrs = {'class': 'form-control'}),
-            'telefono_postulante': forms.NumberInput(attrs = {'class': 'form-control'}),
-            'genero_postulante' : forms.Select(choices=genero.items()),
+            'telefono_postulante': forms.TextInput(attrs = {'class': 'form-control'}),
+            'genero_postulante' : forms.Select(choices=genero.items(), attrs = {'class': 'form-control'}),
             'edad_postulante':  forms.NumberInput(attrs = {'class': 'form-control'}), 
             'ciudad_postulante': forms.TextInput(attrs = {'class': 'form-control'}),
             'direccion_postulante': forms.TextInput(attrs = {'class': 'form-control'}),
         }
 
-class DatosAdicionalesForm(ModelForm):
-    class Meta: 
-        model = Detallepostulante
-        fields = ['descripcion_laboral','idioma_laboral']
-        labels = {
-            'descripcion_laboral': 'Descripcion', 
-            'idioma_laboral': 'Idioma', 
-        }
-        widgets = { 
-            'descripcion_laboral': forms.Textarea(attrs = {'class': 'form-control'}),
-            'idioma_laboral': forms.NumberInput(attrs = {'class': 'form-control'}),
-        }
+# class DatosAdicionalesForm(ModelForm):
+#     class Meta: 
+#         model = Detallepostulante
+#         fields = ['descripcion_laboral','idioma_laboral']
+#         labels = {
+#             'descripcion_laboral': 'Descripcion', 
+#             'idioma_laboral': 'Idioma', 
+#         }
+#         widgets = { 
+#             'descripcion_laboral': forms.Textarea(attrs = {'class': 'form-control'}),
+#             'idioma_laboral': forms.NumberInput(attrs = {'class': 'form-control'}),
+#         }
 
 
 class ExperienciaForm(forms.ModelForm):
@@ -95,7 +95,7 @@ class ExperienciaForm(forms.ModelForm):
             'cargo': 'Cargo desempeñado',
             'empresa': 'Nombre de la empresa', 
             'pais': 'País', 
-            'area': 'Area', 
+            'area': 'Area de Trabajo', 
             'fecha_inicio': 'Fecha Inicial',
             'fecha_final': 'Fecha Final',
             'descripcion': 'Descripcion del cargo'
@@ -105,14 +105,15 @@ class ExperienciaForm(forms.ModelForm):
             'empresa': forms.TextInput(attrs = {'class': 'form-control'}),
             'pais': forms.TextInput(attrs = {'class': 'form-control'}),
             'area': forms.TextInput(attrs = {'class': 'form-control'}),
-            'fecha_inicio': forms.TextInput(attrs = {'class': 'form-control'}),
-            'fecha_final': forms.TextInput(attrs = {'class': 'form-control'}),
+            'fecha_inicio': forms.DateInput(format='%d-%m-%Y',attrs={'type': 'date', 'class': 'form-control'}),
+            'fecha_final': forms.DateInput(format='%d-%m-%Y',attrs={'type': 'date', 'class': 'form-control'}),
             'descripcion': forms.Textarea(attrs = {'class': 'form-control'})
         }
 
 
 class EducacionForm(forms.ModelForm):
     class Meta: 
+        estado = {'1':'En Curso', '2':'Graduado', '3':'Abandonado'}
         model = Educacion
         fields = ['titulo_edu','pais_edu','institucion_edu','nivel_edu', 'estado_edu', 'descripcion_edu']
         labels = {
@@ -127,7 +128,7 @@ class EducacionForm(forms.ModelForm):
             'titulo_edu': forms.TextInput(attrs = {'class': 'form-control'}),
             'pais_edu': forms.TextInput(attrs = {'class': 'form-control'}),
             'institucion_edu': forms.TextInput(attrs = {'class': 'form-control'}),
-           'nivel_edu': forms.TextInput(attrs = {'class': 'form-control'}),
-            'estado_edu': forms.TextInput(attrs = {'class': 'form-control'}),
+           'nivel_edu': forms.Select(attrs = {'class': 'form-control'}),
+            'estado_edu': forms.Select(choices=estado.items(), attrs = {'class': 'form-control'}),
             'descripcion_edu': forms.TextInput(attrs = {'class': 'form-control'})
         }

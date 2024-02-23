@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 from .models import *
-from  .forms import PublicacionForm, EmpleoForm, DatosPersonalesForm, ExperienciaForm, DatosAdicionalesForm, EducacionForm
+from  .forms import PublicacionForm, EmpleoForm, DatosPersonalesForm, ExperienciaForm,EducacionForm #DatosAdicionalesForm
 
 def actualizar(request, publicacion_id): 
     publicacion = Empleo.objects.get(pk = publicacion_id)
@@ -65,6 +65,7 @@ def descripcion(request, empleo_id):
 
    
 def agregarDatosPersonales(request): 
+    
     if request.POST: 
         form = DatosPersonalesForm(request.POST)
         if form.is_valid():
@@ -78,14 +79,14 @@ def agregarDatosPersonales(request):
 def agregarDatosAdicionales(request): 
     if request.POST: 
         ExperienciaForm1 = ExperienciaForm(request.POST)
-        DatosAdicionalesForm1 = DatosAdicionalesForm(request.POST)
-        if ExperienciaForm1.is_valid() and DatosAdicionalesForm1.is_valid():
+        
+        if ExperienciaForm1.is_valid(): #and DatosAdicionalesForm1.is_valid():
             ExperienciaForm1.save()
-            DatosAdicionalesForm1.save()
+            #DatosAdicionalesForm1.save()
         messages.success(request, 'Informacion agregada con éxito')
         return redirect(agregarDatosEducacion)  
 
-    return render(request, 'DatosAd.html', {'form1':ExperienciaForm, 'form2': DatosAdicionalesForm})
+    return render(request, 'DatosAd.html', {'form1':ExperienciaForm}) #'form2': DatosAdicionalesForm
 
   
 def agregarDatosEducacion(request): 

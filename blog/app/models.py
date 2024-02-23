@@ -19,11 +19,12 @@ class Postulante(models.Model):
     nombre_postulante = models.CharField(max_length=144)
     apellido_postulante = models.CharField(max_length=144,blank=False,null=False)
     genero_postulante = models.CharField(max_length=144,blank=False,null=False)
-    edad_postulante = models.IntegerField(blank=False,null=False, validators=[MaxValueValidator(99)])
+    edad_postulante = models.IntegerField(blank=False,null=False, max_length=2)
     direccion_postulante = models.CharField(max_length=200,blank=False,null=False)
     email_postulante = models.EmailField(max_length=150,blank=False,null=False)
-    telefono_postulante = models.IntegerField(blank=False,null=False, validators=[MaxValueValidator(9999999999)])
+    telefono_postulante = models.CharField(blank=False,null=False, max_length=10)
     ciudad_postulante = models.CharField(max_length=144,blank=False, null=False)
+    total_experiencia = models.FloatField(blank=True,null=True)
     # Falta numero de cedula, nacionalidad
     
     def tiempo_total_experiencia(self):
