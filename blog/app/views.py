@@ -97,3 +97,11 @@ def agregarDatosEducacion(request):
         return redirect(index)  
 
     return render(request, 'DatosEducacion.html', {'form':EducacionForm})
+
+def lista_postulantes(request):
+    c={}
+    
+    c['postulantes'] = Postulante.objects.all()
+    
+    return render(request, 'lista_postulantes.html', c)
+    

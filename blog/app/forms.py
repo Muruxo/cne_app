@@ -90,24 +90,24 @@ class DatosAdicionalesForm(ModelForm):
 class ExperienciaForm(forms.ModelForm):
     class Meta: 
         model = Experiencia
-        fields = ['cargo_exp','empresa_exp','pais_exp','area_exo', 'finicio_exp', 'ffinal_exp', 'descripcion_exp']
+        fields = ['cargo','empresa','pais','area', 'fecha_inicio', 'fecha_final', 'descripcion']
         labels = {
-            'cargo_exp': 'Cargo desempeñado',
-            'empresa_exp': 'Nombre de la empresa', 
-            'pais_exp': 'País', 
-            'area_exo': 'Area', 
-            'finicio_exp': 'Fecha Inicial',
-            'ffinal_exp': 'Fecha Final',
-            'descripcion_exp': 'Descripcion del cargo'
+            'cargo': 'Cargo desempeñado',
+            'empresa': 'Nombre de la empresa', 
+            'pais': 'País', 
+            'area': 'Area', 
+            'fecha_inicio': 'Fecha Inicial',
+            'fecha_final': 'Fecha Final',
+            'descripcion': 'Descripcion del cargo'
         }
         widgets = { 
-            'cargo_exp': forms.TextInput(attrs = {'class': 'form-control'}),
-            'empresa_exp': forms.TextInput(attrs = {'class': 'form-control'}),
-            'pais_exp': forms.TextInput(attrs = {'class': 'form-control'}),
-            'area_exo': forms.TextInput(attrs = {'class': 'form-control'}),
-            'finicio_exp': forms.TextInput(attrs = {'class': 'form-control'}),
-            'ffinal_exp': forms.TextInput(attrs = {'class': 'form-control'}),
-            'descripcion_exp': forms.Textarea(attrs = {'class': 'form-control'})
+            'cargo': forms.TextInput(attrs = {'class': 'form-control'}),
+            'empresa': forms.TextInput(attrs = {'class': 'form-control'}),
+            'pais': forms.TextInput(attrs = {'class': 'form-control'}),
+            'area': forms.TextInput(attrs = {'class': 'form-control'}),
+            'fecha_inicio': forms.TextInput(attrs = {'class': 'form-control'}),
+            'fecha_final': forms.TextInput(attrs = {'class': 'form-control'}),
+            'descripcion': forms.Textarea(attrs = {'class': 'form-control'})
         }
 
 

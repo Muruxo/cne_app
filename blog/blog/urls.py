@@ -18,7 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from app.views import index, home, agregar, eliminar, actualizar, postular, descripcion, agregarDatosAdicionales, agregarDatosEducacion, agregarDatosPersonales
+from app.views import *
 from django.contrib.auth.decorators import login_required
 from .views import MyPasswordChangeView, MyPasswordSetView, DashboardView
 from django.conf import settings
@@ -33,6 +33,7 @@ urlpatterns = [
     
     path('index', index, name='index'),
     path('home', home, name='home'),
+    path('lista_postulantes', lista_postulantes, name='lista_postulantes'),
     path('agregar', agregar, name = 'agregar'),
     path('eliminar/<publicacion_id>', eliminar, name = 'eliminar'),
     path('actualizar/<publicacion_id>', actualizar, name ="actualizar"), 

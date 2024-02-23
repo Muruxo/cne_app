@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.core.validators import MaxValueValidator
 from django.contrib.auth.models import User
+from datetime import date
 
 class Publicacion(models.Model):
     titulo      = models.CharField(max_length=50)
@@ -25,9 +26,17 @@ class Postulante(models.Model):
     ciudad_postulante = models.CharField(max_length=144,blank=False, null=False)
     # Falta numero de cedula, nacionalidad
     
+    def tiempo_total_experiencia(self):
+        total = 0
+        for e in self.experiencias.all():
+            total = total + e.tiempo_trabajado()
+        return total
+    
     def __str__(self) -> str:
             return f'{self.pk} - {self.nombre_postulante}'
-
+        
+        
+# Posiblemente puede morir Deprecated
 class Detallepostulante(models.Model):
     descripcion_laboral = models.TextField(blank=True,null=True)
     idioma_laboral = models.CharField(max_length=255,blank=True,null=True)
@@ -37,17 +46,28 @@ class Detallepostulante(models.Model):
         return f'{self.experiencia_laboral}'
 
 class Experiencia(models.Model): 
-    id_experiencia_fk = models.ForeignKey(Postulante, related_name='postulanteexp', on_delete=models.CASCADE,null=True)
-    cargo_exp = models.CharField(max_length=255,blank=False,null=False)
-    empresa_exp = models.CharField(max_length=255,blank=False,null=False)
-    pais_exp = models.CharField(max_length=255,blank=False,null=False)
-    area_exo = models.CharField(max_length=255,blank=False,null=False)
-    finicio_exp = models.DateField(blank=False, null= False)
-    ffinal_exp = models.DateField(blank=True, null=True)
-    descripcion_exp = models.TextField(blank=True,null=True)
+    postulante = models.ForeignKey(Postulante, related_name='experiencias', on_delete=models.CASCADE,null=True)
+    cargo = models.CharField(max_length=255,blank=False,null=False)
+    empresa = models.CharField(max_length=255,blank=False,null=False)
+    pais = models.CharField(max_length=255,blank=False,null=False)
+    area = models.CharField(max_length=255,blank=False,null=False)
+    fecha_inicio = models.DateField(blank=False, null= False)
+    fecha_final = models.DateField(blank=True, null=True)
+    descripcion = models.TextField(blank=True,null=True)
+    
+    def tiempo_trabajado(self):
+        if self.fecha_final: 
+            diferencia = self.fecha_final - self.fecha_inicio
+            diferencia = diferencia.days / 365
+        else:
+            diferencia = date.today() - self.fecha_inicio
+            diferencia = diferencia.days / 365
+        return round(diferencia, 1)
+        
+    
     
     def __str__(self)->str:
-        return f'{self.empresa_exp}'
+        return f'{self.empresa}'
     class Meta: 
         verbose_name_plural = 'Experiencia'
         
@@ -95,6 +115,7 @@ class Empleo(models.Model):
     modalidad_empleo = models.CharField(max_length=200,blank=False,null=False)
     tiempo_empleo = models.IntegerField(blank=False,null=False, validators=[MaxValueValidator(9999999999)])
     id_ciudad_fk = models.ForeignKey(Ciudad, related_name='ciudad', on_delete=models.SET_NULL,null=True)
+    anos_minimos_experiencia = models.IntegerField(blank=False,null=False)
     
     def __str__(self)->str:
         return f'{self.nombre_empleo}'

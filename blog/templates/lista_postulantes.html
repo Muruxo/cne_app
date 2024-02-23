@@ -1,0 +1,57 @@
+
+{% extends 'partials/base.html' %}
+{% load humanize %}
+
+{% block content %}
+
+<br>
+<center>
+  <h1>Empleos CNE</h1>
+  <h3>Santo Domingo 2024</h3>
+</center>
+{%for postulante in postulantes %} <br>
+<div class="container-fluid col-sm-8 mb-6 mb-sm-2">
+    <div class="card">
+      <div class="card-body">
+        <h2>{{postulante.nombre_postulante}} {{postulante.apellido_postulante}}</h2>
+        <p>Tiempo total de Experiencia: </p>
+        <p>{{postulante.tiempo_total_experiencia}}</p>
+        <div
+            class="table-responsive"
+        >
+            <table
+                class="table table-primary"
+            >
+                <thead>
+                    <tr>
+                        <th scope="col">Cargo</th>
+                        <th scope="col">Empresa</th>
+                        <th scope="col">Tiempo Experiencia</th>
+                        <th scope="col">Fecha de Inicio</th>
+                        <th scope="col">Fecha Fin</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for experiencia in postulante.experiencias.all %}
+                    <tr class="">
+                        <td scope="row">{{experiencia.cargo}}</td>
+                        <td>{{experiencia.empresa}}</td>
+                        <td>{{experiencia.tiempo_trabajado}} años </td>
+                        <td>{{experiencia.fecha_inicio}}</td>
+                        <td>{{experiencia.fecha_final}}</td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+        
+       
+
+
+      </div>
+    </div>
+  </div>
+
+
+  {%endfor%}
+  {% endblock %}
