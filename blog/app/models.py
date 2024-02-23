@@ -115,7 +115,7 @@ class Empleo(models.Model):
     modalidad_empleo = models.CharField(max_length=200,blank=False,null=False)
     tiempo_empleo = models.IntegerField(blank=False,null=False, validators=[MaxValueValidator(9999999999)])
     id_ciudad_fk = models.ForeignKey(Ciudad, related_name='ciudad', on_delete=models.SET_NULL,null=True)
-    anos_minimos_experiencia = models.IntegerField(blank=False,null=False)
+    anos_minimos_experiencia = models.IntegerField(blank=True,null=True)
     
     def __str__(self)->str:
         return f'{self.nombre_empleo}'
