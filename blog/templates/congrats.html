@@ -1,0 +1,63 @@
+
+{% extends 'partials/base.html' %}
+{% load humanize %}
+
+{% block content %}
+
+<br>
+<center>
+  <h1>Felicidades</h1>
+  <h3>Postulación Exitosa</h3>
+</center>
+ <br>
+<div class="container-fluid col-sm-8 mb-6 mb-sm-2">
+    <div class="card">
+      <div class="card-body">
+        <p>Detalle de Postulación</p>
+        <div class="table-responsive">
+            <table class="table table-primary">
+                <thead>
+                    <tr>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Empleo</th>
+                        <th scope="col">Fecha de Postulación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  
+                    {%for p in congrats %}
+                    <tr class="">
+                        <td scope="row">{{p.estado_postulado}}</td>
+                        <td>{{p.id_postulados_fk}}{{p.apellido_postulante}}</td>
+                        <td>{{p.id_empleo_fk}} </td>
+                        <td>{{p.fecha_postulado}}</td>
+                    </tr>
+                    {%endfor%}
+                    {%comment%}
+                </tbody>
+                <!-- <tbody>
+                    {%for experiencias in postulante.experiencias.all %}
+                    <tr class="">
+                        <td scope="row">{{experiencia.cargo}}</td>
+                        <td>{{experiencia.empresa}}</td>
+                        <td>{{experiencia.tiempo_trabajado}} años </td>
+                        <td>{{experiencia.fecha_inicio}}</td>
+                        <td>{{experiencia.fecha_final}}</td>
+                    </tr>
+                    {%endfor%} -->
+                    {% endcomment%}
+                </tbody>
+            </table>
+        </div>
+        
+       
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+  {% endblock %}
