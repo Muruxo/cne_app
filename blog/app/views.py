@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-from .models import Publicacion, Empleo, Postulante, Experiencia, Detallepostulante
+from .models import *
 from  .forms import PublicacionForm, EmpleoForm, DatosPersonalesForm, ExperienciaForm, DatosAdicionalesForm, EducacionForm
 
 def actualizar(request, publicacion_id): 
@@ -98,10 +98,10 @@ def agregarDatosEducacion(request):
 
     return render(request, 'DatosEducacion.html', {'form':EducacionForm})
 
-def lista_postulantes(request):
+
+def lista_postulantes(request, lista_id):
+    publicacion = Empleo.objects.get(pk = lista_id)
     c={}
-    
     c['postulantes'] = Postulante.objects.all()
-    
     return render(request, 'lista_postulantes.html', c)
     

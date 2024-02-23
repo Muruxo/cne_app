@@ -62,7 +62,7 @@ class Experiencia(models.Model):
         else:
             diferencia = date.today() - self.fecha_inicio
             diferencia = diferencia.days / 365
-        return round(diferencia, 1)
+        return round(diferencia, 0)
         
     
     

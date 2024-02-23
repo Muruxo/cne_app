@@ -33,7 +33,7 @@ urlpatterns = [
     
     path('index', index, name='index'),
     path('home', home, name='home'),
-    path('lista_postulantes', lista_postulantes, name='lista_postulantes'),
+    path('lista_postulantes/<lista_id>', lista_postulantes, name='lista_postulantes'),
     path('agregar', agregar, name = 'agregar'),
     path('eliminar/<publicacion_id>', eliminar, name = 'eliminar'),
     path('actualizar/<publicacion_id>', actualizar, name ="actualizar"), 
