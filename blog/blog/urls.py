@@ -30,7 +30,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     
     path('dashboard', DashboardView.as_view(), name='dashboard'),
-    
+    path('', index, name='index'),
     path('index', index, name='index'),
     path('home', home, name='home'),
     path('lista_postulantes/<lista_id>', lista_postulantes, name='lista_postulantes'),
@@ -40,7 +40,7 @@ urlpatterns = [
     path('postular', postular, name = 'postular'),
     path('descripcion/<empleo_id>', descripcion, name ="descripcion"), 
     path('accounts/', include('allauth.urls')),
-    path('DatosPer', agregarDatosPersonales, name='DatosPer'),
+    path('DatosPer/<id>', agregarDatosPersonales, name='DatosPer'),
     path('DatosAd', agregarDatosAdicionales, name='DatosAd'),
     path('DatosEdu', agregarDatosEducacion, name='DatosEdu'),
     path('congrats/<lista_id>', congrats, name= 'congrats'),

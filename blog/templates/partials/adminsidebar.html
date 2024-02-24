@@ -9,26 +9,32 @@
                         <!-- Left Menu Start -->
                         <ul class="metismenu list-unstyled" id="side-menu">
                             <li class="menu-title" key="Main">Main</li>
-
                             <li>
                                 <a href="{% url 'index' %}" class="waves-effect">
                                     <i class="ti-home"></i><span class="badge rounded-pill bg-primary float-end"></span>
                                     <span key="Dashboard">Inicio</span>
                                 </a>
                             </li>
-
                             <li>
-                                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="ti-user"></i>
-                                    <span key="UI_Elements">Datos Personales</span>
+                                <a href="{% url 'home' %}" class="waves-effect">
+                                    <i class="ti-settings"></i><span class="badge rounded-pill bg-primary float-end"></span>
+                                    <span key="Dashboard">Config</span>
                                 </a>
-                                <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="{% url 'DatosPer' %}" key="Alerts">Perfil</a></li>
-                                    <li><a href="{% url 'DatosAd' %}" key="Buttons">Datos Laborales</a></li>
-                                    <li><a href="{% url 'DatosEdu' %}" key="Cards">Datos Educación</a></li>
-                                </ul>
                             </li>
 
+                            <li>
+                                <a href="{% url 'agregar' %}" class="waves-effect">
+                                    <i class="ti-plus"></i><span class="badge rounded-pill bg-primary float-end"></span>
+                                    <span key="Dashboard">Agregar Empleo</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#" class="waves-effect">
+                                    <i class="ti-list"></i><span class="badge rounded-pill bg-primary float-end"></span>
+                                    <span key="Dashboard">Postulantes</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <!-- Sidebar -->

@@ -24,12 +24,13 @@
   <h5>Postula a tu trabajo ahora!</h3>
   
 </center>
-{%for p in empleos %} <br>
+ <br>
 
   
   <div class="row">
-    <div class="container-fluid col-sm-8 mb-6 mb-sm-2" >
-        <div class="card bg-secondary" style="border-radius: 0.5rem;">
+    {%for p in empleos %}
+    <div class="container-fluid col-sm-8 mb-5 mb-sm-2 " >
+        <div class="card bg-secondary" style="border-radius: 1rem;">
           <a class="dir" href="{% url 'descripcion' p.id %}">
             <div class="card-body btn" style="text-align:left;">
                 <blockquote class="card-blockquote mb-0">
@@ -43,5 +44,6 @@
             </div></a>
         </div>
     </div>
+    <br><br><br>
   {%endfor%}
   {% endblock %}
