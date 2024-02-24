@@ -95,19 +95,40 @@ def agregarDatosEducacion(request):
         if form.is_valid():
             form.save()
         messages.success(request, 'Informacion agregada con éxito')
-        return redirect(index)  
+        return redirect(congrats)  
 
     return render(request, 'DatosEducacion.html', {'form':EducacionForm})
 
 
+
+# def lista_postulantes(request, lista_id):
+#     publicacion = Postulante.objects.get(pk = lista_id)
+#     contenido = {
+#         'postulados' : publicacion
+#     }
+#     template = "lista_postulantes.html"
+#     return render(request, template, contenido)
+
 def lista_postulantes(request, lista_id):
-    publicacion = Empleo.objects.get(pk = lista_id)
     c={}
     c['postulantes'] = Postulante.objects.all()
     return render(request, 'lista_postulantes.html', c)
 
-def congrats(request):
+def descripcion(request, empleo_id): 
+    empleo = Empleo.objects.get(pk = empleo_id)
+    contenido = {
+        'empleo' : empleo
+    }
+    template = "descripcion.html"
+    return render(request, template, contenido)
+
+
+
+
+def congrats(request, id_postulados_fk):
     
     c={}
-    c['congrats'] = Postulados.objects.all()
+    c['congrats'] = Postulados.objects.get(pk = id_postulados_fk)
     return render(request, 'congrats.html', c)
+
+
