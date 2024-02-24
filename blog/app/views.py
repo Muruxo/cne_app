@@ -1,39 +1,53 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
+from .utils import * 
 from .models import *
 from  .forms import PublicacionForm, EmpleoForm, DatosPersonalesForm, ExperienciaForm,EducacionForm #DatosAdicionalesForm
-
+from django.http import HttpResponse
 def actualizar(request, publicacion_id): 
-    publicacion = Empleo.objects.get(pk = publicacion_id)
-    form = EmpleoForm(request.POST or None, instance = publicacion)
-    if form.is_valid(): 
-        form.save()
-        messages.success(request, 'Publicación Actualizada')
-        return redirect(home)  
-    return render(request, 'actualizar.html', {'publicacion':publicacion, 'form': form})
-    
+    if hasattr(request.user, 'perfil_admin'):
+        publicacion = Empleo.objects.get(pk = publicacion_id)
+        form = EmpleoForm(request.POST or None, instance = publicacion)
+        if form.is_valid(): 
+            form.save()
+            messages.success(request, 'Publicación Actualizada')
+            return redirect(home)  
+        return render(request, 'actualizar.html', {'publicacion':publicacion, 'form': form})
+    else: 
+        return(index)
+      
 def eliminar(request, publicacion_id):
-    publicacion = Empleo.objects.get(pk = publicacion_id)
-    publicacion.delete()
-    messages.success(request, 'Publicación Eliminada')
-    return redirect(home)  
-
+    if hasattr(request.user, 'perfil_admin'):
+        publicacion = Empleo.objects.get(pk = publicacion_id)
+        publicacion.delete()
+        messages.success(request, 'Publicación Eliminada')
+        return redirect(home)  
+    else: 
+        return redirect(index)
 # @login_required    
 def agregar(request): 
-    if request.POST: 
-        form = EmpleoForm(request.POST)
-        if form.is_valid():
-            form.save()
-        messages.success(request, 'Publicacion Añadida')
-        return redirect(home)  
+    if hasattr(request.user, 'perfil_admin'):
+        if request.POST: 
+            form = EmpleoForm(request.POST)
+            if form.is_valid():
+                form.save()
+            messages.success(request, 'Publicacion Añadida')
+            return redirect(home)
+    else:
+        return redirect(index)
 
     return render(request, 'agregar.html', {'form':EmpleoForm})
-
-def home(request): 
+@login_required
+def home(request):
+    if not es_admin(request.user):
+        return HttpResponse('Acceso no permitido')
     empleos = Empleo.objects.all()
     return render(request, 'home.html', {'empleos': empleos})
+
+def ver_postulante(request):
+    id = Postulante.objects.all()
+    return render(request, 'usersidebar.html', {'empleos': id})
 
 def index(request):
     empleos = Empleo.objects.all()
@@ -63,26 +77,35 @@ def descripcion(request, empleo_id):
 
 #FORM DATOS PERSONALES POSTULANTE
 
-   
-def agregarDatosPersonales(request): 
+def actualizar(request, publicacion_id): 
+        publicacion = Empleo.objects.get(pk = publicacion_id)
+        form = EmpleoForm(request.POST or None, instance = publicacion)
+        if form.is_valid(): 
+            form.save()
+            messages.success(request, 'Publicación Actualizada')
+            return redirect(home)  
+        return render(request, 'actualizar.html', {'publicacion':publicacion, 'form': form})
     
+def agregarDatosPersonales(request, id): 
+    
+    idpostulante = Postulante.objects.get(pk = id)
+    form = DatosPersonalesForm(request.POST or None, instance = idpostulante)
     if request.POST: 
-        form = DatosPersonalesForm(request.POST)
         if form.is_valid():
             form.save()
         messages.success(request, 'Informacion agregada con éxito')
         return redirect(agregarDatosAdicionales) 
 
-    return render(request, 'DatosPersonales.html', {'form':DatosPersonalesForm})
+    return render(request, 'DatosPersonales.html', 'usersidebar.html', {'datos': idpostulante, 'form':form})
+
 
 
 def agregarDatosAdicionales(request): 
     if request.POST: 
         ExperienciaForm1 = ExperienciaForm(request.POST)
         
-        if ExperienciaForm1.is_valid(): #and DatosAdicionalesForm1.is_valid():
+        if ExperienciaForm1.is_valid(): 
             ExperienciaForm1.save()
-            #DatosAdicionalesForm1.save()
         messages.success(request, 'Informacion agregada con éxito')
         return redirect(agregarDatosEducacion)  
 
@@ -132,3 +155,6 @@ def congrats(request, id_postulados_fk):
     return render(request, 'congrats.html', c)
 
 
+def extraer_id_postulante(request): 
+    id = Postulante.objects.all()
+    return render(request, 'usersidebar.html', {'postulantes': id})

@@ -33,9 +33,16 @@
         {% block header %}
         {% include 'partials/header.html' %}
         {% endblock %}
+
         {% block sidebar %}
-        {% include 'partials/sidebar.html' %}
-        {% endblock %}  
+        {% if user.perfil_admin%}
+        {% include 'partials/adminsidebar.html' %} 
+        {% endif %}
+        {%if user.perfil_postulante%}
+        {% include 'partials/usersidebar.html' %}
+        
+        {%endif%}
+        {% endblock %}
 
         {% comment %} 
         {% block header %}
@@ -98,9 +105,12 @@
 
             {% endblock %}
 
+            {%comment%}
             {% block footer %}
             {% include 'partials/footer.html' %}
             {% endblock %}
+            {%endcomment%}
+
         </div>
         <!-- end main content-->
         

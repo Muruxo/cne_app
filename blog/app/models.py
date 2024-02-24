@@ -13,9 +13,20 @@ class Publicacion(models.Model):
         return self.titulo
     class Meta: 
         verbose_name_plural = 'Publicaciones'
+        
+class Personal(models.Model): 
+    user = models.OneToOneField(User, related_name='perfil_admin', on_delete=models.CASCADE, null=True)
+    nombre = models.CharField(max_length=144,blank=False,null=False)
+    apellido = models.CharField(max_length=144,blank=False,null=False) 
+    
+    def __str__(self): 
+        return f'{self.nombre}{self.apellido}'
+    class Meta: 
+        verbose_name_plural = 'Personal'
+    
 
 class Postulante(models.Model):
-    user = models.OneToOneField(User, related_name='perfil', on_delete=models.CASCADE, null=True)
+    user = models.OneToOneField(User, related_name='perfil_postulante', on_delete=models.CASCADE, null=True)
     nombre_postulante = models.CharField(max_length=144)
     apellido_postulante = models.CharField(max_length=144,blank=False,null=False)
     genero_postulante = models.CharField(max_length=144,blank=False,null=False)
