@@ -125,10 +125,10 @@ def agregarDatosAdicionales(request, id):
     contenido['form'] = ExperienciaForm(
         request.POST or None,
         request.FILES or None,
-        instance = {contenido['instancia_experiencia'], id }
+        instance = contenido['instancia_experiencia']
     ) 
     
-    return render(request, 'DatosAd.html', contenido, id) #'form2': DatosAdicionalesForm
+    return render(request, id, 'DatosAd.html', contenido) #'form2': DatosAdicionalesForm
 
 #------------------------------------------------------------------------------------------------------
 
