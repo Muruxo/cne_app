@@ -86,9 +86,9 @@ def actualizar(request, publicacion_id):
             return redirect(home)  
         return render(request, 'actualizar.html', {'publicacion':publicacion, 'form': form})
     
-def agregarDatosPersonales(request, id): 
+def agregarDatosPersonales(request,id): 
     
-    idpostulante = Postulante.objects.get(pk = id)
+    idpostulante = Postulante.objects.get(pk = id )
     form = DatosPersonalesForm(request.POST or None, instance = idpostulante)
     if request.POST: 
         if form.is_valid():

@@ -41,7 +41,7 @@ urlpatterns = [
     path('postular', postular, name = 'postular'),
     path('descripcion/<empleo_id>', descripcion, name ="descripcion"), 
     path('accounts/', include('allauth.urls')),
-    path('DatosPer/<str:id>', agregarDatosPersonales, name='DatosPer'),
+    path('DatosPer/<id>', agregarDatosPersonales, name='DatosPer'),
     path('DatosAd', agregarDatosAdicionales, name='DatosAd'),
     path('DatosEdu', agregarDatosEducacion, name='DatosEdu'),
     path('congrats/<lista_id>', congrats, name= 'congrats'),
