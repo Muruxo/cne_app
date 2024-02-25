@@ -2,8 +2,8 @@ from django import forms
 from django.utils import timezone
 from django.forms import ModelForm
 from django.shortcuts import render
-
-from .models import Empleo, Publicacion, Postulante, Detallepostulante, Experiencia, Educacion
+from django.contrib.auth.models import User
+from .models import Empleo, Publicacion, Experiencia, Educacion
 
 MODALIDAD_EMPLEO_CHOICES = ["Activado", "Desactivado", "Pendiente"]
 
@@ -50,27 +50,27 @@ class PublicacionForm(ModelForm):
 class DatosPersonalesForm(forms.ModelForm):
     class Meta: 
         genero = {'M':'Masculino', 'F':'Femenino'}
-        model = Postulante
-        fields = ['nombre_postulante','apellido_postulante','email_postulante','telefono_postulante','genero_postulante','edad_postulante','ciudad_postulante','direccion_postulante']
+        model = User
+        fields = ['first_name','last_name','email','telefono','genero','edad','ciudad','direccion']
         labels = {  
-            'nombre_postulante': 'Nombres',
-            'apellido_postulante': 'Apellidos', 
-            'email_postulante': 'Email', 
-            'telefono_postulante': 'Teléfono', 
-            'genero_postulante': 'Género', 
-            'edad_postulante': 'Edad', 
-            'ciudad_postulante': 'Ciudad', 
-            'direccion_postulante': 'Dirección'
+            'first_name': 'Nombres',
+            'last_name': 'Apellidos', 
+            'email': 'Email', 
+            'telefono': 'Teléfono', 
+            'genero': 'Género', 
+            'edad': 'Edad', 
+            'ciudad': 'Ciudad', 
+            'direccion': 'Dirección'
         }
         widgets = { 
-             'nombre_postulante': forms.TextInput(attrs = {'class': 'form-control'}),
-            'apellido_postulante': forms.TextInput(attrs = {'class': 'form-control'}),
-            'email_postulante': forms.EmailInput(attrs = {'class': 'form-control'}),
-            'telefono_postulante': forms.TextInput(attrs = {'class': 'form-control'}),
-            'genero_postulante' : forms.Select(choices=genero.items(), attrs = {'class': 'form-control'}),
-            'edad_postulante':  forms.NumberInput(attrs = {'class': 'form-control'}), 
-            'ciudad_postulante': forms.TextInput(attrs = {'class': 'form-control'}),
-            'direccion_postulante': forms.TextInput(attrs = {'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs = {'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs = {'class': 'form-control'}),
+            'email': forms.EmailInput(attrs = {'class': 'form-control'}),
+            'telefono': forms.TextInput(attrs = {'class': 'form-control'}),
+            'genero' : forms.Select(choices=genero.items(), attrs = {'class': 'form-control'}),
+            'edad':  forms.NumberInput(attrs = {'class': 'form-control'}), 
+            'ciudad': forms.TextInput(attrs = {'class': 'form-control'}),
+            'direccion': forms.TextInput(attrs = {'class': 'form-control'}),
         }
 
 # class DatosAdicionalesForm(ModelForm):

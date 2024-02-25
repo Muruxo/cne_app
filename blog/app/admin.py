@@ -1,46 +1,12 @@
 from django.contrib import admin
 
-from .models import Publicacion, Personal, Postulante, Detallepostulante, Experiencia, Niveltitulo, Educacion, Ciudad, Empleo, Postulados
+
+from .models import Publicacion, Experiencia, Niveltitulo, Educacion, Ciudad, Empleo, Postulados
 
 
 @admin.register(Publicacion)
 class PublicacionAdmin(admin.ModelAdmin):
     list_display = ('id', 'titulo', 'descripcion', 'email')
-
-
-@admin.register(Personal)
-class PersonalAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'nombre', 'apellido')
-    list_filter = ('user',)
-
-
-@admin.register(Postulante)
-class PostulanteAdmin(admin.ModelAdmin):
-    list_display = (
-        'id',
-        'user',
-        'nombre_postulante',
-        'apellido_postulante',
-        'genero_postulante',
-        'edad_postulante',
-        'direccion_postulante',
-        'email_postulante',
-        'telefono_postulante',
-        'ciudad_postulante',
-        'total_experiencia',
-    )
-    list_filter = ('user',)
-
-
-@admin.register(Detallepostulante)
-class DetallepostulanteAdmin(admin.ModelAdmin):
-    list_display = (
-        'id',
-        'descripcion_laboral',
-        'idioma_laboral',
-        'id_postulante_fk',
-    )
-    list_filter = ('id_postulante_fk',)
 
 
 @admin.register(Experiencia)

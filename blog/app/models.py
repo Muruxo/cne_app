@@ -14,51 +14,51 @@ class Publicacion(models.Model):
     class Meta: 
         verbose_name_plural = 'Publicaciones'
         
-class Personal(models.Model): 
-    user = models.OneToOneField(User, related_name='perfil_admin', on_delete=models.CASCADE, null=True)
-    nombre = models.CharField(max_length=144,blank=False,null=False)
-    apellido = models.CharField(max_length=144,blank=False,null=False) 
+# class Personal(models.Model): 
+#     user = models.OneToOneField(User, related_name='perfil_admin', on_delete=models.CASCADE, null=True)
+#     nombre = models.CharField(max_length=144,blank=False,null=False)
+#     apellido = models.CharField(max_length=144,blank=False,null=False) 
     
-    def __str__(self): 
-        return f'{self.nombre}{self.apellido}'
-    class Meta: 
-        verbose_name_plural = 'Personal'
+#     def __str__(self): 
+#         return f'{self.nombre}{self.apellido}'
+#     class Meta: 
+#         verbose_name_plural = 'Personal'
     
 
-class Postulante(models.Model):
-    user = models.OneToOneField(User, related_name='perfil_postulante', on_delete=models.CASCADE, null=True)
-    nombre_postulante = models.CharField(max_length=144)
-    apellido_postulante = models.CharField(max_length=144,blank=False,null=False)
-    genero_postulante = models.CharField(max_length=144,blank=False,null=False)
-    edad_postulante = models.IntegerField(blank=False,null=False, max_length=2)
-    direccion_postulante = models.CharField(max_length=200,blank=False,null=False)
-    email_postulante = models.EmailField(max_length=150,blank=False,null=False)
-    telefono_postulante = models.CharField(blank=False,null=False, max_length=10)
-    ciudad_postulante = models.CharField(max_length=144,blank=False, null=False)
-    total_experiencia = models.FloatField(blank=True,null=True)
-    # Falta numero de cedula, nacionalidad
+# class Postulante(models.Model):
+#     user = models.OneToOneField(User, related_name='perfil_postulante', on_delete=models.CASCADE, null=True)
+#     nombre_postulante = models.CharField(max_length=144)
+#     apellido_postulante = models.CharField(max_length=144,blank=False,null=False)
+#     genero_postulante = models.CharField(max_length=144,blank=False,null=False)
+#     edad_postulante = models.IntegerField(blank=False,null=False, max_length=2)
+#     direccion_postulante = models.CharField(max_length=200,blank=False,null=False)
+#     email_postulante = models.EmailField(max_length=150,blank=False,null=False)
+#     telefono_postulante = models.CharField(blank=False,null=False, max_length=10)
+#     ciudad_postulante = models.CharField(max_length=144,blank=False, null=False)
+#     total_experiencia = models.FloatField(blank=True,null=True)
+#     # Falta numero de cedula, nacionalidad
     
-    def tiempo_total_experiencia(self):
-        total = 0
-        for e in self.experiencias.all():
-            total = total + e.tiempo_trabajado()
-        return total
+#     def tiempo_total_experiencia(self):
+#         total = 0
+#         for e in self.experiencias.all():
+#             total = total + e.tiempo_trabajado()
+#         return total
     
-    def __str__(self) -> str:
-            return f'{self.user}'
+#     def __str__(self) -> str:
+#             return f'{self.user}'
         
         
 # Posiblemente puede morir Deprecated
-class Detallepostulante(models.Model):
-    descripcion_laboral = models.TextField(blank=True,null=True)
-    idioma_laboral = models.CharField(max_length=255,blank=True,null=True)
-    id_postulante_fk = models.ForeignKey(Postulante, related_name='postulante', on_delete=models.CASCADE,null=True)
+# class Detallepostulante(models.Model):
+#     descripcion_laboral = models.TextField(blank=True,null=True)
+#     idioma_laboral = models.CharField(max_length=255,blank=True,null=True)
+#     id_postulante_fk = models.ForeignKey(User, related_name='postulante', on_delete=models.CASCADE,null=True)
 
-    def __str__(self)->str:
-        return f'{self.experiencia_laboral}'
+#     def __str__(self)->str:
+#         return f'{self.experiencia_laboral}'
 
 class Experiencia(models.Model): 
-    postulante = models.ForeignKey(Postulante, related_name='experiencias', on_delete=models.CASCADE,null=True)
+    postulante = models.ForeignKey(User, related_name='experiencias', on_delete=models.CASCADE,null=True)
     cargo = models.CharField(max_length=255,blank=False,null=False)
     empresa = models.CharField(max_length=255,blank=False,null=False)
     pais = models.CharField(max_length=255,blank=False,null=False)
@@ -95,7 +95,7 @@ class Niveltitulo(models.Model):
         
     
 class Educacion(models.Model): 
-    id_educacion_fk = models.ForeignKey(Postulante, related_name='postulanteedu', on_delete=models.CASCADE,null=True)
+    id_educacion_fk = models.ForeignKey(User, related_name='postulanteedu', on_delete=models.CASCADE,null=True)
     titulo_edu = models.CharField(max_length=255,blank=False,null=False)
     pais_edu = models.CharField(max_length=255,blank=False,null=False)
     institucion_edu = models.CharField(max_length=255,blank=False,null=False)
@@ -136,7 +136,7 @@ class Empleo(models.Model):
 class Postulados(models.Model):
     estado_postulado = models.CharField(max_length=144,blank=False, null=False)
     fecha_postulado = models.DateField(default=timezone.now, blank=False,null=False)
-    id_postulados_fk = models.ForeignKey(Postulante, related_name='postulado', on_delete=models.SET_NULL,null=True)
+    id_postulados_fk = models.ForeignKey(User, related_name='postulado', on_delete=models.SET_NULL,null=True)
     id_empleo_fk = models.ForeignKey(Empleo, related_name='postulados', on_delete=models.SET_NULL,null=True)
 
     def __str__(self)-> str:
