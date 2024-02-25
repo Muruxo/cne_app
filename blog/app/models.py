@@ -3,6 +3,8 @@ from django.utils import timezone
 from django.core.validators import MaxValueValidator
 from django.contrib.auth.models import User
 from datetime import date
+from django.db import models
+from django.urls import reverse
 
 class Publicacion(models.Model):
     titulo      = models.CharField(max_length=50)
@@ -66,6 +68,10 @@ class Experiencia(models.Model):
     fecha_inicio = models.DateField(blank=False, null= False)
     fecha_final = models.DateField(blank=True, null=True)
     descripcion = models.TextField(blank=True,null=True)
+    curriculum = models.FileField(upload_to="media/curriculums", blank=True)
+
+    def get_absolute_url(self):
+        return reverse('DatosAd', kwargs={'postulante': self.id})
     
     def tiempo_trabajado(self):
         if self.fecha_final: 

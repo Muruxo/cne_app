@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.db import models
+from django.urls import reverse
 from .utils import * 
 from .models import *
 from  .forms import PublicacionForm, EmpleoForm, DatosPersonalesForm, ExperienciaForm,EducacionForm #DatosAdicionalesForm
@@ -93,17 +95,60 @@ def agregarDatosPersonales(request,id):
 
     return render(request, 'DatosPersonales.html', {'datos': idpostulante, 'form':form})
 
+# def agregarDatosAdicionales(request,id): 
+    
+#     idpostulante = User.objects.get(pk = id )
+#     contenido = {}
+#     contenido['form'] = ExperienciaForm(request.POST or None, request.FILES or None, instance = idpostulante)
+#     if request.POST: 
+#         if contenido['form'].is_valid():
+#             contenido['form'].save()
+#         messages.success(request, 'Informacion agregada con éxito')
+#         return redirect(agregarDatosEducacion) 
 
-def agregarDatosAdicionales(request): 
-    if request.POST: 
-        ExperienciaForm1 = ExperienciaForm(request.POST)
-        
-        if ExperienciaForm1.is_valid(): 
-            ExperienciaForm1.save()
+#     return render(request, 'DatosAd.html', {'datos': idpostulante, 'form':contenido['form']})
+
+
+def agregarDatosAdicionales(request, id):
+    id= User.objects.get(pk = id )
+    contenido = {}
+    if request.method == 'POST': 
+        contenido['form'] = ExperienciaForm(
+                            request.POST or None,
+                            request.FILES or None,
+                            )
+        if contenido['form'].is_valid():
+            contenido['form'].save()
         messages.success(request, 'Informacion agregada con éxito')
-        return redirect(agregarDatosEducacion)  
+        return redirect(contenido['form'].instance.get_absolute_url())
+    contenido['instancia_experiencia'] = Experiencia()
+    contenido['form'] = ExperienciaForm(
+        request.POST or None,
+        request.FILES or None,
+        instance = {contenido['instancia_experiencia'], id }
+    ) 
+    
+    return render(request, 'DatosAd.html', contenido, id) #'form2': DatosAdicionalesForm
 
-    return render(request, 'DatosAd.html', {'form1':ExperienciaForm}) #'form2': DatosAdicionalesForm
+#------------------------------------------------------------------------------------------------------
+
+# def nuevo_refugio(request):
+#     contenido = {}
+#     if request.method == 'POST':
+#         contenido['form'] = RefugioForm(
+#                         request.POST or None,
+#                         request.FILES or None,
+#                         )
+#         if contenido['form'].is_valid():
+#             contenido['form'].save()
+#             return redirect(contenido['form'].instance.get_absolute_url())
+#     contenido['instancia_refugio'] = Refugio()
+#     contenido['form'] = RefugioForm(
+#         request.POST or None,
+#         request.FILES or None,
+#         instance = contenido['instancia_refugio']
+#     )
+#     return render(request, 'formulario_refugio.html', contenido)
 
   
 def agregarDatosEducacion(request): 

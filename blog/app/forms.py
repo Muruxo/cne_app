@@ -90,7 +90,7 @@ class DatosPersonalesForm(forms.ModelForm):
 class ExperienciaForm(forms.ModelForm):
     class Meta: 
         model = Experiencia
-        fields = ['cargo','empresa','pais','area', 'fecha_inicio', 'fecha_final', 'descripcion']
+        fields = ['cargo','empresa','pais','area', 'fecha_inicio', 'fecha_final', 'descripcion', 'curriculum']
         labels = {
             'cargo': 'Cargo desempeñado',
             'empresa': 'Nombre de la empresa', 
@@ -98,16 +98,19 @@ class ExperienciaForm(forms.ModelForm):
             'area': 'Area de Trabajo', 
             'fecha_inicio': 'Fecha Inicial',
             'fecha_final': 'Fecha Final',
-            'descripcion': 'Descripcion del cargo'
+            'descripcion': 'Descripcion del cargo',
+            'curriculum' : 'Subir Curriculum Vitae'
         }
         widgets = { 
+            'postulante': User.first_name,
             'cargo': forms.TextInput(attrs = {'class': 'form-control'}),
             'empresa': forms.TextInput(attrs = {'class': 'form-control'}),
             'pais': forms.TextInput(attrs = {'class': 'form-control'}),
             'area': forms.TextInput(attrs = {'class': 'form-control'}),
             'fecha_inicio': forms.DateInput(format='%d-%m-%Y',attrs={'type': 'date', 'class': 'form-control'}),
             'fecha_final': forms.DateInput(format='%d-%m-%Y',attrs={'type': 'date', 'class': 'form-control'}),
-            'descripcion': forms.Textarea(attrs = {'class': 'form-control'})
+            'descripcion': forms.Textarea(attrs = {'class': 'form-control'}),
+            'curriculum': forms.FileInput(attrs = {'class': 'form-control'}),
         }
 
 
