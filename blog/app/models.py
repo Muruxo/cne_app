@@ -45,7 +45,7 @@ class Postulante(models.Model):
         return total
     
     def __str__(self) -> str:
-            return f'{self.nombre_postulante}'
+            return f'{self.user}'
         
         
 # Posiblemente puede morir Deprecated

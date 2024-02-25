@@ -20,12 +20,12 @@
                             <li class="menu-title" key="DatosPersonales">Datos Personales</li>
                     
                             <li>
-                                {%for p in idpostulante %}
-                                <a href="{% url 'DatosPer' p.id %}" class="waves-effect">
+                                
+                                <a href="{% url 'DatosPer' user.id %}" class="waves-effect">
                                     <i class="ti-user"></i><span class="badge rounded-pill bg-primary float-end"></span>
                                     <span key="Dashboard">Perfil</span>
                                 </a>
-                                {%endfor%}
+                             
                             </li>
                    
                             <li>

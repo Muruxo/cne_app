@@ -45,9 +45,9 @@ def home(request):
     empleos = Empleo.objects.all()
     return render(request, 'home.html', {'empleos': empleos})
 
-def ver_postulante(request):
-    id = Postulante.objects.all()
-    return render(request, 'usersidebar.html', {'empleos': id})
+def prueba(request, id):
+    c = Postulante.objects.get(pk = id)
+    return render(request, 'prueba.html', {'id': c})
 
 def index(request):
     empleos = Empleo.objects.all()
@@ -96,8 +96,7 @@ def agregarDatosPersonales(request, id):
         messages.success(request, 'Informacion agregada con éxito')
         return redirect(agregarDatosAdicionales) 
 
-    return render(request, 'DatosPersonales.html', 'usersidebar.html', {'datos': idpostulante, 'form':form})
-
+    return render(request, 'DatosPersonales.html', {'datos': idpostulante, 'form':form})
 
 
 def agregarDatosAdicionales(request): 
@@ -123,7 +122,6 @@ def agregarDatosEducacion(request):
     return render(request, 'DatosEducacion.html', {'form':EducacionForm})
 
 
-
 # def lista_postulantes(request, lista_id):
 #     publicacion = Postulante.objects.get(pk = lista_id)
 #     contenido = {
@@ -132,7 +130,7 @@ def agregarDatosEducacion(request):
 #     template = "lista_postulantes.html"
 #     return render(request, template, contenido)
 
-def lista_postulantes(request, lista_id):
+def lista_postulantes(request):
     c={}
     c['postulantes'] = Postulante.objects.all()
     return render(request, 'lista_postulantes.html', c)
@@ -145,16 +143,8 @@ def descripcion(request, empleo_id):
     template = "descripcion.html"
     return render(request, template, contenido)
 
-
-
-
 def congrats(request, id_postulados_fk):
     
     c={}
     c['congrats'] = Postulados.objects.get(pk = id_postulados_fk)
     return render(request, 'congrats.html', c)
-
-
-def extraer_id_postulante(request): 
-    id = Postulante.objects.all()
-    return render(request, 'usersidebar.html', {'postulantes': id})

@@ -41,7 +41,7 @@
                 <p class="card-text"><strong>Tiempo de Contrato:</strong> {{ empleo.tiempo_empleo }} meses</p>
                 <p class="card-text"><strong>Ciudad:</strong> {{empleo.id_ciudad_fk}} </p>
                 {% if user.perfil_postulante%}
-                <a href="{% url 'DatosPer' user.id%}" class="btn btn-success">Postular</a>
+                <a href="{% url 'DatosPer' user.id %}" class="btn btn-success">Postular</a>
                 {% endif%}
                 <a href="{% url 'index' %}" class="btn btn-outline-primary">Regresar</a>
                 </div>
