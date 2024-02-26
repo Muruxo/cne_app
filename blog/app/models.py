@@ -60,7 +60,7 @@ class Publicacion(models.Model):
 #         return f'{self.experiencia_laboral}'
 
 class Experiencia(models.Model): 
-    postulante = models.ForeignKey(User, related_name='experiencias', on_delete=models.CASCADE,null=True)
+    postulante = models.ForeignKey(User, related_name='experiencia_postulante', on_delete=models.CASCADE,null=True)
     cargo = models.CharField(max_length=255,blank=False,null=False)
     empresa = models.CharField(max_length=255,blank=False,null=False)
     pais = models.CharField(max_length=255,blank=False,null=False)
@@ -70,8 +70,7 @@ class Experiencia(models.Model):
     descripcion = models.TextField(blank=True,null=True)
     curriculum = models.FileField(upload_to="media/curriculums", blank=True)
 
-    def get_absolute_url(self):
-        return reverse('DatosAd', kwargs={'postulante': self.id})
+
     
     def tiempo_trabajado(self):
         if self.fecha_final: 
