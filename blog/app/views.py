@@ -227,7 +227,21 @@ def descripcion(request, empleo_id):
     return render(request, template, contenido)
 
 def congrats(request, id_postulados_fk):
-    
     c={}
     c['congrats'] = Postulados.objects.get(pk = id_postulados_fk)
     return render(request, 'congrats.html', c)
+<<<<<<< Updated upstream
+=======
+
+def extraer_id_postulante(request): 
+    id = Postulante.objects.all()
+    return render(request, 'usersidebar.html', {'postulantes': id})
+
+def postulante_por_empleo(request, empleo): 
+    datosempleo = Empleo.objects.get(pk=empleo)        
+    c={}
+    c['postulados'] = Postulados.objects.filter(id_empleo_fk = empleo)
+
+    return render(request, 'postulanteporempleo.html', c)
+
+>>>>>>> Stashed changes
