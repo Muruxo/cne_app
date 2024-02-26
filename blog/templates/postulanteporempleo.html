@@ -1,0 +1,67 @@
+
+{% extends 'partials/base.html' %}
+{% load humanize %}
+
+{% block content %}
+
+<br>
+<center>
+  <h1>Lista de Postulantes</h1>
+  <h3>Santo Domingo 2024</h3>
+</center>
+
+<br>
+<div class="container-fluid col-sm-8 mb-6 mb-sm-2">
+    <div class="card">
+      <div class="card-body">
+        <h2>{{datosempleo.nombre_empleo}}</h2>
+        <p>Descripción: {{empleo.descripcion_empleo}} años</p>
+        <p>Postulantes: </p>
+        <div
+            class="table-responsive"
+        >
+            <table
+                class="table table-primary"
+            >
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Fecha Postulación</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Edad</th>
+                        <th scope="col">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for p in postulados%}
+            
+                   
+                    <tr class="">
+                        <td scope="row"></td>
+                        <td>{{p.estado_postulado}}</td>
+                        <td>{{p.fecha_postulado}}</td>
+                        <td>{{p.id_postulados_fk}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><button class="btn btn-success"><i class="ti-pencil"></i></button></td>
+                    </tr>
+                
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+        
+       
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+  {% endblock %}
