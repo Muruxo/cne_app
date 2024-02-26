@@ -102,7 +102,6 @@ class ExperienciaForm(forms.ModelForm):
             'curriculum' : 'Subir Curriculum Vitae'
         }
         widgets = { 
-            'postulante': User.first_name,
             'cargo': forms.TextInput(attrs = {'class': 'form-control'}),
             'empresa': forms.TextInput(attrs = {'class': 'form-control'}),
             'pais': forms.TextInput(attrs = {'class': 'form-control'}),
@@ -112,6 +111,10 @@ class ExperienciaForm(forms.ModelForm):
             'descripcion': forms.Textarea(attrs = {'class': 'form-control'}),
             'curriculum': forms.FileInput(attrs = {'class': 'form-control'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['postulante'] = forms.CharField(widget=forms.HiddenInput())
 
 
 class EducacionForm(forms.ModelForm):

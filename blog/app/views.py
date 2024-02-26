@@ -109,26 +109,69 @@ def agregarDatosPersonales(request,id):
 #     return render(request, 'DatosAd.html', {'datos': idpostulante, 'form':contenido['form']})
 
 
-def agregarDatosAdicionales(request, id):
-    id= User.objects.get(pk = id )
+
+
+
+
+
+
+
+
+
+
+# def agregarDatosAdicionales(request, username):
+#     usuario = User.objects.get(username = username)
+#     contenido = {}
+#     if request.method == 'POST': 
+#         contenido['form'] = ExperienciaForm(
+#                             request.POST or None,
+#                             request.FILES or None,
+#                             )
+#         if contenido['form'].is_valid():
+#             contenido['form'].save()
+#         messages.success(request, 'Informacion agregada con éxito')
+#         return redirect(agregarDatosEducacion)
+
+    
+#     return render(request, 'DatosAd.html', {**contenido, 'postulante':usuario})
+
+
+
+
+
+
+
+
+
+
+
+
+
+def agregarDatosAdicionales(request, username):
+    usuario = User.objects.get(username = username)
     contenido = {}
     if request.method == 'POST': 
-        contenido['form'] = ExperienciaForm(
-                            request.POST or None,
-                            request.FILES or None,
-                            )
-        if contenido['form'].is_valid():
-            contenido['form'].save()
-        messages.success(request, 'Informacion agregada con éxito')
-        return redirect(contenido['form'].instance.get_absolute_url())
-    contenido['instancia_experiencia'] = Experiencia()
-    contenido['form'] = ExperienciaForm(
-        request.POST or None,
-        request.FILES or None,
-        instance = contenido['instancia_experiencia']
-    ) 
-    
-    return render(request, id, 'DatosAd.html', contenido) #'form2': DatosAdicionalesForm
+        form = ExperienciaForm(request.POST, request.FILES)
+        if form.is_valid():
+            experiencia = form.save(commit=False)
+            experiencia.postulante = usuario  # Asigna el nombre de usuario al campo correspondiente
+            experiencia.save()
+            messages.success(request, 'Informacion agregada con éxito')
+            return redirect(agregarDatosEducacion)
+    else:
+        form = ExperienciaForm(initial={'postulante': username})  # Establece el valor inicial del campo de nombre de usuario
+        contenido['form'] = form
+        contenido['postulante'] = usuario
+    return render(request, 'DatosAd.html', contenido)
+
+
+def experiencias(request, username):
+    usuario = User.objects.get(username = username)
+    experiencia = Experiencia.objects.filter(postulante = usuario)
+    return render(request, 'verExperiencias.html', {'experiencia': experiencia})
+
+
+ #'form2': DatosAdicionalesForm
 
 #------------------------------------------------------------------------------------------------------
 

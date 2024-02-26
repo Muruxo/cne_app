@@ -21,6 +21,7 @@ class ExperienciaAdmin(admin.ModelAdmin):
         'fecha_inicio',
         'fecha_final',
         'descripcion',
+        'curriculum'
     )
     list_filter = ('postulante', 'fecha_inicio', 'fecha_final')
 
