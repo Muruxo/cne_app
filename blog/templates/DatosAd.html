@@ -13,33 +13,15 @@
 
 
     <br>
-    <center>
- 
-
+    <center> 
+        
 {% csrf_token %}
-<button class="btn btn-success" type="submit">Siguiente</button>
+<a href="{% url 'DatosEdu' %}"><button class="btn btn-success" type="submit">Siguiente</button></a>
 <a href="{% url 'home' %}"><button class="btn btn-danger" type="">Cancelar</button></a>
 
 </form>
 
 </div>
-
-<div class="row">
-    {%for e in experiencia %}
-    <div class="container-fluid col-sm-8 mb-5 mb-sm-2 " >
-        <div class="card bg-secondary" style="border-radius: 1rem;">
-          <a class="dir" href="{% url 'descripcion' p.id %}">
-            <div class="card-body btn" style="text-align:left;">
-                <blockquote class="card-blockquote mb-0">
-                  <h5 class="card-title">{{e.cargo}}</h5>
-                  <p class="card-text"><i class="bi bi-geo-alt"></i> {{e.empresa }}</p>
-                  <p class="card-text"><i class="bi bi-briefcase"></i> {{e.area}}</p>
-                    </footer>
-                </blockquote>
-            </div></a>
-        </div>
-    </div>
-    {%endfor%}
 <br><br>
 </center>
 {% endblock %}

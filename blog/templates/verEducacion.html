@@ -1,0 +1,23 @@
+{% extends 'partials/base.html' %}
+{% block content %}
+
+<div class="row">
+    {%for edu in educacion %}
+    <div class="container-fluid col-sm-8 mb-5 mb-sm-2 " >
+        <div class="card bg-secondary" style="border-radius: 1rem;">
+          <a class="dir" href="{% url 'DatosAd' e.postulante %}">
+            <div class="card-body btn" style="text-align:left;">
+                <blockquote class="card-blockquote mb-0">
+                  <h5 class="card-title">{{edu.titulo_edu}}</h5>
+                  <p class="card-text"><i class="bi bi-geo-alt"></i> {{edu.institucion_edu }}</p>
+                  <p class="card-text"><i class="bi bi-briefcase"></i> {{edu.nivel_edu}}</p>
+                  <p class="card-text"><i class="bi bi-briefcase"></i> {{edu.estado_edu}}</p>
+                    </footer>
+                </blockquote>
+            </div></a>
+        </div>
+    </div>
+    {%endfor%}
+<br><br>
+</center>
+{% endblock %}

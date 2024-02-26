@@ -136,13 +136,35 @@ def agregarDatosPersonales(request,id):
 #     return render(request, 'DatosAd.html', {**contenido, 'postulante':usuario})
 
 
+# NUEVA FUNCION AGREGAR DATOS (ARREGLAR PROBLEMA FOREIGNKEY)
+# def agregarDatosEducacion(request, username): 
+#     usuario = User.objects.get(username = username)
+#     contenido = {}
+#     if request.method == 'POST':  
+#         form = EducacionForm(request.POST)
+#         if form.is_valid():
+#             educacion = form.save(commit=False)
+#             educacion.id_educacion_fk = usuario
+#             educacion.save()
+#             messages.success(request, 'Informacion agregada con éxito')
+#             return redirect(index, username)  
+    
+#     else:
+#         form = EducacionForm(initial={'id_educacion_fk': username})  # Establece el valor inicial del campo de nombre de usuario
+#         contenido['form'] = form
+#         contenido['id_educacion_fk'] = usuario
 
+#     return render(request, 'DatosEducacion.html', contenido)
 
+def agregarDatosEducacion(request): 
+    if request.POST: 
+        form = EducacionForm(request.POST)
+        if form.is_valid():
+            form.save()
+        messages.success(request, 'Informacion agregada con éxito')
+        return redirect(index)  
 
-
-
-
-
+    return render(request, 'DatosEducacion.html', {'form':EducacionForm})
 
 
 
@@ -157,7 +179,7 @@ def agregarDatosAdicionales(request, username):
             experiencia.postulante = usuario  # Asigna el nombre de usuario al campo correspondiente
             experiencia.save()
             messages.success(request, 'Informacion agregada con éxito')
-            return redirect(agregarDatosEducacion)
+            return redirect(agregarDatosEducacion, username)
     else:
         form = ExperienciaForm(initial={'postulante': username})  # Establece el valor inicial del campo de nombre de usuario
         contenido['form'] = form
@@ -193,16 +215,12 @@ def experiencias(request, username):
 #     )
 #     return render(request, 'formulario_refugio.html', contenido)
 
-  
-def agregarDatosEducacion(request): 
-    if request.POST: 
-        form = EducacionForm(request.POST)
-        if form.is_valid():
-            form.save()
-        messages.success(request, 'Informacion agregada con éxito')
-        return redirect(congrats)  
 
-    return render(request, 'DatosEducacion.html', {'form':EducacionForm})
+
+def educaciones(request, username):
+    usuario = User.objects.get(username = username)
+    educacion = Educacion.objects.filter(id_educacion_fk = usuario)
+    return render(request, 'verExperiencias.html', {'experiencia': educacion})
 
 
 # def lista_postulantes(request, lista_id):
@@ -230,10 +248,6 @@ def congrats(request, id_postulados_fk):
     c={}
     c['congrats'] = Postulados.objects.get(pk = id_postulados_fk)
     return render(request, 'congrats.html', c)
-
-def extraer_id_postulante(request): 
-    id = Postulante.objects.all()
-    return render(request, 'usersidebar.html', {'postulantes': id})
 
 def postulante_por_empleo(request, empleo): 
     datosempleo = Empleo.objects.get(pk=empleo)        

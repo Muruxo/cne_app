@@ -138,3 +138,7 @@ class EducacionForm(forms.ModelForm):
             'estado_edu': forms.Select(choices=estado.items(), attrs = {'class': 'form-control'}),
             'descripcion_edu': forms.TextInput(attrs = {'class': 'form-control'})
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['id_educacion_fk'] = forms.CharField(widget=forms.HiddenInput())
