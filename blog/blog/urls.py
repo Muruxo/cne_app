@@ -46,6 +46,7 @@ urlpatterns = [
     path('verExperiencias/<username>', experiencias, name='Experiencias'),
     path('DatosEdu', agregarDatosEducacion, name='DatosEdu'),
     path('congrats/<lista_id>', congrats, name= 'congrats'),
+    path('postulanteporempleo/<empleo>', postulante_por_empleo, name= 'postulanteporempleo'),
     path('admin/', admin.site.urls),
    
    
