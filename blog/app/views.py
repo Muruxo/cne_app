@@ -179,7 +179,7 @@ def agregarDatosAdicionales(request, username):
             experiencia.postulante = usuario  # Asigna el nombre de usuario al campo correspondiente
             experiencia.save()
             messages.success(request, 'Informacion agregada con éxito')
-            return redirect(agregarDatosEducacion, username)
+            return redirect(agregarDatosEducacion)
     else:
         form = ExperienciaForm(initial={'postulante': username})  # Establece el valor inicial del campo de nombre de usuario
         contenido['form'] = form

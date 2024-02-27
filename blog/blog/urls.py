@@ -43,7 +43,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('DatosPer/<id>', agregarDatosPersonales, name='DatosPer'),
     path('DatosAd/<str:username>', agregarDatosAdicionales, name='DatosAd'),
-    path('DatosEdu/', agregarDatosEducacion, name='DatosEdu'),
+    path('DatosEdu', agregarDatosEducacion, name='DatosEdu'),
     path('verExperiencias/<username>', experiencias, name='Experiencias'),
     path('verEducaciones/<username>', educaciones, name='Educaciones'),
     path('congrats/<lista_id>', congrats, name= 'congrats'),
