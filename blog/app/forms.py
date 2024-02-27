@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.forms import ModelForm
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from .models import Empleo, Publicacion, Experiencia, Educacion
+from .models import Empleo, Publicacion, Experiencia, Educacion, Postulante
 
 MODALIDAD_EMPLEO_CHOICES = ["Activado", "Desactivado", "Pendiente"]
 
@@ -50,11 +50,11 @@ class PublicacionForm(ModelForm):
 class DatosPersonalesForm(forms.ModelForm):
     class Meta: 
         genero = {'M':'Masculino', 'F':'Femenino'}
-        model = User
-        fields = ['first_name','last_name','email','telefono','genero','edad','ciudad','direccion']
+        model = Postulante
+        fields = ['nombre','apellido','email','telefono','genero','edad','ciudad','direccion']
         labels = {  
-            'first_name': 'Nombres',
-            'last_name': 'Apellidos', 
+            'nombre': 'Nombres',
+            'apellido': 'Apellidos', 
             'email': 'Email', 
             'telefono': 'Teléfono', 
             'genero': 'Género', 
@@ -63,8 +63,8 @@ class DatosPersonalesForm(forms.ModelForm):
             'direccion': 'Dirección'
         }
         widgets = { 
-            'first_name': forms.TextInput(attrs = {'class': 'form-control'}),
-            'last_name': forms.TextInput(attrs = {'class': 'form-control'}),
+            'nombre': forms.TextInput(attrs = {'class': 'form-control'}),
+            'apellido': forms.TextInput(attrs = {'class': 'form-control'}),
             'email': forms.EmailInput(attrs = {'class': 'form-control'}),
             'telefono': forms.TextInput(attrs = {'class': 'form-control'}),
             'genero' : forms.Select(choices=genero.items(), attrs = {'class': 'form-control'}),
@@ -72,6 +72,10 @@ class DatosPersonalesForm(forms.ModelForm):
             'ciudad': forms.TextInput(attrs = {'class': 'form-control'}),
             'direccion': forms.TextInput(attrs = {'class': 'form-control'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['usuario_postulante'] = forms.CharField(widget=forms.HiddenInput())
 
 # class DatosAdicionalesForm(ModelForm):
 #     class Meta: 
