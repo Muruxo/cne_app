@@ -28,7 +28,7 @@ class EmpleoForm(ModelForm):
             'area_empleo': forms.TextInput(attrs = {'class': 'form-control'}),
             'modalidad_empleo': forms.TextInput(attrs = {'class': 'form-control'}),
             'tiempo_empleo':forms.TextInput(attrs= {'type': 'number', 'class': 'form-control'}),
-            'id_ciudad_fk':forms.TextInput(attrs = {'class': 'form-control'}),
+            'id_ciudad_fk':forms.Select(attrs = {'class': 'form-control'}),
         }
         
 class PublicacionForm(ModelForm):
@@ -100,7 +100,6 @@ class ExperienciaForm(forms.ModelForm):
             'fecha_inicio': 'Fecha Inicial',
             'fecha_final': 'Fecha Final',
             'descripcion': 'Descripcion del cargo',
-            'curriculum' : 'Subir Curriculum Vitae'
         }
         widgets = { 
             'cargo': forms.TextInput(attrs = {'class': 'form-control'}),
@@ -110,7 +109,6 @@ class ExperienciaForm(forms.ModelForm):
             'fecha_inicio': forms.DateInput(format='%d-%m-%Y',attrs={'type': 'date', 'class': 'form-control'}),
             'fecha_final': forms.DateInput(format='%d-%m-%Y',attrs={'type': 'date', 'class': 'form-control'}),
             'descripcion': forms.Textarea(attrs = {'class': 'form-control'}),
-            'curriculum': forms.FileInput(attrs = {'class': 'form-control'}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -120,7 +118,7 @@ class ExperienciaForm(forms.ModelForm):
 
 class EducacionForm(forms.ModelForm):
     class Meta: 
-        genero = {'M':'Masculino', 'F':'Femenino'}
+        nivel = {'1':'Bachiller', '2':'Técnico', '3':'Universitario', '4':'Magister', '5':'Doctorado', '6':'Otro'}
         estado = {'1':'En Curso', '2':'Graduado', '3':'Abandonado'}
         model = Educacion
         fields = ['titulo_edu','pais_edu','institucion_edu','nivel_edu', 'estado_edu', 'descripcion_edu']
@@ -128,18 +126,20 @@ class EducacionForm(forms.ModelForm):
             'titulo_edu': 'Titulo',
             'pais_edu': 'Pais', 
             'institucion_edu': 'Institucion', 
-            'nivel_edu': 'Area', 
+            'nivel_edu': 'Nivel', 
             'estado_edu': 'Estado',
             'descripcion_edu': 'Descripcion',
+            'curriculum' : 'Subir Curriculum Vitae (en PDF)'
         }
         widgets = { 
             
             'titulo_edu': forms.TextInput(attrs = {'class': 'form-control'}),
             'pais_edu': forms.TextInput(attrs = {'class': 'form-control'}),
             'institucion_edu': forms.TextInput(attrs = {'class': 'form-control'}),
-            'nivel_edu': forms.TextInput(attrs = {'class': 'form-control'}),
+            'nivel_edu': forms.Select(choices=nivel.items(), attrs = {'class': 'form-control'}),
             'estado_edu': forms.Select(choices=estado.items(), attrs = {'class': 'form-control'}),
             'descripcion_edu': forms.TextInput(attrs = {'class': 'form-control'})
+            'curriculum': forms.FileInput(attrs = {'class': 'form-control'}),
         }
 
     def __init__(self, *args, **kwargs):
