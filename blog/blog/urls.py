@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-
+from django.urls import reverse
 from app.views import *
 from django.contrib.auth.decorators import login_required
 from .views import MyPasswordChangeView, MyPasswordSetView, DashboardView
@@ -42,9 +42,10 @@ urlpatterns = [
     path('descripcion/<empleo_id>', descripcion, name ="descripcion"), 
     path('accounts/', include('allauth.urls')),
     path('DatosPer/<id>', agregarDatosPersonales, name='DatosPer'),
-    path('DatosAd/<username>', agregarDatosAdicionales, name='DatosAd'),
+    path('DatosAd/<str:username>', agregarDatosAdicionales, name='DatosAd'),
+    path('DatosEdu/', agregarDatosEducacion, name='DatosEdu'),
     path('verExperiencias/<username>', experiencias, name='Experiencias'),
-    path('DatosEdu', agregarDatosEducacion, name='DatosEdu'),
+    path('verEducaciones/<username>', educaciones, name='Educaciones'),
     path('congrats/<lista_id>', congrats, name= 'congrats'),
     path('postulanteporempleo/<empleo>', postulante_por_empleo, name= 'postulanteporempleo'),
     path('descripcionpostulante/<str:id>', descripcionpostulante, name= 'descripcionpostulante'),
