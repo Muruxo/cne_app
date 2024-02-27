@@ -5,9 +5,8 @@
     {%for edu in educacion %}
     <div class="container-fluid col-sm-8 mb-5 mb-sm-2 " >
         <div class="card bg-secondary" style="border-radius: 1rem;">
-          <a class="dir" href="{% url 'DatosAd' edu.id_educacion_fk %}">
+          <a class="dir" href="{% url 'DatosAd' edu.id %}">
             <div class="card-body btn" style="text-align:left;">
-              <h1>{{edu.id}} </h1>
                 <blockquote class="card-blockquote mb-0">
                   <h5 class="card-title">{{edu.titulo_edu}}</h5>
                   <p class="card-text"><i class="bi bi-geo-alt"></i> {{edu.institucion_edu }}</p>

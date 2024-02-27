@@ -73,9 +73,6 @@ class DatosPersonalesForm(forms.ModelForm):
             'direccion': forms.TextInput(attrs = {'class': 'form-control'}),
         }
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['usuario_postulante'] = forms.CharField(widget=forms.HiddenInput())
 
 # class DatosAdicionalesForm(ModelForm):
 #     class Meta: 
@@ -123,6 +120,7 @@ class ExperienciaForm(forms.ModelForm):
 
 class EducacionForm(forms.ModelForm):
     class Meta: 
+        genero = {'M':'Masculino', 'F':'Femenino'}
         estado = {'1':'En Curso', '2':'Graduado', '3':'Abandonado'}
         model = Educacion
         fields = ['titulo_edu','pais_edu','institucion_edu','nivel_edu', 'estado_edu', 'descripcion_edu']
@@ -135,10 +133,11 @@ class EducacionForm(forms.ModelForm):
             'descripcion_edu': 'Descripcion',
         }
         widgets = { 
+            
             'titulo_edu': forms.TextInput(attrs = {'class': 'form-control'}),
             'pais_edu': forms.TextInput(attrs = {'class': 'form-control'}),
             'institucion_edu': forms.TextInput(attrs = {'class': 'form-control'}),
-           'nivel_edu': forms.Select(attrs = {'class': 'form-control'}),
+            'nivel_edu': forms.TextInput(attrs = {'class': 'form-control'}),
             'estado_edu': forms.Select(choices=estado.items(), attrs = {'class': 'form-control'}),
             'descripcion_edu': forms.TextInput(attrs = {'class': 'form-control'})
         }

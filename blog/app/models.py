@@ -96,7 +96,7 @@ class Educacion(models.Model):
     titulo_edu = models.CharField(max_length=255,blank=False,null=False)
     pais_edu = models.CharField(max_length=255,blank=False,null=False)
     institucion_edu = models.CharField(max_length=255,blank=False,null=False)
-    nivel_edu= models.ForeignKey(Niveltitulo, related_name='nivelid', on_delete=models.CASCADE,null=True)
+    nivel_edu= models.CharField(max_length=255,blank=False,null=False)
     estado_edu= models.CharField(max_length=255,blank=False,null=False)
     descripcion_edu = models.TextField(blank=True,null=True)
     
