@@ -133,7 +133,7 @@ class Empleo(models.Model):
 class Postulados(models.Model):
     estado_postulado = models.CharField(max_length=144,blank=False, null=False)
     fecha_postulado = models.DateField(default=timezone.now, blank=False,null=False)
-    id_postulados_fk = models.ForeignKey(User, related_name='postulado', on_delete=models.SET_NULL,null=True)
+    id_postulados_fk = models.ForeignKey(Postulante, related_name='postulado', on_delete=models.SET_NULL,null=True)
     id_empleo_fk = models.ForeignKey(Empleo, related_name='postulados', on_delete=models.SET_NULL,null=True)
 
     def __str__(self)-> str:
