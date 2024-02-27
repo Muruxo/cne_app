@@ -48,6 +48,7 @@ urlpatterns = [
     path('verEducaciones/<username>', educaciones, name='Educaciones'),
     path('congrats/<lista_id>', congrats, name= 'congrats'),
     path('postulanteporempleo/<empleo>', postulante_por_empleo, name= 'postulanteporempleo'),
+    path('descripcionpostulante/<str:id>', descripcionpostulante, name= 'descripcionpostulante'),
     path('admin/', admin.site.urls),
    
    

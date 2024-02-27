@@ -1,0 +1,115 @@
+{% extends 'partials/base.html' %}
+
+{% block content %}
+
+
+
+ <br>   
+ <div class=" mt-4 col-8 m-2">
+        <h2>{{persona.first_name}} {{persona.last_name}}</h2>
+ </div>
+<div class="container mt-4">
+    <div class="card">
+      
+      <div class="card-body" style="text-align:left;">
+      
+        <h5 class="card-title">Detalles Personales</h5>
+        <div
+                class="table-responsive"
+        >
+                <table
+                        class="table table-primary"
+                >
+                        <thead>
+                                <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Apellido</th>
+                                        <th scope="col">Edad</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Ciudad</th>
+                                </tr>
+                        </thead>
+                        <tbody>
+                                <tr class="">
+                                        <td>{{persona.id }}</td>
+                                        <td>{{persona.first_name }}</td>
+                                        <td>{{persona.last_name }}</td>
+                                        <td>{{persona.edad}}</td>
+                                        <td>{{persona.email}}</td>
+                                        <td>{{persona.ciudad}}</td>
+                                </tr>
+                        </tbody>
+                </table>
+        </div>
+        
+      </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+        <div class="card">
+          
+          <div class="card-body" style="text-align:left;">
+          
+            <h5 class="card-title">Experiencia Laboral </h5>
+            <div
+                    class="table-responsive"
+            >
+                    <table
+                            class="table table-primary"
+                    >
+                            <thead>
+                                    <tr>
+                                            <th scope="col">Nº</th>
+                                            <th scope="col">Cargo</th>
+                                            <th scope="col">Empresa</th>
+                                            <th scope="col">Pais</th>
+                                            <th scope="col">Area</th>
+                                            <th scope="col">Fecha Inicio</th>
+                                            <th scope="col">Fecha Final</th>
+                                    </tr>
+                            </thead>
+                            <tbody>
+                                {%for e in experiencia %}
+                                    <tr class="">
+                                            <td></td>
+                                            <td>{{e.cargo }}</td>
+                                            <td>{{e.empresa }}</td>
+                                            <td>{{e.pais}}</td>
+                                            <td>{{e.area}}</td>
+                                            <td>{{e.fecha_inicio}}</td>
+                                    </tr>
+                                {%endfor%}
+                            </tbody>
+                    </table>
+            </div>
+            
+          </div>
+        </div>
+    </div>
+    
+
+<div class="container mt-4 mb-5">
+        <div class="card">
+                <div class="card-header">
+                        <h5 class="card-title">Detalles</h5>     
+                </div>
+                <div class="card-body">
+                <p class="card-text"><strong>ID:</strong> </p>
+                <p class="card-text"><strong>Nombres:</strong> </p>
+                <p class="card-text"><strong>Apellidos:</strong> </p>
+                <p class="card-text"><strong>Edad:</strong> </p>
+                <p class="card-text"><strong>Título:</strong>  </p>
+                <p class="card-text"><strong>Email:</strong>  </p>
+                <p class="card-text"><strong>Ciudad:</strong>  </p>
+                {% if user.perfil_postulante%}
+                <a href="{% url 'DatosPer' user.id %}" class="btn btn-success">Postular</a>
+                {% endif%}
+                <a href="{% url 'index' %}" class="btn btn-outline-primary">Regresar</a>
+                </div>
+
+        </div>
+</div>
+        
+{% endblock %}
