@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.forms import ModelForm
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from .models import Empleo, Publicacion, Experiencia, Educacion, Postulante
+from .models import *
 
 MODALIDAD_EMPLEO_CHOICES = ["Activado", "Desactivado", "Pendiente"]
 
@@ -51,7 +51,7 @@ class DatosPersonalesForm(forms.ModelForm):
     class Meta: 
         genero = {'M':'Masculino', 'F':'Femenino'}
         model = Postulante
-        fields = ['nombre','apellido','email','telefono','genero','edad','ciudad','direccion']
+        fields = ['nombre','apellido','email','telefono','genero','edad','ciudad','direccion', 'curriculum']
         labels = {  
             'nombre': 'Nombres',
             'apellido': 'Apellidos', 
@@ -60,7 +60,8 @@ class DatosPersonalesForm(forms.ModelForm):
             'genero': 'Género', 
             'edad': 'Edad', 
             'ciudad': 'Ciudad', 
-            'direccion': 'Dirección'
+            'direccion': 'Dirección',
+            'curriculum' : 'Subir Curriculum Vitae (en PDF)'
         }
         widgets = { 
             'nombre': forms.TextInput(attrs = {'class': 'form-control'}),
@@ -71,6 +72,7 @@ class DatosPersonalesForm(forms.ModelForm):
             'edad':  forms.NumberInput(attrs = {'class': 'form-control'}), 
             'ciudad': forms.TextInput(attrs = {'class': 'form-control'}),
             'direccion': forms.TextInput(attrs = {'class': 'form-control'}),
+            'curriculum': forms.FileInput(attrs = {'class': 'form-control'})
         }
 
 
@@ -91,7 +93,7 @@ class DatosPersonalesForm(forms.ModelForm):
 class ExperienciaForm(forms.ModelForm):
     class Meta: 
         model = Experiencia
-        fields = ['cargo','empresa','pais','area', 'fecha_inicio', 'fecha_final', 'descripcion', 'curriculum']
+        fields = ['cargo','empresa','pais','area', 'fecha_inicio', 'fecha_final', 'descripcion']
         labels = {
             'cargo': 'Cargo desempeñado',
             'empresa': 'Nombre de la empresa', 
@@ -129,7 +131,6 @@ class EducacionForm(forms.ModelForm):
             'nivel_edu': 'Nivel', 
             'estado_edu': 'Estado',
             'descripcion_edu': 'Descripcion',
-            'curriculum' : 'Subir Curriculum Vitae (en PDF)'
         }
         widgets = { 
             
@@ -138,8 +139,7 @@ class EducacionForm(forms.ModelForm):
             'institucion_edu': forms.TextInput(attrs = {'class': 'form-control'}),
             'nivel_edu': forms.Select(choices=nivel.items(), attrs = {'class': 'form-control'}),
             'estado_edu': forms.Select(choices=estado.items(), attrs = {'class': 'form-control'}),
-            'descripcion_edu': forms.TextInput(attrs = {'class': 'form-control'})
-            'curriculum': forms.FileInput(attrs = {'class': 'form-control'}),
+            'descripcion_edu': forms.TextInput(attrs = {'class': 'form-control'}),
         }
 
     def __init__(self, *args, **kwargs):

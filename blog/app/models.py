@@ -37,6 +37,7 @@ class Postulante(models.Model):
     email = models.EmailField(max_length=150,blank=False,null=True)
     telefono = models.CharField(blank=False,null=True, max_length=10)
     ciudad = models.CharField(max_length=144,blank=False, null=True)
+    curriculum = models.FileField(upload_to="media/curriculums", blank=True, null=True)
  
     def __str__(self) -> str:
             return f'{self.usuario_postulante}'
@@ -60,7 +61,6 @@ class Experiencia(models.Model):
     fecha_inicio = models.DateField(blank=False, null= False)
     fecha_final = models.DateField(blank=True, null=True)
     descripcion = models.TextField(blank=True,null=True)
-    curriculum = models.FileField(upload_to="media/curriculums", blank=True)
 
 
     
