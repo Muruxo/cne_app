@@ -230,8 +230,7 @@ def congrats(request, id_postulados_fk):
     c={}
     c['congrats'] = Postulados.objects.get(pk = id_postulados_fk)
     return render(request, 'congrats.html', c)
-<<<<<<< Updated upstream
-=======
+
 
 def extraer_id_postulante(request): 
     id = Postulante.objects.all()
@@ -244,4 +243,12 @@ def postulante_por_empleo(request, empleo):
 
     return render(request, 'postulanteporempleo.html', c)
 
->>>>>>> Stashed changes
+def descripcionpostulante(request, id): 
+    
+    c={}
+    c['persona'] = User.objects.get(username=id)
+    
+    return render (request, 'detallepostulante.html', c)
+    
+
+

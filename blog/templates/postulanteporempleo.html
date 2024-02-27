@@ -15,7 +15,6 @@
     <div class="card">
       <div class="card-body">
         <h2>{{datosempleo.nombre_empleo}}</h2>
-        <p>Descripción: {{empleo.descripcion_empleo}} años</p>
         <p>Postulantes: </p>
         <div
             class="table-responsive"
@@ -28,11 +27,8 @@
                         <th scope="col">ID</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Fecha Postulación</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Apellido</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Edad</th>
-                        <th scope="col">Acción</th>
+                        <th scope="col">Postulante</th>
+                        <th scope="col">Descripción</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,12 +40,10 @@
                         <td>{{p.estado_postulado}}</td>
                         <td>{{p.fecha_postulado}}</td>
                         <td>{{p.id_postulados_fk}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><button class="btn btn-success"><i class="ti-pencil"></i></button></td>
+                    
+                        <td><a href="{% url 'descripcionpostulante' p.id_postulados_fk%}"><button class="btn btn-success"><i class="ti-pencil"></i></button></a></td>
                     </tr>
-                
+
                     {%endfor%}
                 </tbody>
             </table>
