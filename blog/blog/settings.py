@@ -29,6 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'Muruxo.pythonanywhere.com',
+    '127.0.0.1'
 ]
 
 # Redireccionar al iniciar y salir de sesión 
@@ -82,7 +83,9 @@ ROOT_URLCONF = 'blog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': ['templates',
+                 '/home/Muruxo/cne_app/blog/templates',
+                 ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
