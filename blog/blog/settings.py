@@ -27,7 +27,10 @@ SECRET_KEY = 'django-insecure-xf1aivoj9!in*&uw85j)pyajl1sorg40f0=ox_fot-)s%e$0s8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'Muruxo.pythonanywhere.com',
+    '127.0.0.1'
+]
 
 # Redireccionar al iniciar y salir de sesión 
 
@@ -80,7 +83,9 @@ ROOT_URLCONF = 'blog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': ['templates',
+                 '/home/Muruxo/cne_app/blog/templates',
+                 ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -99,13 +104,23 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Muruxo$db',
+        'USER': 'Muruxo',
+        'PASSWORD': 'Liceo2024',
+        'HOST': 'Muruxo.mysql.pythonanywhere-services.com',
+        'PORT': '3306'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -143,6 +158,14 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+ 
+ 
+STATICFILES_DIRS = [
+    # os.path.join(BASE_DIR, "static"),
+    #os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "apps/templates/static"),
+]
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, 'static'),
  
