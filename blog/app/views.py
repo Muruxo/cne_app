@@ -74,7 +74,7 @@ def descripcion(request, empleo_id):
 
 #FORM DATOS PERSONALES POSTULANTE
 
-    
+@login_required   
 def agregarDatosPersonales(request, id): 
     usuario = User.objects.get(pk = id )
     contenido = {}
@@ -94,7 +94,7 @@ def agregarDatosPersonales(request, id):
     return render(request, 'DatosPersonales.html', contenido)
 
 
-
+@login_required
 def agregarDatosAdicionales(request, id):
     usuario = User.objects.get(pk = id)
     contenido = {}
@@ -115,7 +115,7 @@ def agregarDatosAdicionales(request, id):
 
 #  AGREGAR EDUCACION NUEVO
 
-
+@login_required
 def agregarDatosEducacion(request, id):
     usuario = User.objects.get(pk = id)
     contenido = {}
@@ -133,7 +133,7 @@ def agregarDatosEducacion(request, id):
         contenido['id_educacion_fk'] = id
     return render(request, 'DatosEducacion.html', contenido)
 
-
+@login_required
 def actualizarDatosPersonales(request, id): 
         postulante = Postulante.objects.get(pk = id)
         form = DatosPersonalesForm(request.POST or None, instance = postulante)
@@ -143,24 +143,26 @@ def actualizarDatosPersonales(request, id):
             return redirect(index)  
         return render(request, 'actualizarDatosPersonales.html', {'postulante':postulante, 'form': form})
 
-
+@login_required
 def actualizarEducaciones(request, id): 
         educacion = Educacion.objects.get(pk = id)
+        postulante_id = educacion.id_educacion_fk.pk
         form = EducacionForm(request.POST or None, instance = educacion)
         if form.is_valid(): 
             form.save() 
             messages.success(request, 'Publicación Actualizada')
-            return redirect(educaciones, id)  
+            return redirect(educaciones, id=postulante_id)  
         return render(request, 'actualizarEducacion.html', {'id_educacion_fk':educacion, 'form': form})
 
-
+@login_required
 def actualizarExperiencias(request, id): 
         experiencia = Experiencia.objects.get(pk = id)
         form = ExperienciaForm(request.POST or None, instance = experiencia)
+        postulante_id = experiencia.postulante.pk
         if form.is_valid(): 
             form.save()
             messages.success(request, 'Publicación Actualizada')
-            return redirect(experiencias, id)  
+            return redirect(experiencias, id=postulante_id)  
         return render(request, 'actualizarExperiencia.html', {'postulante':experiencia, 'form': form})
 
 # def agregarDatosAdicionales(request,id): 
@@ -240,7 +242,7 @@ def actualizarExperiencias(request, id):
 #      return render(request, 'DatosEducacion.html', {'id_educacion_fk': usuario, 'form':form})
 
 
-
+@login_required
 def experiencias(request, id):
     usuario = User.objects.get(pk = id)
     experiencia = Experiencia.objects.filter(postulante = usuario)
@@ -270,7 +272,7 @@ def experiencias(request, id):
 #     return render(request, 'formulario_refugio.html', contenido)
 
 
-
+@login_required
 def educaciones(request, id):
     usuario = User.objects.get(id = id)
     educacion = Educacion.objects.filter(id_educacion_fk = usuario)
@@ -284,12 +286,12 @@ def educaciones(request, id):
 #     }
 #     template = "lista_postulantes.html"
 #     return render(request, template, contenido)
-
+@login_required
 def lista_postulantes(request):
     c={}
     c['postulantes'] = User.objects.all()
     return render(request, 'lista_postulantes.html', c)
-
+@login_required
 def descripcion(request, empleo_id): 
     empleo = Empleo.objects.get(pk = empleo_id)
     contenido = {
@@ -297,40 +299,63 @@ def descripcion(request, empleo_id):
     }
     template = "descripcion.html"
     return render(request, template, contenido)
-
+@login_required
 def congrats(request, id_postulados_fk):
     c={}
     c['congrats'] = Postulados.objects.get(pk = id_postulados_fk)
     return render(request, 'congrats.html', c)
 
-
+@login_required
 def extraer_id_postulante(request): 
     id = Postulante.objects.all()
     return render(request, 'usersidebar.html', {'postulantes': id})
 
-
+@login_required
 def postulante_por_empleo(request, empleo): 
     datosempleo = Empleo.objects.get(pk=empleo)        
     c={}
     c['postulados'] = Postulados.objects.filter(id_empleo_fk = empleo)
+    c['empleo'] = datosempleo
 
     return render(request, 'postulanteporempleo.html', c)
 
 
+@login_required
 def descripcionpostulante(request, id): 
+    experienciapostulante = Experiencia.objects.filter(postulante = id)
+    educacionpostulante = Educacion.objects.filter(id_educacion_fk = id)
     
     c={}
-    c['persona'] = User.objects.get(username=id)
+    c['persona'] = Postulante.objects.get(id = id)
+    c['experiencia'] = experienciapostulante
+    c['educacion'] = educacionpostulante
     
-    return render (request, 'detallepostulante.html', c)
     
+    return render (request, 'descripcionpostulante.html', c) 
 
+
+
+
+
+@login_required
 def redireccionDatosPersonales(request, id):
     # Realiza la consulta a la base de datos
-    resultado_consulta = Postulante.objects.filter(usuario_postulante_id = id).exists()
+    resultado_consulta = Postulante.objects.filter(id = id).exists()
 
     # Si el resultado de la consulta cumple tu condición
     if resultado_consulta:
         return actualizarDatosPersonales(request, id)  # Redirige a la primera función de vista
     else:
         return agregarDatosPersonales(request, id)  # Redirige a la segunda función de vista
+    
+
+def redireccionPostular(request, id):
+    # Realiza la consulta a la base de datos
+    resultado_consulta = Postulante.objects.filter(id = id).exists()
+
+    # Si el resultado de la consulta cumple tu condición
+    if resultado_consulta:
+        return actualizarDatosPersonales(request, id)  # Redirige a la primera función de vista
+    else:
+        return agregarDatosPersonales(request, id)  # Redirige a la segunda función de vista
+    

@@ -10,5 +10,10 @@ def es_admin(user: User.is_staff):
 def es_postulante(user: User.is_staff):
     if user == False:
         return False 
+    
+
+def tiene_cuenta(user: User.is_authenticated):
+    if user == False:
+        return
    
     

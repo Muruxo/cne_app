@@ -21,7 +21,7 @@
                     
                             <li>
                                 
-                                <a href="{% url 'DatosPer' request.user.id %} " class="waves-effect">
+                                <a href="{% url 'DatosPer' request.user.perfil_postulante.id %} " class="waves-effect">
                                     <i class="ti-user"></i><span class="badge rounded-pill bg-primary float-end"></span>
                                     <span key="Dashboard">Perfil</span>
                                 </a>
@@ -29,14 +29,14 @@
                             </li>
                    
                             <li>
-                                <a href="{% url 'verExperiencias' request.user.id  %}" class="waves-effect">
+                                <a href="{% url 'verExperiencias' request.user.perfil_postulante.id  %}" class="waves-effect">
                                     <i class="ti-folder"></i><span class="badge rounded-pill bg-primary float-end"></span>
                                     <span key="Dashboard">Datos Laborales</span>
                                 </a>
                             </li>
 
                             <li>
-                                <a href="{% url 'Educaciones' request.user.id %}" class="waves-effect">
+                                <a href="{% url 'Educaciones' request.user.perfil_postulante.id %}" class="waves-effect">
                                     <i class="ti-book"></i><span class="badge rounded-pill bg-primary float-end"></span>
                                     <span key="Dashboard">Datos Educación</span>
                                 </a>

@@ -5,7 +5,7 @@
   <div class="container-fluid col-sm-8 mb-6 mb-sm-4 " style="text-align:center">
     <div class="card bg-secondary" style="border-radius: 1rem;">
       <br>
-  <a class="dir" href="{% url 'DatosAd' request.user.id %}"><h3>Agregar Experiencia</h3></a>
+  <a class="dir" href="{% url 'DatosAd' request.user.perfil_postulante.id %}"><h3>Agregar Experiencia</h3></a>
   <br>
 </div>
 </div>
@@ -14,7 +14,7 @@
     {%for e in experiencia %}
     <div class="container-fluid col-sm-5 mb-6 mb-sm-4 " >
         <div class="card bg-secondary" style="border-radius: 1rem;">
-          <a class="dir" href="{% url 'actualizarExperiencia' request.user.id %}">
+          <a class="dir" href="{% url 'actualizarExperiencia' e.id %}">
             <div class="card-body btn" style="text-align:left;">
                 <blockquote class="card-blockquote mb-0">
                   <h5 class="card-title">{{e.cargo}}</h5>

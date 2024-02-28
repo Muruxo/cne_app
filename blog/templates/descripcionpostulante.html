@@ -33,8 +33,8 @@
                         <tbody>
                                 <tr class="">
                                         <td>{{persona.id }}</td>
-                                        <td>{{persona.first_name }}</td>
-                                        <td>{{persona.last_name }}</td>
+                                        <td>{{persona.nombre }}</td>
+                                        <td>{{persona.apellido }}</td>
                                         <td>{{persona.edad}}</td>
                                         <td>{{persona.email}}</td>
                                         <td>{{persona.ciudad}}</td>
@@ -88,7 +88,49 @@
           </div>
         </div>
     </div>
-    
+
+    <div class="container mt-4">
+        <div class="card">
+          
+          <div class="card-body" style="text-align:left;">
+          
+            <h5 class="card-title">Formacion Academica</h5>
+            <div
+                    class="table-responsive"
+            >
+                    <table
+                            class="table table-primary"
+                    >
+                            <thead>
+                                    <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Titulo</th>
+                                            <th scope="col">Pais</th>
+                                            <th scope="col">Institucion</th>
+                                            <th scope="col">Nivel</th>
+                                            <th scope="col">Estado</th>
+                                            <th scope="col">Descripcion</th>
+                                    </tr>
+                            </thead>
+                            <tbody>
+                                {%for edu in educacion %}
+                                    <tr class="">
+                                            <td></td>
+                                            <td>{{edu.titulo_edu }}</td>
+                                            <td>{{edu.pais_edu }}</td>
+                                            <td>{{edu.institucion_edu}}</td>
+                                            <td>{{edu.nivel_edu}}</td>
+                                            <td>{{edu.estado_edu}}</td>
+                                            <td>{{edu.descripcion_edu}}</td>
+                                    </tr>
+                                {%endfor%}
+                            </tbody>
+                    </table>
+            </div>
+            
+          </div>
+        </div>
+    </div>
 
 <div class="container mt-4 mb-5">
         <div class="card">
@@ -104,7 +146,7 @@
                 <p class="card-text"><strong>Email:</strong>  </p>
                 <p class="card-text"><strong>Ciudad:</strong>  </p>
                 {% if user.perfil_postulante%}
-                <a href="{% url 'DatosPer' user.id %}" class="btn btn-success">Postular</a>
+                <a href="{% url 'DatosPer' request.user.perfil_postulante.id %}" class="btn btn-success">Postular</a>
                 {% endif%}
                 <a href="{% url 'index' %}" class="btn btn-outline-primary">Regresar</a>
                 </div>
