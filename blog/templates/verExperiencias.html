@@ -2,20 +2,30 @@
 {% block content %}
 
 <div class="row">
+  <div class="container-fluid col-sm-8 mb-6 mb-sm-4 " style="text-align:center">
+    <div class="card bg-secondary" style="border-radius: 1rem;">
+      <br>
+  <a class="dir" href="{% url 'DatosAd' request.user.id %}"><h3>Agregar Experiencia</h3></a>
+  <br>
+</div>
+</div>
+</div>
+<div class="row">  
     {%for e in experiencia %}
-    <div class="container-fluid col-sm-8 mb-5 mb-sm-2 " >
+    <div class="container-fluid col-sm-5 mb-6 mb-sm-4 " >
         <div class="card bg-secondary" style="border-radius: 1rem;">
-          <a class="dir" href="{% url 'DatosAd' e.postulante %}">
+          <a class="dir" href="{% url 'actualizarExperiencia' request.user.id %}">
             <div class="card-body btn" style="text-align:left;">
                 <blockquote class="card-blockquote mb-0">
                   <h5 class="card-title">{{e.cargo}}</h5>
-                  <p class="card-text"><i class="bi bi-geo-alt"></i> {{e.empresa }}</p>
-                  <p class="card-text"><i class="bi bi-briefcase"></i> {{e.area}}</p>
-                    </footer>
+                  <p class="card-text"> {{e.empresa }}</p>
+                  <p class="card-text"> {{e.area}}</p>
                 </blockquote>
             </div></a>
         </div>
     </div>
+</div>
+
     {%endfor%}
 <br><br>
 </center>

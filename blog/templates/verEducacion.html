@@ -1,11 +1,20 @@
 {% extends 'partials/base.html' %}
 {% block content %}
-
+<div class="container-fluid col-sm-12 mb-8 mb-sm-6 " ></div>
+<div class="row">
+  <div class="container-fluid col-sm-3 mb-3 mb-sm-3 " style="text-align:center">
+    <div class="card bg-secondary" style="border-radius: 1rem;">
+      <br>
+  <a class="dir" href="{% url 'DatosEdu' request.user.id %}"><h3>Agregar Educacion</h3></a>
+  <br>
+</div>
+</div>
+</div>
 <div class="row">
     {%for edu in educacion %}
     <div class="container-fluid col-sm-8 mb-5 mb-sm-2 " >
         <div class="card bg-secondary" style="border-radius: 1rem;">
-          <a class="dir" href="{% url 'DatosAd' edu.id %}">
+          <a class="dir" href="{% url 'actualizarEducacion' edu.id %}">
             <div class="card-body btn" style="text-align:left;">
                 <blockquote class="card-blockquote mb-0">
                   <h5 class="card-title">{{edu.titulo_edu}}</h5>
@@ -17,6 +26,7 @@
             </div></a>
         </div>
     </div>
+</div>
     {%endfor%}
 <br><br>
 </center>

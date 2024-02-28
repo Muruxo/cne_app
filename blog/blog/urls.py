@@ -17,7 +17,6 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from django.urls import reverse
 from app.views import *
 from django.contrib.auth.decorators import login_required
 from .views import MyPasswordChangeView, MyPasswordSetView, DashboardView
@@ -41,10 +40,13 @@ urlpatterns = [
     path('postular', postular, name = 'postular'),
     path('descripcion/<empleo_id>', descripcion, name ="descripcion"), 
     path('accounts/', include('allauth.urls')),
-    path('DatosPer/<str:id>', agregarDatosPersonales, name='DatosPer'),
+    path('DatosPer/<str:id>', redireccionDatosPersonales, name='DatosPer'),
     path('DatosAd/<str:id>', agregarDatosAdicionales, name='DatosAd'),
     path('DatosEdu/<str:id>', agregarDatosEducacion, name='DatosEdu'),
-    path('verExperiencias/<str:id>', experiencias, name='Experiencias'),
+    path('actualizarDatosPersonales/<str:id>', actualizarDatosPersonales, name ="actualizarDatosPersonales"), 
+    path('actualizarExperiencia/<str:id>', actualizarExperiencias, name ="actualizarExperiencia"), 
+    path('actualizarEducacion/<str:id>', actualizarEducaciones, name ="actualizarEducacion"), 
+    path('verExperiencias/<str:id>', experiencias, name='verExperiencias'),
     path('verEducaciones/<str:id>', educaciones, name='Educaciones'),
     path('congrats/<lista_id>', congrats, name= 'congrats'),
     path('postulanteporempleo/<empleo>', postulante_por_empleo, name= 'postulanteporempleo'),

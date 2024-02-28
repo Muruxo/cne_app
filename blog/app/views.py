@@ -74,20 +74,12 @@ def descripcion(request, empleo_id):
 
 #FORM DATOS PERSONALES POSTULANTE
 
-def actualizar(request, publicacion_id): 
-        publicacion = Empleo.objects.get(pk = publicacion_id)
-        form = EmpleoForm(request.POST or None, instance = publicacion)
-        if form.is_valid(): 
-            form.save()
-            messages.success(request, 'Publicación Actualizada')
-            return redirect(home)  
-        return render(request, 'actualizar.html', {'publicacion':publicacion, 'form': form})
     
 def agregarDatosPersonales(request, id): 
     usuario = User.objects.get(pk = id )
     contenido = {}
     if request.method == 'POST':  
-        form = DatosPersonalesForm(request.POST)
+        form = DatosPersonalesForm(request.POST,  request.FILES)
         if form.is_valid():
             postulante = form.save(commit=False)
             postulante.usuario_postulante = usuario  # Asigna el nombre de usuario al campo correspondiente
@@ -107,13 +99,13 @@ def agregarDatosAdicionales(request, id):
     usuario = User.objects.get(pk = id)
     contenido = {}
     if request.method == 'POST': 
-        form = ExperienciaForm(request.POST, request.FILES)
+        form = ExperienciaForm(request.POST)
         if form.is_valid():
             experiencia = form.save(commit=False)
             experiencia.postulante = usuario  # Asigna el nombre de usuario al campo correspondiente
             experiencia.save()
             messages.success(request, 'Informacion agregada con éxito')
-            return redirect(agregarDatosEducacion, id)
+            return redirect(experiencias, id)
     else:
         form = ExperienciaForm(initial={'postulante': id})  # Establece el valor inicial del campo de nombre de usuario
         contenido['form'] = form
@@ -125,16 +117,16 @@ def agregarDatosAdicionales(request, id):
 
 
 def agregarDatosEducacion(request, id):
-    id = User.objects.get(id = id)
+    usuario = User.objects.get(pk = id)
     contenido = {}
     if request.method == 'POST': 
         form = EducacionForm(request.POST)
         if form.is_valid():
             educacion = form.save(commit=False)
-            educacion.id_educacion_fk = id  # Asigna el nombre de usuario al campo correspondiente
+            educacion.id_educacion_fk = usuario  # Asigna el nombre de usuario al campo correspondiente
             educacion.save()
             messages.success(request, 'Informacion agregada con éxito')
-            return redirect(index)
+            return redirect(educaciones, id)
     else:
         form = EducacionForm(initial={'id_educacion_fk': id})  # Establece el valor inicial del campo de nombre de usuario
         contenido['form'] = form
@@ -142,6 +134,34 @@ def agregarDatosEducacion(request, id):
     return render(request, 'DatosEducacion.html', contenido)
 
 
+def actualizarDatosPersonales(request, id): 
+        postulante = Postulante.objects.get(pk = id)
+        form = DatosPersonalesForm(request.POST or None, instance = postulante)
+        if form.is_valid(): 
+            form.save()
+            messages.success(request, 'Publicación Actualizada')
+            return redirect(index)  
+        return render(request, 'actualizarDatosPersonales.html', {'postulante':postulante, 'form': form})
+
+
+def actualizarEducaciones(request, id): 
+        educacion = Educacion.objects.get(pk = id)
+        form = EducacionForm(request.POST or None, instance = educacion)
+        if form.is_valid(): 
+            form.save() 
+            messages.success(request, 'Publicación Actualizada')
+            return redirect(educaciones, id)  
+        return render(request, 'actualizarEducacion.html', {'id_educacion_fk':educacion, 'form': form})
+
+
+def actualizarExperiencias(request, id): 
+        experiencia = Experiencia.objects.get(pk = id)
+        form = ExperienciaForm(request.POST or None, instance = experiencia)
+        if form.is_valid(): 
+            form.save()
+            messages.success(request, 'Publicación Actualizada')
+            return redirect(experiencias, id)  
+        return render(request, 'actualizarExperiencia.html', {'postulante':experiencia, 'form': form})
 
 # def agregarDatosAdicionales(request,id): 
     
@@ -305,3 +325,12 @@ def descripcionpostulante(request, id):
     return render (request, 'detallepostulante.html', c)
     
 
+def redireccionDatosPersonales(request, id):
+    # Realiza la consulta a la base de datos
+    resultado_consulta = Postulante.objects.filter(usuario_postulante_id = id).exists()
+
+    # Si el resultado de la consulta cumple tu condición
+    if resultado_consulta:
+        return actualizarDatosPersonales(request, id)  # Redirige a la primera función de vista
+    else:
+        return agregarDatosPersonales(request, id)  # Redirige a la segunda función de vista

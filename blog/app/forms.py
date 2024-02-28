@@ -120,8 +120,8 @@ class ExperienciaForm(forms.ModelForm):
 
 class EducacionForm(forms.ModelForm):
     class Meta: 
-        nivel = {'1':'Bachiller', '2':'Técnico', '3':'Universitario', '4':'Magister', '5':'Doctorado', '6':'Otro'}
-        estado = {'1':'En Curso', '2':'Graduado', '3':'Abandonado'}
+        nivel = {'Bachiller':'Bachiller', 'Técnico':'Técnico', 'Universitario':'Universitario', 'Magister':'Magister', 'Doctorado':'Doctorado', 'Otro':'Otro'}
+        estado = {'En Curso':'En Curso', 'Graduado':'Graduado', 'Abandonado':'Abandonado'}
         model = Educacion
         fields = ['titulo_edu','pais_edu','institucion_edu','nivel_edu', 'estado_edu', 'descripcion_edu']
         labels = {
