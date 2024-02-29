@@ -1,0 +1,28 @@
+{% extends 'partials/base.html' %}
+
+{% block content %}
+<br>
+<center>
+<h1>Subir Curriculum</h1>
+
+<div class="col-4 mb-4" >
+
+<form action="" method="POST" enctype="multipart/form-data">
+{{ form.as_p }}
+{% csrf_token %}
+<button class="btn btn-success" type="submit">Guardar</button>
+<a href="{% url 'index' %}"><button class="btn btn-danger" type="">Cancelar</button></a>
+
+</form>
+ 
+{% if curriculum_archivo %}
+    <p>Archivo existente:</p>
+    <a href="{{ curriculum_archivo.url }}" download>{{ curriculum_archivo.name }}</a>
+{% else %}
+    <p>No hay archivo existente.</p>
+{% endif %}
+
+</div>
+<br><br>
+</center>
+{% endblock %}

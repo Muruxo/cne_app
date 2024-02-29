@@ -41,6 +41,7 @@ urlpatterns = [
     path('descripcion/<empleo_id>', descripcion, name ="descripcion"), 
     path('accounts/', include('allauth.urls')),
     path('DatosPer/<str:id>', redireccionDatosPersonales, name='DatosPer'),
+    path('subirCurriculum/<str:id>', subirCurriculum, name='subirCurriculum'),
     path('DatosAd/<str:id>', agregarDatosAdicionales, name='DatosAd'),
     path('DatosEdu/<str:id>', agregarDatosEducacion, name='DatosEdu'),
     path('actualizarDatosPersonales/<str:id>', actualizarDatosPersonales, name ="actualizarDatosPersonales"), 

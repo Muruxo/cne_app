@@ -53,7 +53,7 @@ class Postulante(models.Model):
 #         return f'{self.experiencia_laboral}'
 
 class Experiencia(models.Model): 
-    postulante = models.ForeignKey(User, related_name='experiencia_postulante', on_delete=models.CASCADE,null=True)
+    postulante = models.ForeignKey(Postulante, related_name='experiencia_postulante', on_delete=models.CASCADE,null=True)
     cargo = models.CharField(max_length=255,blank=False,null=False)
     empresa = models.CharField(max_length=255,blank=False,null=False)
     pais = models.CharField(max_length=255,blank=False,null=False)
@@ -92,7 +92,7 @@ class Niveltitulo(models.Model):
         
     
 class Educacion(models.Model):
-    id_educacion_fk = models.ForeignKey(User, related_name='educacion_postulante', on_delete=models.CASCADE,null=True)
+    id_educacion_fk = models.ForeignKey(Postulante, related_name='educacion_postulante', on_delete=models.CASCADE,null=True)
     titulo_edu = models.CharField(max_length=255,blank=False,null=False)
     pais_edu = models.CharField(max_length=255,blank=False,null=False)
     institucion_edu = models.CharField(max_length=255,blank=False,null=False)

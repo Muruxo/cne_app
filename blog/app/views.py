@@ -6,7 +6,7 @@ from django.db import models
 from django.urls import reverse
 from .utils import * 
 from .models import *
-from  .forms import PublicacionForm, EmpleoForm, DatosPersonalesForm, ExperienciaForm,EducacionForm
+from  .forms import *
 from django.http import HttpResponse
 def actualizar(request, publicacion_id):
         
@@ -94,9 +94,51 @@ def agregarDatosPersonales(request, id):
     return render(request, 'DatosPersonales.html', contenido)
 
 
+
+# @login_required   
+# def subirCurriculum(request, id): 
+#     if request.method == 'POST':  
+#         form = CurriculumForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             curriculum = form.save(commit=False)
+#             curriculum.id = request.usuario_postulante.id
+#             messages.success(request, 'Informacion agregada con éxito')
+#         return redirect(index, id)  
+#     return render(request, 'subirCurriculum.html', form)
+
+
+
+@login_required   
+def subirCurriculum(request, id): 
+    # Obtener el postulante asociado al ID proporcionado
+    postulante = Postulante.objects.get(pk=id)
+    
+    # Obtener o crear el currículum asociado al postulante
+    curriculum, created = Curriculum.objects.get_or_create(postulante=postulante)
+    
+    # Verificar si la solicitud es de tipo POST
+    if request.method == 'POST':  
+        # Inicializar el formulario con la instancia del currículum existente
+        form = CurriculumForm(request.POST, request.FILES, instance=curriculum)
+        # Verificar si el formulario es válido
+        if form.is_valid():
+            # Guardar el formulario pero sin confirmar aún
+            form.save()
+            # Mostrar un mensaje de éxito
+            messages.success(request, '¡Información actualizada con éxito!')
+            # Redirigir a alguna vista de éxito, por ejemplo, la página de perfil del usuario
+            return redirect('perfil_usuario')  # Ajusta esto según sea necesario
+    else:
+        # Si no es una solicitud POST, inicializar el formulario con la instancia del currículum existente
+        form = CurriculumForm(instance=curriculum)
+    
+    # Renderizar el formulario en el contexto del request
+    return render(request, 'subirCurriculum.html', {'form': form})
+
+
 @login_required
 def agregarDatosAdicionales(request, id):
-    usuario = User.objects.get(pk = id)
+    usuario = Postulante.objects.get(pk = id)
     contenido = {}
     if request.method == 'POST': 
         form = ExperienciaForm(request.POST)
@@ -117,7 +159,7 @@ def agregarDatosAdicionales(request, id):
 
 @login_required
 def agregarDatosEducacion(request, id):
-    usuario = User.objects.get(pk = id)
+    usuario = Postulante.objects.get(pk = id)
     contenido = {}
     if request.method == 'POST': 
         form = EducacionForm(request.POST)
@@ -244,7 +286,7 @@ def actualizarExperiencias(request, id):
 
 @login_required
 def experiencias(request, id):
-    usuario = User.objects.get(pk = id)
+    usuario = Postulante.objects.get(pk = id)
     experiencia = Experiencia.objects.filter(postulante = usuario)
     return render(request, 'verExperiencias.html', {'experiencia': experiencia})
 
@@ -274,7 +316,7 @@ def experiencias(request, id):
 
 @login_required
 def educaciones(request, id):
-    usuario = User.objects.get(id = id)
+    usuario = Postulante.objects.get(id = id)
     educacion = Educacion.objects.filter(id_educacion_fk = usuario)
     return render(request, 'verEducacion.html', {'educacion': educacion})
 
@@ -291,6 +333,7 @@ def lista_postulantes(request):
     c={}
     c['postulantes'] = User.objects.all()
     return render(request, 'lista_postulantes.html', c)
+
 @login_required
 def descripcion(request, empleo_id): 
     empleo = Empleo.objects.get(pk = empleo_id)

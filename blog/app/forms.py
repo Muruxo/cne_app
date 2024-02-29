@@ -76,6 +76,46 @@ class DatosPersonalesForm(forms.ModelForm):
         }
 
 
+class DatosPersonalesForm(forms.ModelForm):
+    class Meta: 
+        genero = {'M':'Masculino', 'F':'Femenino'}
+        model = Postulante
+        fields = ['nombre','apellido','email','telefono','genero','edad','ciudad','direccion', 'curriculum']
+        labels = {  
+            'nombre': 'Nombres',
+            'apellido': 'Apellidos', 
+            'email': 'Email', 
+            'telefono': 'Teléfono', 
+            'genero': 'Género', 
+            'edad': 'Edad', 
+            'ciudad': 'Ciudad', 
+            'direccion': 'Dirección',
+        }
+        widgets = { 
+            'nombre': forms.TextInput(attrs = {'class': 'form-control'}),
+            'apellido': forms.TextInput(attrs = {'class': 'form-control'}),
+            'email': forms.EmailInput(attrs = {'class': 'form-control'}),
+            'telefono': forms.TextInput(attrs = {'class': 'form-control'}),
+            'genero' : forms.Select(choices=genero.items(), attrs = {'class': 'form-control'}),
+            'edad':  forms.NumberInput(attrs = {'class': 'form-control'}), 
+            'ciudad': forms.TextInput(attrs = {'class': 'form-control'}),
+            'direccion': forms.TextInput(attrs = {'class': 'form-control'}),
+        }
+
+
+
+class CurriculumForm(forms.ModelForm):
+    class Meta: 
+        model = Postulante
+        fields = ['curriculum']
+        labels = {  
+            'curriculum' : 'Subir Curriculum Vitae (en PDF)'
+        }
+        widgets = { 
+            'curriculum': forms.FileInput(attrs = {'class': 'form-control'})
+        }
+
+
 # class DatosAdicionalesForm(ModelForm):
 #     class Meta: 
 #         model = Detallepostulante
