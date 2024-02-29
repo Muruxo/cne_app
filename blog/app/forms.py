@@ -80,7 +80,7 @@ class DatosPersonalesForm(forms.ModelForm):
     class Meta: 
         genero = {'M':'Masculino', 'F':'Femenino'}
         model = Postulante
-        fields = ['nombre','apellido','email','telefono','genero','edad','ciudad','direccion', 'curriculum']
+        fields = ['nombre','apellido','email','telefono','genero','edad','ciudad','direccion']
         labels = {  
             'nombre': 'Nombres',
             'apellido': 'Apellidos', 

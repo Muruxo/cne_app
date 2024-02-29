@@ -17,7 +17,7 @@
  
 {% if postulante.curriculum %}
     <p>Archivo existente:</p>
-    <a href="{{ postulante.curriculum.url }}" download>Descargar currículum</a>
+    <a href="{{ postulante.curriculum.url }}" download><button class="btn btn-success" type="">Ver Curriculum</button></a>
 {% else %}
     <p>No hay archivo existente.</p>
 {% endif %}

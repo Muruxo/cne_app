@@ -8,6 +8,10 @@ from .utils import *
 from .models import *
 from  .forms import *
 from django.http import HttpResponse
+from django.views.decorators.http import require_POST
+
+
+
 def actualizar(request, publicacion_id):
         
         publicacion = Empleo.objects.get(pk = publicacion_id)
@@ -50,15 +54,15 @@ def index(request):
     empleos = Empleo.objects.all()
     return render(request, 'index.html', {'empleos': empleos})
 
-def postular(request, empleo_id, postulante_id): 
-    # publicacion = Empleo.objects.get(pk = publicacion_id)
-    # form = EmpleoForm(request.POST or None, instance = publicacion)
-    # if request.POST: 
-    #     form = EmpleoForm(request.POST)
-    #     if form.is_valid():
-    #         form.save()
-    #     messages.success(request, 'Postulación Exitosa')
-        return redirect()  
+# def postular(request, empleo_id, postulante_id): 
+#     publicacion = Empleo.objects.get(pk = publicacion_id)
+#     form = EmpleoForm(request.POST or None, instance = publicacion)
+#     if request.POST: 
+#         form = EmpleoForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#         messages.success(request, 'Postulación Exitosa')
+#         return redirect()  
     
 def descripcion(request, empleo_id): 
     # Query del perro, un perro con el codigo
@@ -71,6 +75,22 @@ def descripcion(request, empleo_id):
     template = "descripcion.html"
     return render(request, template, contenido)
 
+
+@require_POST
+def postular(request):
+    postulante_id = request.POST.get("postulante_id")
+    empleo_id = request.POST.get("empleo_id")
+
+    # Guardar la información en el modelo Postulados
+    postulacion = Postulados.objects.create(
+        id_postulante_fk=postulante_id,
+        id_empleo_fk=empleo_id
+    )
+
+
+
+    # Redirigir a alguna página después de guardar la postulación
+    return redirect('pagina_de_exito')  # Ajusta esto según sea necesario
 
 #FORM DATOS PERSONALES POSTULANTE
 

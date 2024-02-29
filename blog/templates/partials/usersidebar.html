@@ -27,6 +27,14 @@
                                 </a>
                              
                             </li>
+                            <li>
+                                
+                                <a href="{% url 'subirCurriculum' request.user.perfil_postulante.id %} " class="waves-effect">
+                                    <i class="ti-user"></i><span class="badge rounded-pill bg-primary float-end"></span>
+                                    <span key="Dashboard">Curriculum</span>
+                                </a>
+                             
+                            </li>
                    
                             <li>
                                 <a href="{% url 'verExperiencias' request.user.perfil_postulante.id  %}" class="waves-effect">
