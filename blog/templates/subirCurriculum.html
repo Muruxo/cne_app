@@ -15,9 +15,9 @@
 
 </form>
  
-{% if curriculum_archivo %}
+{% if postulante.curriculum %}
     <p>Archivo existente:</p>
-    <a href="{{ curriculum_archivo.url }}" download>{{ curriculum_archivo.name }}</a>
+    <a href="{{ postulante.curriculum.url }}" download>Descargar currículum</a>
 {% else %}
     <p>No hay archivo existente.</p>
 {% endif %}

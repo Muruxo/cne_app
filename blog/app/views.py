@@ -108,32 +108,20 @@ def agregarDatosPersonales(request, id):
 
 
 
+
 @login_required   
 def subirCurriculum(request, id): 
-    # Obtener el postulante asociado al ID proporcionado
-    postulante = Postulante.objects.get(pk=id)
-    
-    # Obtener o crear el currículum asociado al postulante
-    curriculum, created = Curriculum.objects.get_or_create(postulante=postulante)
-    
-    # Verificar si la solicitud es de tipo POST
+    postulante = get_object_or_404(Postulante, pk=id)
     if request.method == 'POST':  
-        # Inicializar el formulario con la instancia del currículum existente
-        form = CurriculumForm(request.POST, request.FILES, instance=curriculum)
-        # Verificar si el formulario es válido
+        form = CurriculumForm(request.POST, request.FILES, instance=postulante)
         if form.is_valid():
-            # Guardar el formulario pero sin confirmar aún
             form.save()
-            # Mostrar un mensaje de éxito
             messages.success(request, '¡Información actualizada con éxito!')
-            # Redirigir a alguna vista de éxito, por ejemplo, la página de perfil del usuario
-            return redirect('perfil_usuario')  # Ajusta esto según sea necesario
+            return redirect(index)
     else:
-        # Si no es una solicitud POST, inicializar el formulario con la instancia del currículum existente
-        form = CurriculumForm(instance=curriculum)
+        form = CurriculumForm(instance=postulante)
     
-    # Renderizar el formulario en el contexto del request
-    return render(request, 'subirCurriculum.html', {'form': form})
+    return render(request, 'subirCurriculum.html', {'form': form, 'postulante': postulante})
 
 
 @login_required
