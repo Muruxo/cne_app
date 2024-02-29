@@ -76,22 +76,6 @@ def descripcion(request, empleo_id):
     return render(request, template, contenido)
 
 
-@require_POST
-def postular(request):
-    postulante_id = request.POST.get("postulante_id")
-    empleo_id = request.POST.get("empleo_id")
-
-    # Guardar la información en el modelo Postulados
-    postulacion = Postulados.objects.create(
-        id_postulante_fk=postulante_id,
-        id_empleo_fk=empleo_id
-    )
-
-
-
-    # Redirigir a alguna página después de guardar la postulación
-    return redirect('pagina_de_exito')  # Ajusta esto según sea necesario
-
 #FORM DATOS PERSONALES POSTULANTE
 
 @login_required   
@@ -342,14 +326,50 @@ def lista_postulantes(request):
     c['postulantes'] = User.objects.all()
     return render(request, 'lista_postulantes.html', c)
 
+# @login_required
+# def descripcion(request, empleo_id): 
+#     empleo = Empleo.objects.get(pk = empleo_id)
+#     contenido = {
+#         'empleo' : empleo
+#     }
+#     template = "descripcion.html"
+#     return render(request, template, contenido)
+
 @login_required
-def descripcion(request, empleo_id): 
-    empleo = Empleo.objects.get(pk = empleo_id)
+def guardar_postulacion(request, empleo_nombre):
+    if request.method == 'POST':
+        # Obtener los datos enviados en la solicitud POST
+        usuario = request.user
+        postulante = Postulante.objects.get(usuario_postulante=usuario)
+        trabajo = Empleo.objects.get(nombre_empleo=empleo_nombre)
+        
+        # Aquí puedes guardar los datos en el modelo que desees
+        # Por ejemplo, puedes guardarlos en el modelo Postulados
+
+        # Ejemplo de cómo podrías guardar los datos en el modelo Postulados
+        postulacion = Postulados.objects.create(
+            estado_postulado='Activo',  # Puedes establecer un estado por defecto
+            id_postulados_fk=postulante,
+            id_empleo_fk=trabajo
+        )
+
+        # Redirigir al usuario a otra página
+        return redirect(index)  # Ajusta esto según sea necesario
+    
+    else:
+        # Si es una solicitud GET, simplemente muestra los datos del empleo
+         empleo = Empleo.objects.get(nombre_empleo = empleo_nombre)
     contenido = {
         'empleo' : empleo
     }
     template = "descripcion.html"
     return render(request, template, contenido)
+
+
+
+
+
+
 @login_required
 def congrats(request, id_postulados_fk):
     c={}

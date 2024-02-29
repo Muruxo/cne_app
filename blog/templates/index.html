@@ -32,7 +32,7 @@
     {%for p in empleos %}
     <div class="container-fluid col-sm-8 mb-5 mb-sm-2 " >
         <div class="card bg-secondary" style="border-radius: 1rem;">
-          <a class="dir" href="{% url 'descripcion' p.id %}">
+          <a class="dir" href="{% url 'guardar_postulacion' p.nombre_empleo %}">
             <div class="card-body btn" style="text-align:left;">
                 <blockquote class="card-blockquote mb-0">
                   <h5 class="card-title">{{p.nombre_empleo}}</h5>
