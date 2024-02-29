@@ -1,10 +1,17 @@
 from django.contrib import admin
 
-from .models import *
+from .models import Publicacion, Personal, Postulante, Experiencia, Niveltitulo, Educacion, Ciudad, Empleo, Postulados
+
 
 @admin.register(Publicacion)
 class PublicacionAdmin(admin.ModelAdmin):
     list_display = ('id', 'titulo', 'descripcion', 'email')
+
+
+@admin.register(Personal)
+class PersonalAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'nombre', 'apellido')
+    list_filter = ('user',)
 
 
 @admin.register(Postulante)
@@ -38,7 +45,7 @@ class ExperienciaAdmin(admin.ModelAdmin):
         'fecha_final',
         'descripcion',
     )
-    list_filter = ('fecha_inicio', 'fecha_final')
+    list_filter = ('postulante', 'fecha_inicio', 'fecha_final')
 
 
 @admin.register(Niveltitulo)

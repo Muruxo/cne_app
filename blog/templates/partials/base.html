@@ -42,10 +42,10 @@
         {% endblock %}
 
         {% block sidebar %}
-        {% if user.is_staff == True %}
+        {% if user.perfil_admin %}
         {% include 'partials/adminsidebar.html' %} 
         {% endif %}
-        {%if user.is_staff == False %}
+        {%if user.perfi_postulante %}
         {% include 'partials/usersidebar.html' %}
         
         {%endif%}
