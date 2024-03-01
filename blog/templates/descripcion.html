@@ -8,30 +8,12 @@
  <div class=" mt-4 col-8 m-2">
         <h2>Descripción del Empleo</h2>
  </div>
-<div class="container mt-4">
-    <div class="card">
-      
-      <div class="card-body" style="text-align:left;">
-      
-        <h5 class="card-title">{{empleo.nombre_empleo}} 
-                {% if user.perfil_postulante%}
-                <a href="{% url 'DatosPer' request.user.perfil_postulante.id%}" class="btn btn-success btn-lg float-end">Postular</a>
-                {% endif%}
-        </h5>
-        
-        <p class="card-text"><i class="bi bi-geo-alt"></i> {{empleo.id_ciudad_fk }}</p>
-        <p class="card-text"><i class="bi bi-briefcase"></i> {{empleo.area_empleo}}</p>
-        <p class="card-text"><i class="bi bi-building"></i> {{empleo.modalidad_empleo}}</p>
-
-      </div>
-    </div>
-</div>
 
 
 <div class="container mt-4 mb-5">
         <div class="card">
                 <div class="card-header">
-                        <h5 class="card-title">{{ empleo.nombre_empleo }}</h5>     
+                        <h3 class="card-title">{{ empleo.nombre_empleo }}</h3>     
                 </div>
                 <div class="card-body">
                 <p class="card-text"><strong>Requisitos:</strong> {{ empleo.descripcion_empleo }}</p>
@@ -40,13 +22,16 @@
                 <p class="card-text"><strong>Modalidad:</strong> {{ empleo.modalidad_empleo}}</p>
                 <p class="card-text"><strong>Tiempo de Contrato:</strong> {{ empleo.tiempo_empleo }} meses</p>
                 <p class="card-text"><strong>Ciudad:</strong> {{empleo.id_ciudad_fk}} </p>
-                {% if user.perfil_postulante%}
-                <a href="{% url 'DatosPer' request.user.perfil_postulante.id %}" class="btn btn-success">Postular</a>
-                {% endif%}
-                <a href="{% url 'index' %}" class="btn btn-outline-primary">Regresar</a>
-                </div>
-
         </div>
+        <form method="post" action="{% url 'guardar_postulacion' empleo.nombre_empleo%}">
+                {% csrf_token %}
+                <!-- Campo oculto para almacenar el empleo_id -->
+                <input type="hidden" name="empleo_nombre" value="{{ empleo.nombre_empleo }}">
+                <!-- Campo oculto para almacenar el nombre de usuario -->
+                <input type="hidden" name="nombre_usuario" value="{{ request.user }}">
+
+                <!-- Botón de envío del formulario -->
+                <button type="submit" class="btn btn-primary">Postular</button>
 </div>
         
 {% endblock %}
