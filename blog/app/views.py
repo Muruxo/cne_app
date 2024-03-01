@@ -27,7 +27,7 @@ def eliminar(request, publicacion_id):
   
         publicacion = Empleo.objects.get(pk = publicacion_id)
         publicacion.delete()
-        messages.success(request, 'Publicación Eliminada')
+        messages.error(request, 'Publicación Eliminada')
         return redirect(home)  
 
 # @login_required    
@@ -366,34 +366,43 @@ def lista_postulantes(request):
 
 @login_required
 def guardar_postulacion(request, empleo_nombre):
-    if request.method == 'POST':
-        # Obtener los datos enviados en la solicitud POST
-        usuario = request.user
-        postulante = Postulante.objects.get(usuario_postulante=usuario)
-        trabajo = Empleo.objects.get(nombre_empleo=empleo_nombre)
-        
-        # Aquí puedes guardar los datos en el modelo que desees
-        # Por ejemplo, puedes guardarlos en el modelo Postulados
-
-        # Ejemplo de cómo podrías guardar los datos en el modelo Postulados
-        postulacion = Postulados.objects.create(
-            estado_postulado='Activo',  # Puedes establecer un estado por defecto
-            id_postulados_fk=postulante,
-            id_empleo_fk=trabajo
-        )
-
-        # Redirigir al usuario a otra página
-        return redirect(index)  # Ajusta esto según sea necesario
     
-    else:
-        # Si es una solicitud GET, simplemente muestra los datos del empleo
-         empleo = Empleo.objects.get(nombre_empleo = empleo_nombre)
-    contenido = {
-        'empleo' : empleo
-    }
-    template = "descripcion.html"
-    return render(request, template, contenido)
+        if request.method == 'POST':
+            # Obtener los datos enviados en la solicitud POST
+            user = request.user
+            resultado_experiencia = Experiencia.objects.filter(postulante_id=user.id).exists()
+            resultado_educacion = Educacion.objects.filter(id_educacion_fk=user.id).exists()
+            if resultado_experiencia and resultado_educacion: 
+                
+                usuario = request.user
+                postulante = Postulante.objects.get(usuario_postulante=usuario)
+                trabajo = Empleo.objects.get(nombre_empleo=empleo_nombre)
+            
+                # Aquí puedes guardar los datos en el modelo que desees
+                # Por ejemplo, puedes guardarlos en el modelo Postulados
 
+                # Ejemplo de cómo podrías guardar los datos en el modelo Postulados
+                postulacion = Postulados.objects.create(
+                    estado_postulado='Activo',  # Puedes establecer un estado por defecto
+                    id_postulados_fk=postulante,
+                    id_empleo_fk=trabajo
+                )
+
+                # Redirigir al usuario a otra página
+                return redirect(index)  # Ajusta esto según sea necesario
+            else: 
+                messages.error(request, 'Debe completar sus datos de Experiencia y Educación')
+                return redirect(index)
+        
+        else:
+            # Si es una solicitud GET, simplemente muestra los datos del empleo
+            empleo = Empleo.objects.get(nombre_empleo = empleo_nombre)
+        contenido = {
+            'empleo' : empleo
+        }
+        template = "descripcion.html"
+        return render(request, template, contenido)
+    
 
 
 
