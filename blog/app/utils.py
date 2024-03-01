@@ -8,7 +8,7 @@ def es_admin(user):
     else: 
         return False
     
-def es_admin(user): 
+def es_postulante(user): 
     if hasattr(user, 'perfil_postulante'):
         return True 
     else: 

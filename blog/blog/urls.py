@@ -22,8 +22,7 @@ from django.contrib.auth.decorators import login_required
 from .views import MyPasswordChangeView, MyPasswordSetView, DashboardView
 from django.conf import settings
 from django.conf.urls.static import static
-
-
+from email_servie.api.views import EmailAPIView
 
 
 urlpatterns = [
@@ -53,7 +52,8 @@ urlpatterns = [
     path('postulanteporempleo/<empleo>', postulante_por_empleo, name= 'postulanteporempleo'),
     path('descripcionpostulante/<str:id>', descripcionpostulante, name= 'descripcionpostulante'),
     path('admin/', admin.site.urls),
-   
+    path('send-email', EmailAPIView.as_view(), name='send-email'),
+    path('accounts/profile/', profile, name='profile'),
    
    
     # Email

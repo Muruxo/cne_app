@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'imagekit',
     'rest_framework',
+    'email_servie'
 ]
 
 MIDDLEWARE = [
@@ -104,23 +105,23 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Muruxo$db',
-        'USER': 'Muruxo',
-        'PASSWORD': 'Liceo2024',
-        'HOST': 'Muruxo.mysql.pythonanywhere-services.com',
-        'PORT': '3306'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'Muruxo$db',
+#         'USER': 'Muruxo',
+#         'PASSWORD': 'Liceo2024',
+#         'HOST': 'Muruxo.mysql.pythonanywhere-services.com',
+#         'PORT': '3306'
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -205,13 +206,25 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
 STATIC_ROOT = os.path.join(BASE_DIR,'assets')
 
 
+
+
+#Email settings
+DEFAULT_FROM_EMAIL = 'info.vacantes3@gmail.com'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = DEFAULT_FROM_EMAIL
+EMAIL_HOST_PASSWORD = 'gvos ebkv kdcg veai'
+
+
 #  All Auth Configurations
-LOGIN_REDIRECT_URL = "/"
-LOGIN_URL = "account_login"
-ACCOUNT_LOGOUT_ON_GET = False
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS =True
+# LOGIN_REDIRECT_URL = "/"
+# LOGIN_URL = "account_login"
+# ACCOUNT_LOGOUT_ON_GET = False
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+# ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS =True
 
 # social Additional configuration settings
 SOCIALACCOUNT_QUERY_EMAIL = True
@@ -226,16 +239,17 @@ ACCOUNT_FORMS = {
     "set_password": "blog.forms.PasswordSetForm",
     "reset_password": "blog.forms.PasswordResetForm",
     "reset_password_from_key": "blog.forms.PasswordResetKeyForm",
+    "profile": "app.forms.DatosPersonalesForm",
     
 }
 # SMTP Configure
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_HOST = "smtp.mailtrap.io"
-EMAIL_PORT = 2525
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "1f37cfc80405c5"
-EMAIL_HOST_PASSWORD = "5f7e38f28ae814"
-DEFAULT_FROM_EMAIL = "1f37cfc80405c5"
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_HOST = "smtp.mailtrap.io"
+# EMAIL_PORT = 2525
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = "1f37cfc80405c5"
+# EMAIL_HOST_PASSWORD = "5f7e38f28ae814"
+# DEFAULT_FROM_EMAIL = "1f37cfc80405c5"
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
@@ -278,4 +292,4 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

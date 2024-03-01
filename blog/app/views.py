@@ -113,7 +113,36 @@ def agregarDatosPersonales(request, id):
         contenido['usuario_postulante'] = usuario
     return render(request, 'DatosPersonales.html', contenido)
 
+@login_required   
+def profile(request): 
+    usuario = request.user
+    if request.POST: 
+        form = DatosPersonalesForm(request.POST)
+        if form.is_valid():
+            postulante = form.save(commit=False)
+            postulante.usuario_postulante = usuario  # Asigna el nombre de usuario al campo correspondiente
+            postulante.save()
+        messages.success(request, 'Información Añadida')
+        return redirect(index)
+    return render(request, 'profile.html', {'form':DatosPersonalesForm})
+    
+# def profile(request): 
+#     usuario = request.user.pk
+#     contenido = {}
+#     if request.method == 'POST':  
+#         form = DatosPersonalesForm(request.POST,  request.FILES)
+#         if form.is_valid():
+#             postulante = form.save(commit=False)
+#             postulante.usuario_postulante.pk = usuario  # Asigna el nombre de usuario al campo correspondiente
+#             postulante.save()
+#             messages.success(request, 'Informacion agregada con éxito')
+#         return redirect(index, usuario) 
 
+#     else:
+#         form = DatosPersonalesForm(initial={'usuario_postulante': usuario})  # Establece el valor inicial del campo de nombre de usuario
+#         contenido['form'] = form
+#         contenido['usuario_postulante'] = usuario
+#     return render(request, 'profile.html', contenido)
 
 # @login_required   
 # def subirCurriculum(request, id): 
