@@ -125,6 +125,7 @@ class Empleo(models.Model):
     tiempo_empleo = models.IntegerField(blank=False,null=False, validators=[MaxValueValidator(9999999999)])
     id_ciudad_fk = models.ForeignKey(Ciudad, related_name='ciudad', on_delete=models.SET_NULL,null=True)
     anos_minimos_experiencia = models.IntegerField(blank=True,null=True)
+    estado = models.IntegerField(blank=True, null=True)
     
     def __str__(self)->str:
         return f'{self.nombre_empleo}'
@@ -135,6 +136,7 @@ class Postulados(models.Model):
     fecha_postulado = models.DateField(default=timezone.now, blank=False,null=False)
     id_postulados_fk = models.ForeignKey(Postulante, related_name='postulado', on_delete=models.SET_NULL,null=True)
     id_empleo_fk = models.ForeignKey(Empleo, related_name='postulados', on_delete=models.SET_NULL,null=True)
+    calificacion = models.IntegerField(blank=True, null=True)
 
     def __str__(self)-> str:
         return f'{self.estado_postulado}'

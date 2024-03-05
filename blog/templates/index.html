@@ -30,6 +30,8 @@
 
   <div class="row">
     {%for p in empleos %}
+
+    {% if p.estado == 1%}
     <div class="container-fluid col-sm-8 mb-5 mb-sm-2 " >
         <div class="card bg-secondary" style="border-radius: 1rem;">
           <a class="dir" href="{% url 'guardar_postulacion' p.nombre_empleo %}">
@@ -45,6 +47,7 @@
             </div></a>
         </div>
     </div>
+    {% endif%}
     <br><br><br>
   {%endfor%}
   {% endblock %}

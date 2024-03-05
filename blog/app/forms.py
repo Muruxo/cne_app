@@ -19,7 +19,7 @@ class EmpleoForm(ModelForm):
             'modalidad_empleo': 'Modalidad de Trabajo',
             'tiempo_empleo': 'Tiempo de contrato',
             'id_ciudad_fk': 'Ciudad',
-            
+            'anos_minimos_experiencia': 'Años de Experiencia'
         }
         widgets = {
             'nombre_empleo': forms.TextInput(attrs = {'class': 'form-control'}),
@@ -29,6 +29,7 @@ class EmpleoForm(ModelForm):
             'modalidad_empleo': forms.TextInput(attrs = {'class': 'form-control'}),
             'tiempo_empleo':forms.TextInput(attrs= {'type': 'number', 'class': 'form-control'}),
             'id_ciudad_fk':forms.Select(attrs = {'class': 'form-control'}),
+            'anos_minimos_experiencia': forms.TextInput(attrs = {'type': 'number', 'class': 'form-control'}),
         }
         
 class PublicacionForm(ModelForm):

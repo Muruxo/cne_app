@@ -370,7 +370,7 @@ def guardar_postulacion(request, empleo_nombre):
         if request.method == 'POST':
             # Obtener los datos enviados en la solicitud POST
             user = request.user
-            resultado_experiencia = Experiencia.objects.filter(postulante_id=user.id).exists()
+            resultado_experiencia = Experiencia.objects.filter(postulante=user.id).exists()
             resultado_educacion = Educacion.objects.filter(id_educacion_fk=user.id).exists()
             if resultado_experiencia and resultado_educacion: 
                 
@@ -380,7 +380,9 @@ def guardar_postulacion(request, empleo_nombre):
             
                 # Aquí puedes guardar los datos en el modelo que desees
                 # Por ejemplo, puedes guardarlos en el modelo Postulados
-
+                # standard = trabajo.anos_minimos_experiencia
+                
+                
                 # Ejemplo de cómo podrías guardar los datos en el modelo Postulados
                 postulacion = Postulados.objects.create(
                     estado_postulado='Activo',  # Puedes establecer un estado por defecto
@@ -467,4 +469,20 @@ def redireccionPostular(request, id):
         return actualizarDatosPersonales(request, id)  # Redirige a la primera función de vista
     else:
         return agregarDatosPersonales(request, id)  # Redirige a la segunda función de vista
+
+
+def activarempleo(request, id):
     
+    empleo = Empleo.objects.get(pk = id)
+    empleo.estado = 1 if empleo.estado == 0 else 0 
+    empleo.save() 
+    messages.success(request, 'Empleo Activado')
+    return redirect('home')
+    
+def desactivarempleo(request, id):
+    
+    empleo = Empleo.objects.get(pk = id)
+    empleo.estado = 0 if empleo.estado == 1 else 1
+    messages.success(request, 'Empleo Desactivado')
+    empleo.save() 
+    return redirect('home')

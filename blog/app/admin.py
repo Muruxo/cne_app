@@ -85,6 +85,7 @@ class EmpleoAdmin(admin.ModelAdmin):
         'tiempo_empleo',
         'id_ciudad_fk',
         'anos_minimos_experiencia',
+        'estado',
     )
     list_filter = ('fecha_empleo', 'id_ciudad_fk')
 
@@ -97,5 +98,6 @@ class PostuladosAdmin(admin.ModelAdmin):
         'fecha_postulado',
         'id_postulados_fk',
         'id_empleo_fk',
+        'calificacion',
     )
     list_filter = ('fecha_postulado', 'id_postulados_fk', 'id_empleo_fk')
