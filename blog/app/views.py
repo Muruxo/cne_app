@@ -365,13 +365,15 @@ def lista_postulantes(request):
 #     return render(request, template, contenido)
 
 @login_required
-def guardar_postulacion(request, empleo_nombre):
-    
+def guardar_postulacion(request, empleo_nombre, nombre_usuario):
+
         if request.method == 'POST':
             # Obtener los datos enviados en la solicitud POST
-            user = request.user
-            resultado_experiencia = Experiencia.objects.filter(postulante=user.id).exists()
-            resultado_educacion = Educacion.objects.filter(id_educacion_fk=user.id).exists()
+            usuario = User.objects.get(username=nombre_usuario)
+            postulante = Postulante.objects.get(usuario_postulante=usuario)
+            resultado_experiencia = Experiencia.objects.filter(postulante=postulante).exists()
+            resultado_educacion = Educacion.objects.filter(id_educacion_fk=postulante).exists()
+
             if resultado_experiencia and resultado_educacion: 
                 
                 usuario = request.user
@@ -382,19 +384,49 @@ def guardar_postulacion(request, empleo_nombre):
                 # Por ejemplo, puedes guardarlos en el modelo Postulados
                 # standard = trabajo.anos_minimos_experiencia
                 
+                exp_usuario = Experiencia.objects.filter(postulante=postulante)
+
+                               
+                experiencia_total = exp_usuario.count()
+
+                # for  experiencia in resultado_experiencia:
+                #     if experiencia:
+                #         experiencia_total += 1
+                        
+                educacion_total = 0
+                educaciones = Educacion.objects.filter(id_educacion_fk=postulante)
+                
+                for educacion in educaciones:
+                    if educacion.nivel_edu == 'Bachiller' and educacion.estado_edu == 'Graduado':
+                        educacion_total += 1
+                    elif educacion.nivel_edu == 'Técnico' and educacion.estado_edu == 'Graduado':
+                        educacion_total += 2
+                    elif educacion.nivel_edu == 'Universitario' and educacion.estado_edu == 'Graduado':
+                        educacion_total += 3
+                    elif educacion.nivel_edu == 'Magister' and educacion.estado_edu == 'Graduado':
+                        educacion_total += 4
+                    elif educacion.nivel_edu == 'Doctorado' and educacion.estado_edu == 'Graduado':
+                        educacion_total += 5
+                    else: 
+                        educacion_total += 1 
+                        
+                calficacion_total = experiencia_total + educacion_total
                 
                 # Ejemplo de cómo podrías guardar los datos en el modelo Postulados
                 postulacion = Postulados.objects.create(
                     estado_postulado='Activo',  # Puedes establecer un estado por defecto
                     id_postulados_fk=postulante,
-                    id_empleo_fk=trabajo
+                    id_empleo_fk=trabajo,
+                    calificacion = calficacion_total
                 )
 
                 # Redirigir al usuario a otra página
+                messages.success(request, 'Postulacion exitosa')
                 return redirect(index)  # Ajusta esto según sea necesario
             else: 
                 messages.error(request, 'Debe completar sus datos de Experiencia y Educación')
                 return redirect(index)
+
         
         else:
             # Si es una solicitud GET, simplemente muestra los datos del empleo

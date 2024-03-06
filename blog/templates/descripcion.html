@@ -23,7 +23,7 @@
                 <p class="card-text"><strong>Tiempo de Contrato:</strong> {{ empleo.tiempo_empleo }} meses</p>
                 <p class="card-text"><strong>Ciudad:</strong> {{empleo.id_ciudad_fk}} </p>
         </div>
-        <form method="post" action="{% url 'guardar_postulacion' empleo.nombre_empleo%}">
+        <form method="post" action="{% url 'guardar_postulacion' empleo.nombre_empleo request.user%}">
                 {% csrf_token %}
                 <!-- Campo oculto para almacenar el empleo_id -->
                 <input type="hidden" name="empleo_nombre" value="{{ empleo.nombre_empleo }}">

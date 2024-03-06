@@ -37,7 +37,7 @@ urlpatterns = [
     path('eliminar/<publicacion_id>', eliminar, name = 'eliminar'),
     path('actualizar/<publicacion_id>', actualizar, name ="actualizar"), 
     # path('postular', postular, name = 'postular'),
-    path('descripcion/<empleo_nombre>', guardar_postulacion , name ="guardar_postulacion"), 
+    path('descripcion/<empleo_nombre><nombre_usuario>', guardar_postulacion , name ="guardar_postulacion"), 
     path('accounts/', include('allauth.urls')),
     path('DatosPer/<str:id>', redireccionDatosPersonales, name='DatosPer'),
     path('subirCurriculum/<str:id>', subirCurriculum, name='subirCurriculum'),
