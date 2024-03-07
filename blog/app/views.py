@@ -65,7 +65,7 @@ def index(request):
 #         return redirect()  
     
 def descripcion(request, empleo_id): 
-    # Query del perro, un perro con el codigo
+
     empleo = Empleo.objects.get(pk = empleo_id)
     
     # creo un diccionario con el objeto
@@ -518,3 +518,15 @@ def desactivarempleo(request, id):
     messages.success(request, 'Empleo Desactivado')
     empleo.save() 
     return redirect('home')
+
+def UsuarioPostulaciones(request):
+    nombre_usuario = request.user
+    usuario = Postulante.objects.get(usuario_postulante = nombre_usuario)
+
+    c={}
+    c['postulados'] = Postulados.objects.filter(id_postulados_fk = usuario)
+    empleo = c['postulados'].first().id_empleo_fk
+    c['empleo'] = Empleo.objects.get(nombre_empleo = empleo)
+    empleo_nombre = c['empleo']
+
+    return render(request, 'postulaciones.html',{'c': c, 'empleo_nombre': empleo_nombre, 'nombre_usuario': nombre_usuario})

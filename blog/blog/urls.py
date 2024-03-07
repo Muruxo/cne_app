@@ -48,6 +48,7 @@ urlpatterns = [
     path('actualizarEducacion/<str:id>', actualizarEducaciones, name ="actualizarEducacion"), 
     path('verExperiencias/<str:id>', experiencias, name='verExperiencias'),
     path('verEducaciones/<str:id>', educaciones, name='Educaciones'),
+    path('postulaciones/', UsuarioPostulaciones, name='postulaciones'),
     path('activar/<id>', activarempleo, name='activar'),
     path('desactivar/<id>', desactivarempleo, name='desactivar'),
     path('congrats/<lista_id>', congrats, name= 'congrats'),
