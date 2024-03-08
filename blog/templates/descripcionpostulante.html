@@ -28,6 +28,7 @@
                                         <th scope="col">Edad</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Ciudad</th>
+                                        <th scope="col">Curriculum</th>
                                 </tr>
                         </thead>
                         <tbody>
@@ -38,6 +39,7 @@
                                         <td>{{persona.edad}}</td>
                                         <td>{{persona.email}}</td>
                                         <td>{{persona.ciudad}}</td>
+                                        <td><a href="{{ persona.curriculum.url }}" download><button class="btn btn-success" type="">Ver Curriculum</button></a></td>
                                 </tr>
                         </tbody>
                 </table>
