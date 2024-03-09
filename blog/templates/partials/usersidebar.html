@@ -8,7 +8,7 @@
                     <div id="sidebar-menu">
                         <!-- Left Menu Start -->
                         <ul class="metismenu list-unstyled" id="side-menu">
-                            <li class="menu-title" key="Main">Main</li>
+                            <li class="menu-title" key="Main">Principal</li>
                          
                             <li>
                                 <a href="{% url 'index' %}" class="waves-effect">
@@ -17,35 +17,19 @@
                                 </a>
                             </li>
 
-                            <li class="menu-title" key="DatosPersonales">Datos Personales</li>
+                            <li class="menu-title" key="DatosPersonales">Paso 1</li>
                     
                             <li>
                                 
                                 <a href="{% url 'DatosPer' request.user.perfil_postulante.id %} " class="waves-effect">
                                     <i class="ti-user"></i><span class="badge rounded-pill bg-primary float-end"></span>
-                                    <span>Perfil</span>
+                                    <span>Datos Personales</span>
                                 </a>
                              
                             </li>
 
-                            <li>
-                                
-                                <a href="{% url 'postulaciones'%} " class="waves-effect">
-                                    <i class="ti-folder"></i><span class="badge rounded-pill bg-primary float-end"></span>
-                                    <span>Mis postulaciones</span>
-                                </a>
-                             
-                            </li>
+                            <li class="menu-title" key="DatosPersonales">Paso 2</li>
 
-                            <li>
-                                
-                                <a href="{% url 'subirCurriculum' request.user.perfil_postulante.id %} " class="waves-effect">
-                                    <i class="ti-archive"></i><span class="badge rounded-pill bg-primary float-end"></span>
-                                    <span>Curriculum</span>
-                                </a>
-                             
-                            </li>
-                   
                             <li>
                                 <a href="{% url 'verExperiencias' request.user.perfil_postulante.id  %}" class="waves-effect">
                                     <i class="ti-briefcase"></i><span class="badge rounded-pill bg-primary float-end"></span>
@@ -59,6 +43,32 @@
                                     <span>Datos Educación</span>
                                 </a>
                             </li>
+
+                            <li class="menu-title" key="DatosPersonales">Paso 3</li>
+
+                            <li>
+                                
+                                <a href="{% url 'subirCurriculum' request.user.perfil_postulante.id %} " class="waves-effect">
+                                    <i class="ti-archive"></i><span class="badge rounded-pill bg-primary float-end"></span>
+                                    <span>Curriculum</span>
+                                </a>
+                             
+                            </li>
+
+                            <li class="menu-title" key="DatosPersonales">Información</li>
+
+                            <li>
+                                
+                                <a href="{% url 'postulaciones'%} " class="waves-effect">
+                                    <i class="ti-folder"></i><span class="badge rounded-pill bg-primary float-end"></span>
+                                    <span>Mis postulaciones</span>
+                                </a>
+                             
+                            </li>
+
+                          
+                   
+                          
                             
 
                         </ul>

@@ -16,11 +16,11 @@
                 <table class="table table-primary">
                         <thead>
                                 <tr>
-                                        <th scope="col">Empleo</th>
+                                        <th scope="col">Cargo</th>
                                         <th scope="col">Fecha de postulación</th>
-                                        <th scope="col">Estado de la vacante</th>
-                                        <th scope="col">Modalidad</th>
-                                        <th scope="col">Duración</th>
+                                        <th scope="col">Estado de la Vacante</th>
+                                        <th scope="col">Modalidad de Trabajo</th>
+                                        <th scope="col">Duración de Contrato</th>
                                         <th scope="col">Ciudad</th>
                                 </tr>
                         </thead>
@@ -31,7 +31,7 @@
                                         <td>{{postulado.fecha_postulado }}</td>
                                         <td>{{postulado.estado_postulado}}</td>
                                         <td>{{postulado.id_empleo_fk.modalidad_empleo}}</td>
-                                        <td>{{postulado.id_empleo_fk.tiempo_empleo}}</td>
+                                        <td>{{postulado.id_empleo_fk.tiempo_empleo}} meses</td>
                                         <td>{{postulado.id_empleo_fk.id_ciudad_fk}}</td>
 
                                 </tr>

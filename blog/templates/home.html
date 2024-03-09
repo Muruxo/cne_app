@@ -25,10 +25,12 @@
         {%endfor%}
         {%endcomment%}
         {% if p.estado == 1 %}
-        <a href="{% url 'desactivar' p.id %}" class="btn btn-dark">Desactivar</a>
+        <button onclick="desactivar()" class="btn btn-dark" >Desactivar</button>
+        <!-- <a href="" class="btn btn-dark" onclick="mostrarConfirmacion()">Desactivar</a> -->
         {% else%}
-        <a href="{% url 'activar' p.id %}" class="btn btn-warning">Activar</a>
-          {% endif%}
+        <button onclick="activar()" class="btn btn-warning">Activar</button>
+        <!-- <a href="{% url 'activar' p.id %}" class="btn btn-warning">Activar</a> -->
+        {% endif%}
         <a href="{% url 'eliminar' p.id %}" class="btn btn-danger">Eliminar</a>
         <a href="{% url 'actualizar' p.id %}" class="btn btn-success">Actualizar</a>
         
@@ -38,6 +40,25 @@
     </div>
   </div>
   
+  <script>
+    function desactivar() {
+        var respuesta = confirm("¿Está seguro de Desactivar este Empleo?");
+        if (respuesta) {
+            window.location.href = "{% url 'desactivar' p.id %}";
+        } else {
+          window.location.href = "{% url 'home' %}";
+        }
+    }
+
+    function activar() {
+        var respuesta = confirm("¿Está seguro de Activar este Empleo?");
+        if (respuesta) {
+            window.location.href = "{% url 'activar' p.id %}";
+        } else {
+          window.location.href = "{% url 'home' %}";
+        }
+    }
+    </script>
 
 <!-- <div class="card">
     <h5 class="card-header">{{p.titulo}}</h5>

@@ -9,8 +9,11 @@ from .models import *
 from  .forms import *
 from django.http import HttpResponse
 from django.views.decorators.http import require_POST
-from tkinter import messagebox
+# import tkinter as tk
+# from tkinter import messagebox
 
+# root = tk.Tk() 
+# root.mainloop()
 
 def actualizar(request, publicacion_id):
         
@@ -507,25 +510,21 @@ def activarempleo(request, id):
     
     empleo = Empleo.objects.get(pk = id)
     empleo.estado = 1 if empleo.estado == 0 else 0 
-    respuesta = messagebox.askokcancel(message="¿Está seguro de Activar este Empleo?", title="Confirmación")
-    if respuesta: 
-        empleo.save() 
-        messages.success(request, 'Empleo Activado')
-        return redirect('home')
-    else: 
-        return redirect('home')
+    # respuesta = messagebox.askokcancel(message="¿Está seguro de Activar este Empleo?", title="Confirmación")
+    # if respuesta: 
+    empleo.save() 
+    messages.success(request, 'Empleo Activado')
+    return redirect('home')
+    # else: 
+    #     return redirect('home')
     
 def desactivarempleo(request, id):
     
     empleo = Empleo.objects.get(pk = id)
     empleo.estado = 0 if empleo.estado == 1 else 1
-    respuesta = messagebox.askokcancel(message="¿Está seguro de Desactivar este Empleo?", title="Confirmación")
-    if respuesta: 
-        messages.success(request, 'Empleo Desactivado')
-        empleo.save() 
-        return redirect('home')
-    else: 
-        return redirect('home')
+    messages.success(request, 'Empleo Desactivado')
+    empleo.save() 
+    return redirect('home')
 
 def UsuarioPostulaciones(request):
     nombre_usuario = request.user
