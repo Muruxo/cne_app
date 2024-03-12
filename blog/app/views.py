@@ -633,7 +633,7 @@ def contratar(request, postulante_id, empleo_id):
     estado.estado_postulado =  "Contratado"
     estado.save() 
     # Enviar correo electrónico
-    asunto = 'Feliciciones - Contratado'
+    asunto = 'Felicitaciones - Contratado'
     mensaje = f'Estimado {postulante.nombre}, por la presente deseamos comunicarle que ha sido contratado para ocupar el cargo de {empleo.nombre_empleo}. Favor presentarse lo más pronto posible en nuestra instalaciones.'
     destinatarios = [settings.EMAIL_HOST_USER, postulante.email]  
     send_mail(asunto, mensaje, settings.EMAIL_HOST_USER, destinatarios, fail_silently=False)
