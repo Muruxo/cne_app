@@ -222,18 +222,17 @@ def actualizarEducaciones(request, id):
             if form.is_valid(): 
                 form.save() 
                 messages.success(request, 'Publicación Actualizada')
-                return redirect(educaciones, id=postulante_id)  
+                return redirect(educaciones)  
         return render(request, 'actualizarEducacion.html', {'id_educacion_fk':educacion, 'form': form})
 
 @login_required
 def actualizarExperiencias(request, id): 
         experiencia = Experiencia.objects.get(pk = id)
         form = ExperienciaForm(request.POST or None, instance = experiencia)
-        postulante_id = experiencia.postulante.pk
         if form.is_valid(): 
             form.save()
             messages.success(request, 'Publicación Actualizada')
-            return redirect(experiencias, id=postulante_id)  
+            return redirect(experiencias)  
         return render(request, 'actualizarExperiencia.html', {'postulante':experiencia, 'form': form})
 
 # def agregarDatosAdicionales(request,id): 
