@@ -9,7 +9,7 @@
         <h2>{{persona.first_name}} {{persona.last_name}}</h2>
  </div>
 <div class="container mt-4">
-        <a href="{% url 'postulante_por_empleo'%}" class="btn btn-info">Regresar</a>
+        <a href="{% url 'postulanteporempleo' empleo.pk %}" class="btn btn-info">Regresar</a>
         <p></p>
     <div class="card">
       <div class="card-body" style="text-align:left;">
@@ -75,7 +75,7 @@
                             <tbody>
                                 {%for e in experiencia %}
                                     <tr class="">
-                                            <td></td>
+                                            <td>{{forloop.counter}}</td>
                                             <td>{{e.cargo }}</td>
                                             <td>{{e.empresa }}</td>
                                             <td>{{e.pais}}</td>
@@ -107,7 +107,7 @@
                     >
                             <thead>
                                     <tr>
-                                            <th scope="col">ID</th>
+                                            <th scope="col">Nº</th>
                                             <th scope="col">Titulo</th>
                                             <th scope="col">Pais</th>
                                             <th scope="col">Institucion</th>
@@ -121,7 +121,7 @@
                             <tbody>
                                 {%for edu in educacion %}
                                     <tr class="">
-                                            <td></td>
+                                            <td>{{forloop.counter}}</td>
                                             <td>{{edu.titulo_edu }}</td>
                                             <td>{{edu.pais_edu }}</td>
                                             <td>{{edu.institucion_edu}}</td>

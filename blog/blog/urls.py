@@ -53,7 +53,7 @@ urlpatterns = [
     path('desactivar/<int:id>', desactivarempleo, name='desactivar'),
     path('congrats/<lista_id>', congrats, name= 'congrats'),
     path('postulanteporempleo/<empleo>', postulante_por_empleo, name= 'postulanteporempleo'),
-    path('descripcionpostulante/<str:id>', descripcionpostulante, name= 'descripcionpostulante'),
+    path('descripcionpostulante/<str:id>/<empleo_id>', descripcionpostulante, name= 'descripcionpostulante'),
     path('admin/', admin.site.urls),
     path('send-email', EmailAPIView.as_view(), name='send-email'),
     path('accounts/profile/', profile, name='profile'),

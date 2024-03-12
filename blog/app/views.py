@@ -518,15 +518,15 @@ def postulante_por_empleo(request, empleo):
 
 
 @login_required
-def descripcionpostulante(request, id): 
+def descripcionpostulante(request, id, empleo_id): 
     experienciapostulante = Experiencia.objects.filter(postulante = id)
     educacionpostulante = Educacion.objects.filter(id_educacion_fk = id)
-    
+    empleo = Empleo.objects.get(pk = empleo_id)
     c={}
     c['persona'] = Postulante.objects.get(id = id)
     c['experiencia'] = experienciapostulante
     c['educacion'] = educacionpostulante
-
+    c['empleo'] = empleo
     c['mostrar_boton'] = educacionpostulante.filter(titulo__isnull=False).exists()
     
     
@@ -591,6 +591,9 @@ def entrevista(request, postulante_id, empleo_id):
     postulante = Postulante.objects.get(pk=postulante_id)
     empleo = Empleo.objects.get(pk=empleo_id)
     estado = Postulados.objects.get(id_postulados_fk = postulante_id, id_empleo_fk = empleo_id)
+    
+    c={}
+    c['empleo'] = empleo
     if request.method == 'POST':
         form = EntrevistaForm(request.POST)
         if form.is_valid():
@@ -614,7 +617,7 @@ def entrevista(request, postulante_id, empleo_id):
             # return HttpResponse('Entrevista creada correctamente.')
     else:
         form = EntrevistaForm()
-    return render(request, 'entrevista.html', {'form': form})
+    return render(request, 'entrevista.html', {'form': form, 'empleo': empleo})
 
 def contratar(request, postulante_id, empleo_id): 
     
