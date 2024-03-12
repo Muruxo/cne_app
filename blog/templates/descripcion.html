@@ -2,7 +2,11 @@
 
 {% block content %}
 
-
+{% if mensaje_error %}
+    <div class="alert alert-danger" role="alert">
+        {{ mensaje_error }}
+    </div>
+{% endif %}
 
  <br>   
  <div class=" mt-4 col-8 m-2">
@@ -23,7 +27,7 @@
                 <p class="card-text"><strong>Tiempo de Contrato:</strong> {{ empleo.tiempo_empleo }} meses</p>
                 <p class="card-text"><strong>Ciudad:</strong> {{empleo.id_ciudad_fk}} </p>
         </div>
-        <form method="post" action="{% url 'guardar_postulacion' empleo.nombre_empleo request.user%}">
+        <form method="post" action="{% url 'guardar_postulacion' empleo.nombre_empleo %}">
                 {% csrf_token %}
                 <!-- Campo oculto para almacenar el empleo_id -->
                 <input type="hidden" name="empleo_nombre" value="{{ empleo.nombre_empleo }}">

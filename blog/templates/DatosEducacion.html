@@ -7,11 +7,12 @@
 
 <div class="col-4 mb-4" >
 
-<form action="" method="POST">
+<form action="" method="POST" enctype="multipart/form-data">
 {{ form.as_p }}
 {% csrf_token %}
+
 <a href="{% url 'index' %}"><button class="btn btn-success" type="submit">Guardar</button></a>
-<a href="{% url 'home' %}"><button class="btn btn-danger" type ="button">Cancelar</button></a>
+<a href="{% url 'Educaciones' %}" class="btn btn-danger">Cancelar</a>
 
 </form>
     

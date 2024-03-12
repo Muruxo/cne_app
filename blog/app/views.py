@@ -9,16 +9,12 @@ from .models import *
 from  .forms import *
 from django.http import HttpResponse
 from django.views.decorators.http import require_POST
-from django.core.mail import send_mail
-from django.shortcuts import render
-from django.core.mail import send_mail
-from django.conf import settings
-
 # import tkinter as tk
 # from tkinter import messagebox
 
 # root = tk.Tk() 
 # root.mainloop()
+
 
 def actualizar(request, publicacion_id):
         
@@ -75,8 +71,6 @@ def index(request):
 def descripcion(request, empleo_id): 
 
     empleo = Empleo.objects.get(pk = empleo_id)
-    
-    # creo un diccionario con el objeto
     contenido = {
         'empleo' : empleo
     }
@@ -151,8 +145,9 @@ def profile(request):
 
 
 @login_required   
-def subirCurriculum(request, id): 
-    postulante = get_object_or_404(Postulante, pk=id)
+def subirCurriculum(request): 
+    id = request.user
+    postulante = get_object_or_404(Postulante, usuario_postulante =id)
     if request.method == 'POST':  
         form = CurriculumForm(request.POST, request.FILES, instance=postulante)
         if form.is_valid():
@@ -170,7 +165,7 @@ def agregarDatosAdicionales(request, id):
     usuario = Postulante.objects.get(pk = id)
     contenido = {}
     if request.method == 'POST': 
-        form = ExperienciaForm(request.POST)
+        form = ExperienciaForm(request.POST, request.FILES)
         if form.is_valid():
             experiencia = form.save(commit=False)
             experiencia.postulante = usuario  # Asigna el nombre de usuario al campo correspondiente
@@ -191,13 +186,13 @@ def agregarDatosEducacion(request, id):
     usuario = Postulante.objects.get(pk = id)
     contenido = {}
     if request.method == 'POST': 
-        form = EducacionForm(request.POST)
+        form = EducacionForm(request.POST, request.FILES)
         if form.is_valid():
             educacion = form.save(commit=False)
             educacion.id_educacion_fk = usuario  # Asigna el nombre de usuario al campo correspondiente
             educacion.save()
             messages.success(request, 'Informacion agregada con éxito')
-            return redirect(educaciones, id)
+            return redirect(educaciones, id=usuario)
     else:
         form = EducacionForm(initial={'id_educacion_fk': id})  # Establece el valor inicial del campo de nombre de usuario
         contenido['form'] = form
@@ -205,8 +200,9 @@ def agregarDatosEducacion(request, id):
     return render(request, 'DatosEducacion.html', contenido)
 
 @login_required
-def actualizarDatosPersonales(request, id): 
-        postulante = Postulante.objects.get(pk = id)
+def actualizarDatosPersonales(request): 
+        id = request.user
+        postulante = Postulante.objects.get(usuario_postulante = id)
         form = DatosPersonalesForm(request.POST or None, instance = postulante)
         if form.is_valid(): 
             form.save()
@@ -216,13 +212,14 @@ def actualizarDatosPersonales(request, id):
 
 @login_required
 def actualizarEducaciones(request, id): 
-        educacion = Educacion.objects.get(pk = id)
+        educacion = get_object_or_404(Educacion, pk=id)
         postulante_id = educacion.id_educacion_fk.pk
         form = EducacionForm(request.POST or None, instance = educacion)
-        if form.is_valid(): 
-            form.save() 
-            messages.success(request, 'Publicación Actualizada')
-            return redirect(educaciones, id=postulante_id)  
+        if request.method == 'POST':
+            if form.is_valid(): 
+                form.save() 
+                messages.success(request, 'Publicación Actualizada')
+                return redirect(educaciones, id=postulante_id)  
         return render(request, 'actualizarEducacion.html', {'id_educacion_fk':educacion, 'form': form})
 
 @login_required
@@ -314,8 +311,9 @@ def actualizarExperiencias(request, id):
 
 
 @login_required
-def experiencias(request, id):
-    usuario = Postulante.objects.get(pk = id)
+def experiencias(request):
+    id = request.user
+    usuario = Postulante.objects.get(usuario_postulante = id)
     experiencia = Experiencia.objects.filter(postulante = usuario)
     return render(request, 'verExperiencias.html', {'experiencia': experiencia})
 
@@ -344,8 +342,9 @@ def experiencias(request, id):
 
 
 @login_required
-def educaciones(request, id):
-    usuario = Postulante.objects.get(id = id)
+def educaciones(request):
+    id = request.user
+    usuario = Postulante.objects.get(usuario_postulante = id)
     educacion = Educacion.objects.filter(id_educacion_fk = usuario)
     return render(request, 'verEducacion.html', {'educacion': educacion})
 
@@ -373,7 +372,9 @@ def lista_postulantes(request):
 #     return render(request, template, contenido)
 
 @login_required
-def guardar_postulacion(request, empleo_nombre, nombre_usuario):
+def guardar_postulacion(request, empleo_nombre):
+        
+        nombre_usuario = request.user
 
         if request.method == 'POST':
             # Obtener los datos enviados en la solicitud POST
@@ -387,6 +388,10 @@ def guardar_postulacion(request, empleo_nombre, nombre_usuario):
                 usuario = request.user
                 postulante = Postulante.objects.get(usuario_postulante=usuario)
                 trabajo = Empleo.objects.get(nombre_empleo=empleo_nombre)
+
+                if Postulados.objects.filter(id_postulados_fk=postulante, id_empleo_fk=trabajo).exists():
+                    messages.error(request, 'Ya te encuentras postulado para esta vacante')
+                    return redirect(index)
             
                 # Aquí puedes guardar los datos en el modelo que desees
                 # Por ejemplo, puedes guardarlos en el modelo Postulados
@@ -487,18 +492,6 @@ def descripcionpostulante(request, id):
 
 
 
-
-@login_required
-def redireccionDatosPersonales(request, id):
-    # Realiza la consulta a la base de datos
-    resultado_consulta = Postulante.objects.filter(id = id).exists()
-
-    # Si el resultado de la consulta cumple tu condición
-    if resultado_consulta:
-        return actualizarDatosPersonales(request, id)  # Redirige a la primera función de vista
-    else:
-        return agregarDatosPersonales(request, id)  # Redirige a la segunda función de vista
-    
 
 def redireccionPostular(request, id):
     # Realiza la consulta a la base de datos

@@ -4,6 +4,7 @@ from django.forms import ModelForm
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from .models import *
+from django.core.validators import RegexValidator
 
 MODALIDAD_EMPLEO_CHOICES = ["Activado", "Desactivado", "Pendiente"]
 
@@ -18,8 +19,7 @@ class EmpleoForm(ModelForm):
             'area_empleo': 'Area del Empleo',
             'modalidad_empleo': 'Modalidad de Trabajo',
             'tiempo_empleo': 'Tiempo de contrato',
-            'id_ciudad_fk': 'Ciudad',
-
+            'id_ciudad_fk': 'Ciudad'
         }
         widgets = {
             'nombre_empleo': forms.TextInput(attrs = {'class': 'form-control'}),
@@ -28,8 +28,7 @@ class EmpleoForm(ModelForm):
             'area_empleo': forms.TextInput(attrs = {'class': 'form-control'}),
             'modalidad_empleo': forms.TextInput(attrs = {'class': 'form-control'}),
             'tiempo_empleo':forms.TextInput(attrs= {'type': 'number', 'class': 'form-control'}),
-            'id_ciudad_fk':forms.Select(attrs = {'class': 'form-control'}),
-
+            'id_ciudad_fk':forms.Select(attrs = {'class': 'form-control'})
         }
         
 class PublicacionForm(ModelForm):
@@ -52,35 +51,6 @@ class DatosPersonalesForm(forms.ModelForm):
     class Meta: 
         genero = {'M':'Masculino', 'F':'Femenino'}
         model = Postulante
-        fields = ['nombre','apellido','email','telefono','genero','edad','ciudad','direccion', 'curriculum']
-        labels = {  
-            'nombre': 'Nombres',
-            'apellido': 'Apellidos', 
-            'email': 'Email', 
-            'telefono': 'Teléfono', 
-            'genero': 'Género', 
-            'edad': 'Edad', 
-            'ciudad': 'Ciudad', 
-            'direccion': 'Dirección',
-            'curriculum' : 'Subir Curriculum Vitae (en PDF)'
-        }
-        widgets = { 
-            'nombre': forms.TextInput(attrs = {'class': 'form-control'}),
-            'apellido': forms.TextInput(attrs = {'class': 'form-control'}),
-            'email': forms.EmailInput(attrs = {'class': 'form-control'}),
-            'telefono': forms.TextInput(attrs = {'class': 'form-control'}),
-            'genero' : forms.Select(choices=genero.items(), attrs = {'class': 'form-control'}),
-            'edad':  forms.NumberInput(attrs = {'class': 'form-control'}), 
-            'ciudad': forms.TextInput(attrs = {'class': 'form-control'}),
-            'direccion': forms.TextInput(attrs = {'class': 'form-control'}),
-            'curriculum': forms.FileInput(attrs = {'class': 'form-control'})
-        }
-
-
-class DatosPersonalesForm(forms.ModelForm):
-    class Meta: 
-        genero = {'M':'Masculino', 'F':'Femenino'}
-        model = Postulante
         fields = ['nombre','apellido','email','telefono','genero','edad','ciudad','direccion']
         labels = {  
             'nombre': 'Nombres',
@@ -96,14 +66,17 @@ class DatosPersonalesForm(forms.ModelForm):
             'nombre': forms.TextInput(attrs = {'class': 'form-control'}),
             'apellido': forms.TextInput(attrs = {'class': 'form-control'}),
             'email': forms.EmailInput(attrs = {'class': 'form-control'}),
-            'telefono': forms.TextInput(attrs = {'class': 'form-control'}),
+            'telefono': forms.TextInput(attrs = {'class': 'form-control', 'pattern': '[0-9]+', 'title': 'Por favor, ingrese solo números'}),
             'genero' : forms.Select(choices=genero.items(), attrs = {'class': 'form-control'}),
             'edad':  forms.NumberInput(attrs = {'class': 'form-control'}), 
             'ciudad': forms.TextInput(attrs = {'class': 'form-control'}),
             'direccion': forms.TextInput(attrs = {'class': 'form-control'}),
         }
-
-
+        telefono_validator = RegexValidator(
+        regex=r'^\d+$',
+        message='Por favor, ingrese solo números.',
+        code='invalid_phone_number'
+        )
 
 class CurriculumForm(forms.ModelForm):
     class Meta: 
@@ -134,7 +107,7 @@ class CurriculumForm(forms.ModelForm):
 class ExperienciaForm(forms.ModelForm):
     class Meta: 
         model = Experiencia
-        fields = ['cargo','empresa','pais','area', 'fecha_inicio', 'fecha_final', 'descripcion']
+        fields = ['cargo','empresa','pais','area', 'fecha_inicio', 'fecha_final', 'descripcion', 'certificado']
         labels = {
             'cargo': 'Cargo desempeñado',
             'empresa': 'Nombre de la empresa', 
@@ -143,6 +116,7 @@ class ExperienciaForm(forms.ModelForm):
             'fecha_inicio': 'Fecha Inicial',
             'fecha_final': 'Fecha Final',
             'descripcion': 'Actividades Realizadas',
+            'certificado': 'Certificado Laboral',
         }
         widgets = { 
             'cargo': forms.TextInput(attrs = {'class': 'form-control'}),
@@ -152,6 +126,7 @@ class ExperienciaForm(forms.ModelForm):
             'fecha_inicio': forms.DateInput(format='%d-%m-%Y',attrs={'type': 'date', 'class': 'form-control'}),
             'fecha_final': forms.DateInput(format='%d-%m-%Y',attrs={'type': 'date', 'class': 'form-control'}),
             'descripcion': forms.Textarea(attrs = {'class': 'form-control'}),
+            'certificado':forms.FileInput(attrs = {'class': 'form-control' ,}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -164,7 +139,7 @@ class EducacionForm(forms.ModelForm):
         nivel = {'Bachiller':'Bachiller', 'Técnico':'Técnico', 'Universitario':'Universitario', 'Magister':'Magister', 'Doctorado':'Doctorado', 'Otro':'Otro'}
         estado = {'En Curso':'En Curso', 'Graduado':'Graduado', 'Abandonado':'Abandonado'}
         model = Educacion
-        fields = ['titulo_edu','pais_edu','institucion_edu','nivel_edu', 'estado_edu', 'descripcion_edu']
+        fields = ['titulo_edu','pais_edu','institucion_edu','nivel_edu', 'estado_edu', 'descripcion_edu', 'titulo']
         labels = {
             'titulo_edu': 'Titulo',
             'pais_edu': 'Pais', 
@@ -172,6 +147,7 @@ class EducacionForm(forms.ModelForm):
             'nivel_edu': 'Nivel', 
             'estado_edu': 'Estado',
             'descripcion_edu': 'Descripcion',
+            'titulo': 'Título',
         }
         widgets = { 
             
@@ -181,6 +157,7 @@ class EducacionForm(forms.ModelForm):
             'nivel_edu': forms.Select(choices=nivel.items(), attrs = {'class': 'form-control'}),
             'estado_edu': forms.Select(choices=estado.items(), attrs = {'class': 'form-control'}),
             'descripcion_edu': forms.TextInput(attrs = {'class': 'form-control'}),
+            'titulo':forms.FileInput(attrs = {'class': 'form-control'}),
         }
 
     def __init__(self, *args, **kwargs):

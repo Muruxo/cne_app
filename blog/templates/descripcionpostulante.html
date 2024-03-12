@@ -39,7 +39,7 @@
                                         <td>{{persona.edad}}</td>
                                         <td>{{persona.email}}</td>
                                         <td>{{persona.ciudad}}</td>
-                                        <td><a href="{{ persona.curriculum.url }}" download><button class="btn btn-success" type="">Ver Curriculum</button></a></td>
+                                        <td><a href="{{ persona.curriculum.url }}" download><button class="btn btn-success" type="">Ver</button></a></td>
                                 </tr>
                         </tbody>
                 </table>
@@ -70,6 +70,7 @@
                                             <th scope="col">Area</th>
                                             <th scope="col">Fecha Inicio</th>
                                             <th scope="col">Fecha Final</th>
+                                            <th scope="col">Certificado Laboral</th>
                                     </tr>
                             </thead>
                             <tbody>
@@ -82,6 +83,7 @@
                                             <td>{{e.area}}</td>
                                             <td>{{e.fecha_inicio}}</td>
                                             <td>{{e.fecha_final}}</td>
+                                            <td><a href="{{ e.certificado.url }}" download><button class="btn btn-success" type="">Ver</button></a></td>
                                     </tr>
                                 {%endfor%}
                             </tbody>
@@ -113,6 +115,8 @@
                                             <th scope="col">Nivel</th>
                                             <th scope="col">Estado</th>
                                             <th scope="col">Descripcion</th>
+                                            <th scope="col">Título / Certificado</th>
+
                                     </tr>
                             </thead>
                             <tbody>
@@ -125,6 +129,7 @@
                                             <td>{{edu.nivel_edu}}</td>
                                             <td>{{edu.estado_edu}}</td>
                                             <td>{{edu.descripcion_edu}}</td>
+                                            <td><a href="{{ edu.titulo.url }}" download><button class="btn btn-success" type="">Ver</button></a></td>
                                     </tr>
                                 {%endfor%}
                             </tbody>
