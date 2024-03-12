@@ -119,7 +119,7 @@ def profile(request):
                 if form.is_valid(): 
                     form.instance.usuario_postulante = usuario
                     form.save()
-                    messages.success(request, 'Publicación Actualizada')
+                    messages.success(request, 'Informacion agregada con éxito')
                     return redirect('index')  
             return render(request, 'profile.html', {'postulante_exists': postulante_exists, 'form': form})
         else: 
@@ -167,6 +167,8 @@ def profile(request):
 #             messages.success(request, 'Informacion agregada con éxito')
 #         return redirect(index, id)  
 #     return render(request, 'subirCurriculum.html', form)
+
+
 
 
 
@@ -260,11 +262,14 @@ def actualizarEducaciones(request, id):
 @login_required
 def actualizarExperiencias(request, id): 
         experiencia = Experiencia.objects.get(pk = id)
-        form = ExperienciaForm(request.POST or None, instance = experiencia)
-        if form.is_valid(): 
-            form.save()
-            messages.success(request, 'Publicación Actualizada')
-            return redirect(experiencias)  
+        if request.method == 'POST':
+            form = ExperienciaForm(request.POST, request.FILES, instance=experiencia)
+            if form.is_valid(): 
+                form.save()
+                messages.success(request, 'Publicación Actualizada')
+                return redirect(experiencias)  
+        else:
+            form = ExperienciaForm(instance=experiencia)    
         return render(request, 'actualizarExperiencia.html', {'postulante':experiencia, 'form': form})
 
 # def agregarDatosAdicionales(request,id): 
@@ -416,8 +421,9 @@ def guardar_postulacion(request, empleo_nombre):
             postulante = Postulante.objects.get(usuario_postulante=usuario)
             resultado_experiencia = Experiencia.objects.filter(postulante=postulante).exists()
             resultado_educacion = Educacion.objects.filter(id_educacion_fk=postulante).exists()
-
-            if resultado_experiencia and resultado_educacion: 
+        
+            
+            if resultado_experiencia and resultado_educacion and postulante.curriculum: 
                 
                 usuario = request.user
                 postulante = Postulante.objects.get(usuario_postulante=usuario)
@@ -478,7 +484,7 @@ def guardar_postulacion(request, empleo_nombre):
                 messages.success(request, 'Postulación exitosa')
                 return redirect(UsuarioPostulaciones)  # Ajusta esto según sea necesario
             else: 
-                messages.error(request, 'Debe completar sus datos de Experiencia y Educación')
+                messages.error(request, 'Debe completar toda su informacion personal')
                 return redirect(index)
 
         

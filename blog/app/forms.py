@@ -8,7 +8,17 @@ from django.core.validators import RegexValidator
 from datetime import datetime
 
 MODALIDAD_EMPLEO_CHOICES = ["Activado", "Desactivado", "Pendiente"]
+
 fecha_actual = datetime.now().strftime('%Y-%m-%d')
+
+def validar_pdf(value):
+    import os
+    from django.core.exceptions import ValidationError
+
+    ext = os.path.splitext(value.name)[1]  # Obtiene la extensión del archivo
+    if ext.lower() != '.pdf':
+        raise ValidationError('Solo se permiten archivos PDF.')
+    
 
 class EmpleoForm(ModelForm):
     class Meta: 
@@ -76,6 +86,7 @@ class DatosPersonalesForm(forms.ModelForm):
             'ciudad': forms.TextInput(attrs = {'class': 'form-control', 'pattern': '^[A-Za-z\s]+$', 'title': 'Por favor, ingrese solo letras'}),
             'direccion': forms.TextInput(attrs = {'class': 'form-control'}),
         }
+    
 
 class CurriculumForm(forms.ModelForm):
     class Meta: 
@@ -87,6 +98,11 @@ class CurriculumForm(forms.ModelForm):
         widgets = { 
             'curriculum': forms.FileInput(attrs = {'class': 'form-control'})
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['curriculum'].validators.append(validar_pdf)
+        self.fields['curriculum'].widget.attrs.update({'accept': 'application/pdf'})
 
 
 # class DatosAdicionalesForm(ModelForm):
@@ -126,13 +142,15 @@ class ExperienciaForm(forms.ModelForm):
             'fecha_inicio': forms.DateInput(format='%d-%m-%Y',attrs={'type': 'date', 'class': 'form-control', 'max': fecha_actual}),
             'fecha_final': forms.DateInput(format='%d-%m-%Y',attrs={'type': 'date', 'class': 'form-control', 'max': fecha_actual}),
             'descripcion': forms.Textarea(attrs = {'class': 'form-control'}),
-            'certificado':forms.FileInput(attrs = {'class': 'form-control' ,}),
+            'certificado':forms.FileInput(attrs = {'class': 'form-control'}),
         }
 
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['postulante'] = forms.CharField(widget=forms.HiddenInput())
+        self.fields['certificado'].validators.append(validar_pdf)
+        self.fields['certificado'].widget.attrs.update({'accept': 'application/pdf'})
 
 
 class EducacionForm(forms.ModelForm):
