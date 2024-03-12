@@ -5,7 +5,7 @@
 <br>
 <center>
   <h1>Empleos CNE</h1>
-  <h3>Santo Domingo 2024</h3>
+  <h3>Santo Domingo</h3>
 </center>
 {%for p in empleos %} <br>
 <div class="container-fluid col-sm-8 mb-6 mb-sm-2">
@@ -41,31 +41,51 @@
   
  
   <script>
-    function desactivar(id) {
-        var respuesta = confirm("¿Está seguro de Desactivar este Empleo?");
-        if (respuesta) {
-            window.location.href = "/desactivar/" + id;
-        } else {
-          window.location.href = "/home";
-        }
+function desactivar(id) {
+        Swal.fire({
+            title: '¿Está seguro de Desactivar este Empleo?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/desactivar/" + id;
+            } else {
+                window.location.href = "/home";
+            }
+        });
     }
-
     function activar(id) {
-        var respuesta = confirm("¿Está seguro de Activar este Empleo?");
-        if (respuesta) {
-            window.location.href = "/activar/" +id;
-        } else {
-          window.location.href = "/home";
-        }
+        Swal.fire({
+            title: '¿Está seguro de Activar este Empleo?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/activar/" + id;
+            } else {
+                window.location.href = "/home";
+            }
+        });
     }
 
     function eliminar(id) {
-        var respuesta = confirm("¿Está seguro de Eliminar este Empleo?");
-        if (respuesta) {
-            window.location.href = "/eliminar/" +id;
-        } else {
-          window.location.href = "/home";
-        }
+        Swal.fire({
+            title: '¿Está seguro de Eliminar este Empleo?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/eliminar/" + id;
+            } else {
+                window.location.href = "/home";
+            }
+        });
     }
     </script>
 
