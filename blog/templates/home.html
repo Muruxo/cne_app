@@ -21,17 +21,17 @@
         {%comment%}
         {%for postulacion in p.postulados.all %}
         {{postulacion}}
-
         {%endfor%}
         {%endcomment%}
+
         {% if p.estado == 1 %}
-        <button onclick="desactivar()" class="btn btn-dark" >Desactivar</button>
+        <button onclick="desactivar('{{ p.id }}')" class="btn btn-dark" >Desactivar</button>
         <!-- <a href="" class="btn btn-dark" onclick="mostrarConfirmacion()">Desactivar</a> -->
         {% else%}
-        <button onclick="activar()" class="btn btn-warning">Activar</button>
+        <button onclick="activar('{{ p.id }}')" class="btn btn-warning">Activar</button>
         <!-- <a href="{% url 'activar' p.id %}" class="btn btn-warning">Activar</a> -->
         {% endif%}
-        <a href="{% url 'eliminar' p.id %}" class="btn btn-danger">Eliminar</a>
+        <button onclick="eliminar('{{ p.id }}')" class="btn btn-danger">Eliminar</button>
         <a href="{% url 'actualizar' p.id %}" class="btn btn-success">Actualizar</a>
         
         <a href="{% url 'postulanteporempleo' p.id %}" class="btn btn-info">Ver</a>
@@ -40,25 +40,36 @@
     </div>
   </div>
   
+ 
   <script>
-    function desactivar() {
+    function desactivar(id) {
         var respuesta = confirm("¿Está seguro de Desactivar este Empleo?");
         if (respuesta) {
-            window.location.href = "{% url 'desactivar' p.id %}";
+            window.location.href = "/desactivar/" + id;
         } else {
-          window.location.href = "{% url 'home' %}";
+          window.location.href = "/home";
         }
     }
 
-    function activar() {
+    function activar(id) {
         var respuesta = confirm("¿Está seguro de Activar este Empleo?");
         if (respuesta) {
-            window.location.href = "{% url 'activar' p.id %}";
+            window.location.href = "/activar/" +id;
         } else {
-          window.location.href = "{% url 'home' %}";
+          window.location.href = "/home";
+        }
+    }
+
+    function eliminar(id) {
+        var respuesta = confirm("¿Está seguro de Eliminar este Empleo?");
+        if (respuesta) {
+            window.location.href = "/eliminar/" +id;
+        } else {
+          window.location.href = "/home";
         }
     }
     </script>
+
 
 <!-- <div class="card">
     <h5 class="card-header">{{p.titulo}}</h5>

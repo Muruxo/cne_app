@@ -142,7 +142,7 @@ class ExperienciaForm(forms.ModelForm):
             'area': 'Area de Trabajo', 
             'fecha_inicio': 'Fecha Inicial',
             'fecha_final': 'Fecha Final',
-            'descripcion': 'Descripcion del cargo',
+            'descripcion': 'Actividades Realizadas',
         }
         widgets = { 
             'cargo': forms.TextInput(attrs = {'class': 'form-control'}),
