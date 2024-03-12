@@ -31,11 +31,10 @@
         <button onclick="activar('{{ p.id }}')" class="btn btn-warning">Activar</button>
         <!-- <a href="{% url 'activar' p.id %}" class="btn btn-warning">Activar</a> -->
         {% endif%}
-        <button onclick="eliminar('{{ p.id }}')" class="btn btn-danger">Eliminar</button>
-        <a href="{% url 'actualizar' p.id %}" class="btn btn-success">Actualizar</a>
         
-        <a href="{% url 'postulanteporempleo' p.id %}" class="btn btn-info">Ver</a>
-
+        <a href="{% url 'postulanteporempleo' p.id %}" class="btn btn-info">Ver Postulantes</a>
+        <a href="{% url 'actualizar' p.id %}" class="btn btn-success">Actualizar</a>
+        <button onclick="eliminar('{{ p.id }}')" class="btn btn-danger">Eliminar</button>
       </div>
     </div>
   </div>

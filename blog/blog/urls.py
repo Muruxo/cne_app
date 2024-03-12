@@ -59,6 +59,7 @@ urlpatterns = [
     path('accounts/profile/', profile, name='profile'),
     path('entrevista/<postulante_id>/<empleo_id>', entrevista, name='entrevista'),
     path('contratar/<postulante_id>/<empleo_id>', contratar, name='contratar'),
+    path('rechazar/<postulante_id>/<empleo_id>', rechazar, name='rechazar'),
    
    
     # Email
