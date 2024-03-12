@@ -560,7 +560,7 @@ def entrevista(request, postulante_id, empleo_id):
 
             send_mail(asunto, mensaje, settings.EMAIL_HOST_USER, destinatarios, fail_silently=False)
 
-            return redirect('postulanteporempleo/{postulante_id}')
+            return redirect('postulanteporempleo', empleo_id)
             # return HttpResponse('Entrevista creada correctamente.')
     else:
         form = EntrevistaForm()

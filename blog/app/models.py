@@ -155,4 +155,4 @@ class Entrevista(models.Model):
     empleo = models.ForeignKey(Empleo, related_name='entrevistaempleo', on_delete=models.SET_NULL,null=True)
 
     def __str__(self):
-        return f"Entrevista para {self.empleo.nombre} el {self.fecha} a las {self.hora}"
+        return f"Entrevista para {self.empleo} el {self.fecha} a las {self.hora}"
