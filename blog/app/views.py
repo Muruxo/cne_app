@@ -543,6 +543,7 @@ def entrevista(request, postulante_id, empleo_id):
     
     postulante = Postulante.objects.get(pk=postulante_id)
     empleo = Empleo.objects.get(pk=empleo_id)
+    estado = Postulados.objects.get(id_postulados_fk = postulante_id, id_empleo_fk = empleo_id)
     if request.method == 'POST':
         form = EntrevistaForm(request.POST)
         if form.is_valid():
@@ -551,12 +552,14 @@ def entrevista(request, postulante_id, empleo_id):
             entrevista = form.save(commit=False)
             entrevista.postulante = postulante
             entrevista.empleo = empleo
+            estado.estado_postulado =  "Entrevista"
+            estado.save() 
             form.save()
             
              # Enviar correo electrónico
             asunto = 'Nueva entrevista programada'
             mensaje = f'Se ha programado una nueva entrevista para {postulante.nombre} para el empleo {empleo.nombre_empleo} el {entrevista.fecha} a las {entrevista.hora}.'
-            destinatarios = [settings.EMAIL_HOST_USER, {postulante.email}]  # Poner aquí la dirección de correo a la que quieres enviar el mensaje
+            destinatarios = [settings.EMAIL_HOST_USER, postulante.email]  # Poner aquí la dirección de correo a la que quieres enviar el mensaje
 
             send_mail(asunto, mensaje, settings.EMAIL_HOST_USER, destinatarios, fail_silently=False)
 
