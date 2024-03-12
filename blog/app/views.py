@@ -174,7 +174,7 @@ def agregarDatosAdicionales(request, id):
             experiencia.postulante = usuario  # Asigna el nombre de usuario al campo correspondiente
             experiencia.save()
             messages.success(request, 'Informacion agregada con éxito')
-            return redirect(experiencias, id)
+            return redirect(experiencias)
     else:
         form = ExperienciaForm(initial={'postulante': id})  # Establece el valor inicial del campo de nombre de usuario
         contenido['form'] = form
@@ -195,7 +195,7 @@ def agregarDatosEducacion(request, id):
             educacion.id_educacion_fk = usuario  # Asigna el nombre de usuario al campo correspondiente
             educacion.save()
             messages.success(request, 'Informacion agregada con éxito')
-            return redirect(educaciones, id=usuario)
+            return redirect(educaciones)
     else:
         form = EducacionForm(initial={'id_educacion_fk': id})  # Establece el valor inicial del campo de nombre de usuario
         contenido['form'] = form
