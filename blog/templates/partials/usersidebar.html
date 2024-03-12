@@ -21,7 +21,7 @@
                     
                             <li>
                                 
-                                <a href="{% url 'DatosPer' request.user.perfil_postulante.id %} " class="waves-effect">
+                                <a href="{% url 'DatosPer' %} " class="waves-effect">
                                     <i class="ti-user"></i><span class="badge rounded-pill bg-primary float-end"></span>
                                     <span>Datos Personales</span>
                                 </a>
@@ -31,14 +31,14 @@
                             <li class="menu-title" key="DatosPersonales">Paso 2</li>
 
                             <li>
-                                <a href="{% url 'verExperiencias' request.user.perfil_postulante.id  %}" class="waves-effect">
+                                <a href="{% url 'Experiencias' %}" class="waves-effect">
                                     <i class="ti-briefcase"></i><span class="badge rounded-pill bg-primary float-end"></span>
                                     <span>Datos Laborales</span>
                                 </a>
                             </li>
 
                             <li>
-                                <a href="{% url 'Educaciones' request.user.perfil_postulante.id %}" class="waves-effect">
+                                <a href="{% url 'Educaciones' %}" class="waves-effect">
                                     <i class="ti-book"></i><span class="badge rounded-pill bg-primary float-end"></span>
                                     <span>Datos Educación</span>
                                 </a>
@@ -48,7 +48,7 @@
 
                             <li>
                                 
-                                <a href="{% url 'subirCurriculum' request.user.perfil_postulante.id %} " class="waves-effect">
+                                <a href="{% url 'subirCurriculum' %} " class="waves-effect">
                                     <i class="ti-archive"></i><span class="badge rounded-pill bg-primary float-end"></span>
                                     <span>Curriculum</span>
                                 </a>
