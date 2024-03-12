@@ -9,6 +9,11 @@ from .models import *
 from  .forms import *
 from django.http import HttpResponse
 from django.views.decorators.http import require_POST
+from django.core.mail import send_mail
+from django.shortcuts import render
+from django.core.mail import send_mail
+from django.conf import settings
+
 # import tkinter as tk
 # from tkinter import messagebox
 
@@ -537,3 +542,30 @@ def UsuarioPostulaciones(request):
     empleo_nombre = c['empleo']
 
     return render(request, 'postulaciones.html',{'c': c, 'empleo_nombre': empleo_nombre, 'nombre_usuario': nombre_usuario})
+
+def entrevista(request, postulante_id, empleo_id): 
+    
+    postulante = Postulante.objects.get(pk=postulante_id)
+    empleo = Empleo.objects.get(pk=empleo_id)
+    if request.method == 'POST':
+        form = EntrevistaForm(request.POST)
+        if form.is_valid():
+            # Aquí puedes procesar los datos del formulario
+            # Por ejemplo, guardar la entrevista en la base de datos
+            entrevista = form.save(commit=False)
+            entrevista.postulante = postulante
+            entrevista.empleo = empleo
+            form.save()
+            
+             # Enviar correo electrónico
+            asunto = 'Nueva entrevista programada'
+            mensaje = f'Se ha programado una nueva entrevista para {postulante.nombre} para el empleo {empleo.nombre} el {entrevista.fecha} a las {entrevista.hora}.'
+            destinatarios = [settings.EMAIL_HOST_USER, {postulante.email}]  # Poner aquí la dirección de correo a la que quieres enviar el mensaje
+
+            send_mail(asunto, mensaje, settings.EMAIL_HOST_USER, destinatarios, fail_silently=False)
+
+            return redirect('postulanteporempleo/{postulante_id}')
+            # return HttpResponse('Entrevista creada correctamente.')
+    else:
+        form = EntrevistaForm()
+    return render(request, 'entrevista.html', {'form': form})
