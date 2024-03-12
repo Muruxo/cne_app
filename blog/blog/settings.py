@@ -166,6 +166,7 @@ STATICFILES_DIRS = [
     # os.path.join(BASE_DIR, "static"),
     #os.path.join(BASE_DIR, "static"),
     os.path.join(BASE_DIR, "apps/templates/static"),
+    os.path.join(BASE_DIR, 'blog'),
 ]
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, 'static'),
