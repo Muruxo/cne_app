@@ -21,15 +21,3 @@
 
 {% endblock %}
 
-{% block scripts %}
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var telefonos = document.querySelectorAll('.telefono');
-
-        for (var i = 0; i < telefonos.length; i++) {
-            telefonos[i].setAttribute('pattern', '[0-9]+');
-            telefonos[i].setAttribute('title', 'Por favor, ingrese solo números');
-        }
-    });
-</script>
-{% endblock %}

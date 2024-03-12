@@ -101,7 +101,7 @@ class Educacion(models.Model):
     nivel_edu= models.CharField(max_length=255,blank=False,null=False)
     estado_edu= models.CharField(max_length=255,blank=False,null=False)
     descripcion_edu = models.TextField(blank=False,null=False)
-    titulo = models.FileField(upload_to="media/titulos", blank=False, null=False)
+    titulo = models.FileField(upload_to="media/titulos", blank=True, null=False)
     
     def __str__(self)->str:
             return f'{self.titulo_edu}'

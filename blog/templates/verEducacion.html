@@ -1,16 +1,16 @@
 {% extends 'partials/base.html' %}
 {% block content %}
-<div class="container-fluid col-sm-12 mb-8 mb-sm-6 " ></div>
+<div class="container-fluid col-sm-12 mb-8 mb-sm-6 " >
 <div class="row">
   <div class="container-fluid col-sm-3 mb-3 mb-sm-3 " style="text-align:center">
-    <div class="card bg-secondary" style="border-radius: 1rem;">
+
       <br>
-  <a class="dir" href="{% url 'DatosEdu' request.user.perfil_postulante.id %}"><h3>Agregar Educación</h3></a>
+  <a class="btn btn-success" style="border-radius: 0.5rem;" href="{% url 'DatosEdu' %}"><h3>Agregar Educación</h3></a>
   <br>
+
 </div>
 </div>
-</div>
-<div class="row">
+
     {%for edu in educacion %}
     <div class="container-fluid col-sm-8 mb-5 mb-sm-2 " >
         <div class="card bg-secondary" style="border-radius: 1rem;">
@@ -26,7 +26,7 @@
             </div></a>
         </div>
     </div>
-</div>
+
     {%endfor%}
 <br><br>
 </center>
