@@ -58,6 +58,7 @@ urlpatterns = [
     path('send-email', EmailAPIView.as_view(), name='send-email'),
     path('accounts/profile/', profile, name='profile'),
     path('entrevista/<postulante_id>/<empleo_id>', entrevista, name='entrevista'),
+    path('contratar/<postulante_id>/<empleo_id>', contratar, name='contratar'),
    
    
     # Email

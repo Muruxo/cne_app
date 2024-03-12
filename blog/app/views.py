@@ -567,3 +567,20 @@ def entrevista(request, postulante_id, empleo_id):
     else:
         form = EntrevistaForm()
     return render(request, 'entrevista.html', {'form': form})
+
+def contratar(request, postulante_id, empleo_id): 
+    
+    postulante = Postulante.objects.get(pk=postulante_id)
+    empleo = Empleo.objects.get(pk=empleo_id)
+    estado = Postulados.objects.get(id_postulados_fk = postulante_id, id_empleo_fk = empleo_id)
+    estado.estado_postulado =  "Contratado"
+    estado.save() 
+        # Enviar correo electrónico
+    asunto = 'Feliciciones - Contratado'
+    mensaje = f'Estimado {postulante.nombre}, por la presente deseamos comunicarle que ha sido contratado para ocupar el cargo de {empleo.nombre_empleo}. Favor presentarse lo más pronto posible en nuestra instalaciones.'
+    destinatarios = [settings.EMAIL_HOST_USER, postulante.email]  # Poner aquí la dirección de correo a la que quieres enviar el mensaje
+
+    send_mail(asunto, mensaje, settings.EMAIL_HOST_USER, destinatarios, fail_silently=False)
+    return redirect('postulanteporempleo', empleo_id)
+        # return HttpResponse('Entrevista creada correctamente.')
+    # return render(request, '')

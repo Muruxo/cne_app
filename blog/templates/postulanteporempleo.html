@@ -54,10 +54,10 @@
                         <td><a href="{% url 'descripcionpostulante' p.id_postulados_fk.pk %}" class=" btn btn-info"><i class="ti-eye"></i></a></td>
                         <td><a href="{% url 'entrevista' p.id_postulados_fk.pk p.id_empleo_fk.pk %}" class=" btn btn-warning"><i class="ti-user"></i></a></td>
                         {% if p.estado_postulado == "Entrevista" %}
-                        <td><a href="#" class="btn btn-success"><i class="ti-check"></i></a></td>
+                        <td><a href="{% url 'contratar' p.id_postulados_fk.pk p.id_empleo_fk.pk %}" class="btn btn-success"><i class="ti-check"></i></a></td>
                         <td><a href="#" class="btn btn-danger"><i class="ti-alert"></i></a></td>
                         {% else%}
-                        <td><a href="#" class="btn btn-success disabled"><i class="ti-check"></i></a></td>
+                        <td><a href="{% url 'contratar' p.id_postulados_fk.pk p.id_empleo_fk.pk %}" class="btn btn-success disabled"><i class="ti-check"></i></a></td>
                         <td><a href="#" class="btn btn-danger disabled"><i class="ti-alert"></i></a></td>
                         {% endif %}
 
