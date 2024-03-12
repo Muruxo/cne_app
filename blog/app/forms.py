@@ -8,6 +8,7 @@ from django.core.validators import RegexValidator
 from datetime import datetime
 
 MODALIDAD_EMPLEO_CHOICES = ["Activado", "Desactivado", "Pendiente"]
+fecha_actual = datetime.now().strftime('%Y-%m-%d')
 
 class EmpleoForm(ModelForm):
     class Meta: 
@@ -26,10 +27,10 @@ class EmpleoForm(ModelForm):
         widgets = {
             'nombre_empleo': forms.TextInput(attrs = {'class': 'form-control'}),
             'descripcion_empleo': forms.Textarea(attrs = {'class': 'form-control'}),
-            'fecha_empleo':forms.DateInput(attrs={'class': 'form-control', 'display':'center' }),
+            'fecha_empleo':forms.DateInput(format='%d-%m-%Y',attrs={'type': 'date', 'class': 'form-control', 'max': fecha_actual}),
             'area_empleo': forms.TextInput(attrs = {'class': 'form-control'}),
             'modalidad_empleo': forms.TextInput(attrs = {'class': 'form-control'}),
-            'tiempo_empleo':forms.TextInput(attrs= {'type': 'number', 'class': 'form-control'}),
+            'tiempo_empleo':forms.NumberInput(attrs = {'class': 'form-control', 'min': '1', 'max': '99'}),
             'id_ciudad_fk':forms.Select(attrs = {'class': 'form-control'}),
            
         }
@@ -104,7 +105,7 @@ class CurriculumForm(forms.ModelForm):
 
 class ExperienciaForm(forms.ModelForm):
     class Meta: 
-        fecha_actual = datetime.now().strftime('%Y-%m-%d')
+        
         model = Experiencia
         fields = ['cargo','empresa','pais','area', 'fecha_inicio', 'fecha_final', 'descripcion', 'certificado']
         labels = {

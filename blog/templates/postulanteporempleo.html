@@ -15,13 +15,15 @@
         text-align: center;
     }
 </style>
-
 <br>
 <div class="container-fluid col-sm-8 mb-6 mb-sm-2">
+
+
     <div class="card">
       <div class="card-body">
+        <a href="{% url 'home'%}" class="btn btn-info">Regresar</a>
         <h2>{{datosempleo.nombre_empleo}}</h2>
-        <p>Postulantes: </p>
+
         <div
             class="table-responsive"
         >

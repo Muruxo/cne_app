@@ -9,8 +9,9 @@
         <h2>{{persona.first_name}} {{persona.last_name}}</h2>
  </div>
 <div class="container mt-4">
+        <a href="{% url 'postulante_por_empleo'%}" class="btn btn-info">Regresar</a>
+        <p></p>
     <div class="card">
-      
       <div class="card-body" style="text-align:left;">
       
         <h5 class="card-title">Detalles Personales</h5>
@@ -58,9 +59,7 @@
             <div
                     class="table-responsive"
             >
-                    <table
-                            class="table table-primary"
-                    >
+                    <table class="table table-primary">
                             <thead>
                                     <tr>
                                             <th scope="col">Nº</th>
@@ -129,7 +128,11 @@
                                             <td>{{edu.nivel_edu}}</td>
                                             <td>{{edu.estado_edu}}</td>
                                             <td>{{edu.descripcion_edu}}</td>
-                                            <td><a href="{{ edu.titulo.url }}" download><button class="btn btn-success" type="">Ver</button></a></td>
+                                            <td>{% if edu.titulo %}
+                                                <a href="{{ edu.titulo.url }}" download>
+                                                    <button class="btn btn-success" type="">Ver</button>
+                                                </a>
+                                                {% endif %}</td>
                                     </tr>
                                 {%endfor%}
                             </tbody>
@@ -140,12 +143,7 @@
         </div>
     </div>
 
-<div class="container mt-4 mb-5">
-        <div class="card">
-                <a href="{% url 'home' %}" class="btn btn-outline-primary">Regresar</a>
-                </div>
 
-        </div>
 </div>
         
 {% endblock %}

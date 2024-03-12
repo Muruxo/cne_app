@@ -526,6 +526,8 @@ def descripcionpostulante(request, id):
     c['persona'] = Postulante.objects.get(id = id)
     c['experiencia'] = experienciapostulante
     c['educacion'] = educacionpostulante
+
+    c['mostrar_boton'] = educacionpostulante.filter(titulo__isnull=False).exists()
     
     
     return render (request, 'descripcionpostulante.html', c) 
