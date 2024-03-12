@@ -107,16 +107,37 @@ def agregarDatosPersonales(request, id):
 
 @login_required   
 def profile(request): 
-    usuario = request.user
-    if request.POST: 
-        form = DatosPersonalesForm(request.POST)
-        if form.is_valid():
-            postulante = form.save(commit=False)
-            postulante.usuario_postulante = usuario  # Asigna el nombre de usuario al campo correspondiente
-            postulante.save()
-        messages.success(request, 'Información Añadida')
-        return redirect(index)
-    return render(request, 'profile.html', {'form':DatosPersonalesForm})
+    if not request.user.is_staff:
+        iduser = request.user.pk
+        postulante_exists = Postulante.objects.filter(usuario_postulante=iduser).exists()
+        if not postulante_exists: 
+            usuario = User.objects.get(pk=iduser)
+            initial_data = {'email': usuario.email}  # Establecer el valor inicial del campo de correo electrónico
+            form = DatosPersonalesForm(initial=initial_data)  # Pasar los datos iniciales al formulario
+            if request.method == 'POST':
+                form = DatosPersonalesForm(request.POST)
+                if form.is_valid(): 
+                    form.instance.usuario_postulante = usuario
+                    form.save()
+                    messages.success(request, 'Publicación Actualizada')
+                    return redirect('index')  
+            return render(request, 'profile.html', {'postulante_exists': postulante_exists, 'form': form})
+        else: 
+            return redirect('index')
+    else:
+        return redirect('home')
+    # usuario = request.user
+    # postulante = Postulante.objects.get(usuario_postulante = usuario)
+    
+    # if request.POST: 
+    #     form = DatosPersonalesForm(request.POST)
+    #     if form.is_valid():
+    #         postulante = form.save(commit=False)
+    #         postulante.usuario_postulante = usuario  # Asigna el nombre de usuario al campo correspondiente
+    #         postulante.save()
+    #     messages.success(request, 'Información Añadida')
+    #     return redirect(index)
+    # return render(request, 'profile.html', {'form':DatosPersonalesForm})
     
 # def profile(request): 
 #     usuario = request.user.pk
