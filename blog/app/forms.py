@@ -163,3 +163,17 @@ class EducacionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['id_educacion_fk'] = forms.CharField(widget=forms.HiddenInput())
+
+class EntrevistaForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(EntrevistaForm, self).__init__(*args, **kwargs)
+        # Establecer la hora predeterminada como 12:00 PM
+        self.fields['hora'].initial = '12:00'
+        
+    class Meta:
+        model = Entrevista
+        fields = ['fecha', 'hora']
+        widgets = {
+            'fecha': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+           'hora': forms.TextInput(attrs={'type': 'time', 'class': 'form-control', 'placeholder': 'HH:MM'}),
+        }

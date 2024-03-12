@@ -1,0 +1,55 @@
+{% extends 'partials/base.html' %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Entrevista</title>
+</head>
+<body>
+
+<div class="container-fluid col-sm-5 mb-6 mb-sm-2">
+    <div class="card m-3">
+        <div class="card-header">
+             <h1>Crear Entrevista</h1>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+    
+    <!-- <form method="post" class="form-control">
+        {% csrf_token %}
+        <div class="container" >
+        <label for="asunto" >Asunto:</label><br>
+        <input type="text" id="asunto" name="asunto" required class="form-control" placeholder="Entrevista de trabajo - CNE Santo Domingo"><br>
+        <label for="mensaje">Mensaje:</label><br>
+        <textarea id="mensaje" name="mensaje" class="form-control" required 
+        placeholder="Estimado {{usuario.nombre}}
+
+        Por la presente lo convocamos a una entrevista en nuestras instalaciones el día: 
+        
+        
+        "></textarea><br>
+        <label for="destinatario" >Destinatario:</label><br>
+        <input type="email" id="destinatario" name="destinatario" class="form-control" required><br>
+        <input type="submit" value="Enviar" class="btn btn-primary">
+    </div>
+    </form>   -->
+</div>
+</body>
+</html>
+
+
+{% endblock %}

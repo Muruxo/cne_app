@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 from django.utils import timezone
 from django.core.validators import MaxValueValidator
@@ -147,3 +148,11 @@ class Postulados(models.Model):
         verbose_name_plural = 'Postulados'
 
 
+class Entrevista(models.Model):
+    fecha = models.DateField(default=timezone.now)
+    hora = models.TimeField(default=timezone.now)
+    postulante = models.ForeignKey(Postulante, related_name='entrevistapostulante', on_delete=models.SET_NULL,null=True)
+    empleo = models.ForeignKey(Empleo, related_name='entrevistaempleo', on_delete=models.SET_NULL,null=True)
+
+    def __str__(self):
+        return f"Entrevista para {self.empleo.nombre} el {self.fecha} a las {self.hora}"

@@ -1,4 +1,3 @@
-
 {% extends 'partials/base.html' %}
 {% load humanize %}
 
@@ -9,6 +8,13 @@
   <h1>Lista de Postulantes</h1>
   <h3>Santo Domingo 2024</h3>
 </center>
+
+<style>
+
+    .table{ 
+        text-align: center;
+    }
+</style>
 
 <br>
 <div class="container-fluid col-sm-8 mb-6 mb-sm-2">
@@ -30,6 +36,9 @@
                         <th scope="col">Postulante</th>
                         <th scope="col">Calificación</th>
                         <th scope="col">Detalle</th>
+                        <th scope="col">Entrevistar</th>
+                        <th scope="col">Contratar</th>
+                        <th scope="col">Rechazar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,7 +51,16 @@
                         <td>{{p.fecha_postulado}}</td>
                         <td>{{p.id_postulados_fk}}</td>
                         <td>{{p.calificacion}}</td>
-                        <td><a href="{% url 'descripcionpostulante' p.id_postulados_fk.pk %}"><button class="btn btn-success"><i class="ti-eye"></i></button></a></td>
+                        <td><a href="{% url 'descripcionpostulante' p.id_postulados_fk.pk %}" class=" btn btn-info"><i class="ti-eye"></i></a></td>
+                        <td><a href="{% url 'entrevista' p.id_postulados_fk.pk p.id_empleo_fk.pk %}" class=" btn btn-warning"><i class="ti-user"></i></a></td>
+                        {% if p.estado_postulado == "Entrevista" %}
+                        <td><a href="#" class="btn btn-success"><i class="ti-check"></i></a></td>
+                        <td><a href="#" class="btn btn-danger"><i class="ti-alert"></i></a></td>
+                        {% else%}
+                        <td><a href="#" class="btn btn-success disabled"><i class="ti-check"></i></a></td>
+                        <td><a href="#" class="btn btn-danger disabled"><i class="ti-alert"></i></a></td>
+                        {% endif %}
+
                     </tr>
 
                     {%endfor%}
@@ -58,5 +76,12 @@
   </div>
 
 
+{% endblock %}
 
-  {% endblock %}
+<!-- {% block javascript %}
+  <script>
+    $('#exampleModal').on('shown.bs.modal', function () {
+    $('#myInput').trigger('focus')
+    })
+  </script>
+{% endblock %} -->
