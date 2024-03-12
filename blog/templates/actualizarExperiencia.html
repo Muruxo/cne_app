@@ -17,7 +17,7 @@
         
 {% csrf_token %}
 <input type="hidden" name="postulante" value="{{ postulante.id }}">
-<a href="{% url 'DatosAd' request.user.perfil_postulante.id %}"><button class="btn btn-success" type="submit">Guardar</button></a>
+<a href="{% url 'DatosAd'  %}"><button class="btn btn-success" type="submit">Guardar</button></a>
 <a href="{% url 'Experiencias' %}" class="btn btn-danger">Cancelar</a>
 
 </form>

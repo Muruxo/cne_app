@@ -167,8 +167,9 @@ def subirCurriculum(request):
 
 
 @login_required
-def agregarDatosAdicionales(request, id):
-    usuario = Postulante.objects.get(pk = id)
+def agregarDatosAdicionales(request):
+    id = request.user
+    usuario = Postulante.objects.get(usuario_postulante = id)
     contenido = {}
     if request.method == 'POST': 
         form = ExperienciaForm(request.POST, request.FILES)
@@ -188,21 +189,24 @@ def agregarDatosAdicionales(request, id):
 #  AGREGAR EDUCACION NUEVO
 
 @login_required
-def agregarDatosEducacion(request, id):
-    usuario = Postulante.objects.get(pk = id)
+def agregarDatosEducacion(request):
+    id_usuario = request.user
+    usuario = Postulante.objects.get(usuario_postulante=id_usuario)
     contenido = {}
-    if request.method == 'POST': 
+    
+    if request.method == 'POST':
         form = EducacionForm(request.POST, request.FILES)
         if form.is_valid():
             educacion = form.save(commit=False)
-            educacion.id_educacion_fk = usuario  # Asigna el nombre de usuario al campo correspondiente
+            educacion.id_educacion_fk = usuario
             educacion.save()
             messages.success(request, 'Informacion agregada con éxito')
             return redirect(educaciones)
     else:
-        form = EducacionForm(initial={'id_educacion_fk': id})  # Establece el valor inicial del campo de nombre de usuario
-        contenido['form'] = form
-        contenido['id_educacion_fk'] = id
+        form = EducacionForm(initial={'id_educacion_fk': usuario})
+    
+    contenido['form'] = form
+    contenido['id_educacion_fk'] = id_usuario
     return render(request, 'DatosEducacion.html', contenido)
 
 @login_required
@@ -220,12 +224,16 @@ def actualizarDatosPersonales(request):
 def actualizarEducaciones(request, id): 
         educacion = get_object_or_404(Educacion, pk=id)
         postulante_id = educacion.id_educacion_fk.pk
-        form = EducacionForm(request.POST or None, instance = educacion)
+        form = EducacionForm(request.POST , request.FILES)
         if request.method == 'POST':
             if form.is_valid(): 
                 form.save() 
                 messages.success(request, 'Publicación Actualizada')
-                return redirect(educaciones)  
+                return redirect(educaciones)
+
+        else:
+            form = EducacionForm(instance=educacion)
+
         return render(request, 'actualizarEducacion.html', {'id_educacion_fk':educacion, 'form': form})
 
 @login_required
@@ -447,7 +455,7 @@ def guardar_postulacion(request, empleo_nombre):
 
                 # Redirigir al usuario a otra página
                 messages.success(request, 'Postulación exitosa')
-                return redirect(index)  # Ajusta esto según sea necesario
+                return redirect(UsuarioPostulaciones)  # Ajusta esto según sea necesario
             else: 
                 messages.error(request, 'Debe completar sus datos de Experiencia y Educación')
                 return redirect(index)
@@ -539,14 +547,21 @@ def desactivarempleo(request, id):
 def UsuarioPostulaciones(request):
     nombre_usuario = request.user
     usuario = Postulante.objects.get(usuario_postulante = nombre_usuario)
-
     c={}
-    c['postulados'] = Postulados.objects.filter(id_postulados_fk = usuario)
-    empleo = c['postulados'].first().id_empleo_fk
-    c['empleo'] = Empleo.objects.get(nombre_empleo = empleo)
-    empleo_nombre = c['empleo']
+    postulaciones = Postulados.objects.filter(id_postulados_fk=usuario)
 
-    return render(request, 'postulaciones.html',{'c': c, 'empleo_nombre': empleo_nombre, 'nombre_usuario': nombre_usuario})
+
+    if postulaciones.exists():
+    
+        c['postulados'] = postulaciones
+        empleo = c['postulados'].first().id_empleo_fk
+        c['empleo'] = Empleo.objects.get(nombre_empleo = empleo)
+        empleo_nombre = c['empleo']
+        return render(request, 'postulaciones.html',{'c': c, 'empleo_nombre': empleo_nombre, 'nombre_usuario': nombre_usuario})
+    
+    else:
+        messages.info(request, 'Aún no ha postulado a ninguna vacante')
+        return redirect(index)
 
 def entrevista(request, postulante_id, empleo_id): 
     
