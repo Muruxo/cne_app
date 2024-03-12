@@ -11,7 +11,7 @@ MODALIDAD_EMPLEO_CHOICES = ["Activado", "Desactivado", "Pendiente"]
 class EmpleoForm(ModelForm):
     class Meta: 
         model = Empleo
-        fields = ['nombre_empleo','descripcion_empleo','fecha_empleo','area_empleo','modalidad_empleo','tiempo_empleo','id_ciudad_fk','estado']
+        fields = ['nombre_empleo','descripcion_empleo','fecha_empleo','area_empleo','modalidad_empleo','tiempo_empleo','id_ciudad_fk']
         labels = {
             'nombre_empleo': 'Empleo', 
             'descripcion_empleo' : 'Descripción',
@@ -19,7 +19,8 @@ class EmpleoForm(ModelForm):
             'area_empleo': 'Area del Empleo',
             'modalidad_empleo': 'Modalidad de Trabajo',
             'tiempo_empleo': 'Tiempo de contrato',
-            'id_ciudad_fk': 'Ciudad'
+            'id_ciudad_fk': 'Ciudad',
+            
         }
         widgets = {
             'nombre_empleo': forms.TextInput(attrs = {'class': 'form-control'}),
@@ -28,7 +29,8 @@ class EmpleoForm(ModelForm):
             'area_empleo': forms.TextInput(attrs = {'class': 'form-control'}),
             'modalidad_empleo': forms.TextInput(attrs = {'class': 'form-control'}),
             'tiempo_empleo':forms.TextInput(attrs= {'type': 'number', 'class': 'form-control'}),
-            'id_ciudad_fk':forms.Select(attrs = {'class': 'form-control'})
+            'id_ciudad_fk':forms.Select(attrs = {'class': 'form-control'}),
+           
         }
         
 class PublicacionForm(ModelForm):

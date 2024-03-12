@@ -23,7 +23,9 @@ def actualizar(request, publicacion_id):
         
         publicacion = Empleo.objects.get(pk = publicacion_id)
         form = EmpleoForm(request.POST or None, instance = publicacion)
-        if form.is_valid(): 
+        if form.is_valid():
+            publicacion.estado = 1
+            publicacion.save()
             form.save()
             messages.success(request, 'Publicación Actualizada')
             return redirect(home)  
@@ -39,14 +41,15 @@ def eliminar(request, publicacion_id):
 
 # @login_required    
 def agregar(request): 
-
-        if request.POST: 
-            form = EmpleoForm(request.POST)
-            if form.is_valid():
-                form.save()
-            messages.success(request, 'Publicacion Añadida')
-            return redirect(home)
-        return render(request, 'agregar.html', {'form':EmpleoForm})
+    
+    if request.POST: 
+        form = EmpleoForm(request.POST)
+        if form.is_valid():
+            form.instance.estado = 1
+            form.save()
+        messages.success(request, 'Publicacion Añadida')
+        return redirect(home)
+    return render(request, 'agregar.html', {'form':EmpleoForm})
 
 @login_required
 def home(request):
@@ -427,6 +430,13 @@ def guardar_postulacion(request, empleo_nombre):
                         
                 calficacion_total = experiencia_total + educacion_total
                 
+                 # Enviar correo electrónico
+                asunto = 'Postulación Exitosa'
+                mensaje = f'Estimado {postulante.nombre}, su postulación para el cargo de {trabajo.nombre_empleo} ha sido realizada con éxito. Pronto nos estaremos comunicando con usted. '
+                destinatarios = [settings.EMAIL_HOST_USER, postulante.email] 
+                
+                send_mail(asunto, mensaje, settings.EMAIL_HOST_USER, destinatarios, fail_silently=False)
+                            
                 # Ejemplo de cómo podrías guardar los datos en el modelo Postulados
                 postulacion = Postulados.objects.create(
                     estado_postulado='Activo',  # Puedes establecer un estado por defecto
@@ -436,7 +446,7 @@ def guardar_postulacion(request, empleo_nombre):
                 )
 
                 # Redirigir al usuario a otra página
-                messages.success(request, 'Postulacion exitosa')
+                messages.success(request, 'Postulación exitosa')
                 return redirect(index)  # Ajusta esto según sea necesario
             else: 
                 messages.error(request, 'Debe completar sus datos de Experiencia y Educación')
@@ -575,12 +585,23 @@ def contratar(request, postulante_id, empleo_id):
     estado = Postulados.objects.get(id_postulados_fk = postulante_id, id_empleo_fk = empleo_id)
     estado.estado_postulado =  "Contratado"
     estado.save() 
-        # Enviar correo electrónico
+    # Enviar correo electrónico
     asunto = 'Feliciciones - Contratado'
     mensaje = f'Estimado {postulante.nombre}, por la presente deseamos comunicarle que ha sido contratado para ocupar el cargo de {empleo.nombre_empleo}. Favor presentarse lo más pronto posible en nuestra instalaciones.'
-    destinatarios = [settings.EMAIL_HOST_USER, postulante.email]  # Poner aquí la dirección de correo a la que quieres enviar el mensaje
-
+    destinatarios = [settings.EMAIL_HOST_USER, postulante.email]  
     send_mail(asunto, mensaje, settings.EMAIL_HOST_USER, destinatarios, fail_silently=False)
     return redirect('postulanteporempleo', empleo_id)
-        # return HttpResponse('Entrevista creada correctamente.')
-    # return render(request, '')
+ 
+def rechazar(request, postulante_id, empleo_id): 
+    
+    postulante = Postulante.objects.get(pk=postulante_id)
+    empleo = Empleo.objects.get(pk=empleo_id)
+    estado = Postulados.objects.get(id_postulados_fk = postulante_id, id_empleo_fk = empleo_id)
+    estado.estado_postulado =  "Rechazado"
+    estado.save() 
+    # Enviar correo electrónico
+    asunto = 'CNE Santo Domingo'
+    mensaje = f'Estimado {postulante.nombre}, lo sentimos. Por la presente deseamos comunicarle que su perfil de trabajo no cumple con los requisitos para ocupar el cargo de {empleo.nombre_empleo}.'
+    destinatarios = [settings.EMAIL_HOST_USER, postulante.email]  
+    send_mail(asunto, mensaje, settings.EMAIL_HOST_USER, destinatarios, fail_silently=False)
+    return redirect('postulanteporempleo', empleo_id)
