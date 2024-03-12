@@ -559,7 +559,7 @@ def entrevista(request, postulante_id, empleo_id):
             
              # Enviar correo electrónico
             asunto = 'Nueva entrevista programada'
-            mensaje = f'Se ha programado una nueva entrevista para {postulante.nombre} para el empleo {empleo.nombre} el {entrevista.fecha} a las {entrevista.hora}.'
+            mensaje = f'Se ha programado una nueva entrevista para {postulante.nombre} para el empleo {empleo.nombre_empleo} el {entrevista.fecha} a las {entrevista.hora}.'
             destinatarios = [settings.EMAIL_HOST_USER, {postulante.email}]  # Poner aquí la dirección de correo a la que quieres enviar el mensaje
 
             send_mail(asunto, mensaje, settings.EMAIL_HOST_USER, destinatarios, fail_silently=False)
