@@ -41,16 +41,16 @@
   
  
   <script>
-function activar(id) {
+function desactivar(id) {
         Swal.fire({
-            title: '¿Está seguro de Activar este Empleo?',
+            title: '¿Está seguro de Desactivar este Empleo?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Sí',
             cancelButtonText: 'No'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = "/activar/" + id;
+                window.location.href = "/desactivar/" + id;
             } else {
                 window.location.href = "/home";
             }
