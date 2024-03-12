@@ -9,6 +9,9 @@ from .models import *
 from  .forms import *
 from django.http import HttpResponse
 from django.views.decorators.http import require_POST
+from django.core.mail import send_mail
+from django.conf import settings
+
 # import tkinter as tk
 # from tkinter import messagebox
 
